@@ -21,7 +21,7 @@ class Partner (models.Model):
 
 class Code (models.Model):
     import time
-    expiretime = models.IntegerField(default=0) # unix timestamp
+    expireTime = models.IntegerField(default=0) # unix timestamp
     useTime    = models.IntegerField(default=1) # how many times it can be used 
     partner    = models.ForeignKey(Partner, on_delete=models.CASCADE)
     picture    = models.TextField()             # how the code should look and also what it gives
