@@ -1,6 +1,15 @@
 from django.shortcuts import render
-
+from backend.utils import extractRequest, encrypt
+from aktivana.models import Company
+from django.http import HttpResponse
 # Create your views here.
 
 def addCompany(request):
-    pass
+    req = extractRequest(request)
+    newCompany = Company(
+        email=req["email"],
+        password=encrypt(req["password"]),
+    )
+    newCompany.save()
+
+
