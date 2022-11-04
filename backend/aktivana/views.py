@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.utils import extractRequest, encrypt
-from aktivana.models import Company
+from aktivana.models import Company, Employee, Partner, Code
 from django.http import HttpResponse
 # Create your views here.
 import json
@@ -19,6 +19,93 @@ def addCompany(request):
             
     except Exception as e:
         return HttpResponse(e.__str__(),status=400)    
+
+
+
+def addEmployee(request):
+    req = extractRequest(request)
+    try:
+        company = Company.objects.filter(signupCode=req["signupCode"])
+        if len(company) != 0:
+            employee = Employee(
+            firstName=req["firstName"],   
+            lastName=req["lastName"],
+            password=req["password"],
+            email=req["email"],
+            company=company[0],
+            )
+            employee.save()
+            return HttpResponse("success",status=200)
+        else:
+            return HttpResponse("Wrong signup code",status=409)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
+
+def getCodes(request):
+    try:
+        req = extractRequest(request)
+        employee = Employee.objects.get(pk=req["id"])
+        codes = employee.company.activeCodes.all()
+
+        codesJ = []
+        usedCodes = json.loads(employee.usedCodes)
+        for code in codes:
+            if code.pk not in usedCodes:
+                print(str(code.__dict__))
+                codesJ.append(str(code.__dict__))
+        
+
+        return HttpResponse(json.dumps(codesJ),status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
+
+def addCode(request):
+    try:
+        req = extractRequest(request)
+        partner = Partner.objects.get(pk="id")
+        code = Code(
+            expireTime=req["expireTime"],
+            useTime=req["useTime"],
+            partner=partner,
+            picture=req["picture"]
+        )
+        code.save()
+        return HttpResponse("sucess",status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
+
+def useCode(request):
+    #try:
+    req = extractRequest(request)
+
+    employee = Employee.objects.get(pk=req["employeeId"])        
+    usedcodes = json.loads(employee.usedCodes)
+
+    code = Code.objects.get(pk=req["codeId"])
+    usedcodes.append(code.pk)
+
+    employee.usedCodes = json.dumps(usedcodes)
+    employee.save()
+
+    return HttpResponse("sucess",status = 200)
+    #except Exception as e:
+     #   return HttpResponse(e,status = 400)
+
+def addPartner(request):
+    try:
+        req = extractRequest(request)
+        partner = Partner(
+            name=req["name"],
+            logo=req["name"],
+            phone=req["name"],
+            email=req["name"],
+            website=req["name"],
+            adress=req["name"],
+        )
+        partner.save()
+        return HttpResponse("sucess",status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
 
 # Create your views here.
 def testConn(request):
