@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.utils import extractRequest, encrypt
-from aktivana.models import Company, Employee
+from aktivana.models import Company, Employee, Partner
 from django.http import HttpResponse
 # Create your views here.
 import json
@@ -38,6 +38,22 @@ def addEmployee(request):
             return HttpResponse("Wrong signup code",status=409)
     except Exception as e:
         return HttpResponse(e,status = 400)
+
+
+
+def addPartner(request):
+    req = extractRequest(request)
+    partner = Partner(
+        name=req["name"],
+        logo=req["name"],
+        phone=req["name"],
+        email=req["name"],
+        website=req["name"],
+        adress=req["name"],
+    )
+    partner.save()
+    return HttpResponse("sucess",status = 200)
+
 
 # Create your views here.
 def testConn(request):
