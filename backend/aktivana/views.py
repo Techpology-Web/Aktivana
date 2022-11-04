@@ -27,12 +27,12 @@ def addEmployee(request):
     try:
         company = Company.objects.filter(signupCode=req["signupCode"])
         if len(company) != 0:
-            employee = Employee(
-            firstName=req["firstName"],   
-            lastName=req["lastName"],
-            password=req["password"],
-            email=req["email"],
-            company=company[0],
+            employee  = Employee(
+            firstName = req["firstName"],   
+            lastName  = req["lastName"],
+            password  = encrypt(req["password"]),
+            email     = req["email"],
+            company   = company[0],
             )
             employee.save()
             return HttpResponse("success",status=200)
@@ -116,7 +116,14 @@ def login(request):
     try:
         req = extractRequest(request)
         emp = Employee.objects.filter(email=req["email"])
-
+        if len(emp) != 0:
+            if emp[0].password == encrypt(req["password"]):
+                
+                return HttpResponse(str(emp[0].pk),status=200)
+            else:
+                return HttpResponse("Wrong password for "+req["email"],status = 409)
+        else:
+            return HttpResponse("No user with this email",status = 409)
 
 
 
