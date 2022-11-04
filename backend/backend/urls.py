@@ -24,5 +24,6 @@ urlpatterns = [
     path('company/add', addCompany),
     path('employee/add', addEmployee),
     path('partner/add', addPartner),
+    path('code/add', addCode),
 
 ]

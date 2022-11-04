@@ -47,9 +47,12 @@ def addCode(request):
         req = extractRequest(request)
         partner = Partner.objects.get(pk="pk")
         code = Code(
-            expiretime=req["expireTime"]
+            expireTime=req["expireTime"],
+            useTime=req["useTime"],
+            partner=partner,
+            picture=req["picture"]
         )
-
+        code.save()
         return HttpResponse("sucess",status = 200)
     except Exception as e:
         return HttpResponse(e,status = 400)
