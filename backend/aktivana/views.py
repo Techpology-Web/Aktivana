@@ -26,16 +26,19 @@ def addEmployee(request):
     req = extractRequest(request)
     try:
         company = Company.objects.filter(signupCode=req["signupCode"])
-        if len(company) != 0 and len(Employee.objects.filter(email=req["email"])):
-            employee  = Employee(
-            firstName = req["firstName"],   
-            lastName  = req["lastName"],
-            password  = encrypt(req["password"]),
-            email     = req["email"],
-            company   = company[0],
-            )
-            employee.save()
-            return HttpResponse("success",status=200)
+        if len(company) != 0:
+            if len(Employee.objects.filter(email=req["email"])):
+                employee  = Employee(
+                firstName = req["firstName"],   
+                lastName  = req["lastName"],
+                password  = encrypt(req["password"]),
+                email     = req["email"],
+                company   = company[0],
+                )
+                employee.save()
+                return HttpResponse("success",status=200)
+            else:
+                return HttpResponse("User with this email alredy exists",status=409)
         else:
             return HttpResponse("Wrong signup code",status=409)
     except Exception as e:
