@@ -2,6 +2,14 @@ from django.db import models
 
 # Create your models here.
 
+def createSignupCode():
+    import random
+    alphabet = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,c"
+    code = ""
+    for i in range(9):
+        code += alphabet[random.randint(0, len(alphabet))]
+    return code
+
 class Partner (models.Model):
 
     name    = models.TextField() # partner name
@@ -23,16 +31,8 @@ class Company (models.Model):
     email       = models.TextField()
     password    = models.TextField()
     activeCodes = models.ManyToManyField(Code)
-    signupCode  = models.TextField(default=self.createSignupCode())
-
-
-    def createSignupCode(self):
-        import random
-        alphabet = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,c"
-        code = ""
-        for i in range(9):
-            code += alphabet[random.randint(0, len(alphabet))]
-        return code
+    signupCode  = models.TextField(default=createSignupCode())
+    
 
 class Employee (models.Model):
 
