@@ -42,18 +42,20 @@ def addEmployee(request):
 
 
 def addPartner(request):
-    req = extractRequest(request)
-    partner = Partner(
-        name=req["name"],
-        logo=req["name"],
-        phone=req["name"],
-        email=req["name"],
-        website=req["name"],
-        adress=req["name"],
-    )
-    partner.save()
-    return HttpResponse("sucess",status = 200)
-
+    try:
+        req = extractRequest(request)
+        partner = Partner(
+            name=req["name"],
+            logo=req["name"],
+            phone=req["name"],
+            email=req["name"],
+            website=req["name"],
+            adress=req["name"],
+        )
+        partner.save()
+        return HttpResponse("sucess",status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
 
 # Create your views here.
 def testConn(request):
