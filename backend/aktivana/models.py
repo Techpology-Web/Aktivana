@@ -41,4 +41,4 @@ class Employee (models.Model):
     password  = models.TextField()          
     email     = models.TextField()          
     company   = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
-    usedCodes = models.TextField()                                   # the codes they have already used
+    usedCodes = models.TextField(default="[]")                                   # the codes they have already used
