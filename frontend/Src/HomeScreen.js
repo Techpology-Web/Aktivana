@@ -1,10 +1,17 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import {
+	SafeAreaView,
+	SafeAreaProvider,
+	SafeAreaInsetsContext,
+	useSafeAreaInsets,
+	initialWindowMetrics,
+} from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   return (
-    <View>
+    <SafeAreaView>
       <Text>HomeScreen</Text>
-    </View>
+    </SafeAreaView>
   )
 }
