@@ -1,3 +1,5 @@
+import json
+
 def extractRequest(_req):
     return json.loads(_req.body.decode('utf-8'))
 
