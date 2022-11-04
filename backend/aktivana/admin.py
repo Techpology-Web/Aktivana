@@ -3,7 +3,7 @@ from aktivana.models import *
 
 # Register your models here.
 
-admin.site.register(Code)
+admin.site.register(Coupon)
 admin.site.register(Partner)
 admin.site.register(Company)
 admin.site.register(Employee)

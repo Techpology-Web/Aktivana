@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.utils import extractRequest, encrypt
-from aktivana.models import Company, Employee, Partner, Code
+from aktivana.models import Company, Employee, Partner, Coupon
 from django.http import HttpResponse
 # Create your views here.
 import json
@@ -45,14 +45,14 @@ def getCodes(request):
     try:
         req = extractRequest(request)
         employee = Employee.objects.get(pk=req["id"])
-        codes = employee.company.activeCodes.all()
+        coupons = employee.company.activeCoupons.all()
 
         codesJ = []
-        usedCodes = json.loads(employee.usedCodes)
-        for code in codes:
-            if code.pk not in usedCodes:
-                print(str(code.__dict__))
-                codesJ.append(str(code.__dict__))
+        usedCoupons = json.loads(employee.usedCoupons)
+        for coupon in coupons:
+            if coupon.pk not in usedCoupons:
+                print(str(coupon.__dict__))
+                codesJ.append(str(coupon.__dict__))
         
 
         return HttpResponse(json.dumps(codesJ),status = 200)
@@ -63,33 +63,33 @@ def addCode(request):
     try:
         req = extractRequest(request)
         partner = Partner.objects.get(pk="id")
-        code = Code(
+        coupon = Coupon(
             expireTime=req["expireTime"],
             useTime=req["useTime"],
             partner=partner,
             picture=req["picture"]
         )
-        code.save()
+        coupon.save()
         return HttpResponse("sucess",status = 200)
     except Exception as e:
         return HttpResponse(e,status = 400)
 
 def useCode(request):
-    #try:
-    req = extractRequest(request)
+    try:
+        req = extractRequest(request)
 
-    employee = Employee.objects.get(pk=req["employeeId"])        
-    usedcodes = json.loads(employee.usedCodes)
+        employee = Employee.objects.get(pk=req["employeeId"])        
+        usedcodes = json.loads(employee.usedCoupons)
 
-    code = Code.objects.get(pk=req["codeId"])
-    usedcodes.append(code.pk)
+        coupon = Coupon.objects.get(pk=req["codeId"])
+        usedcodes.append(coupon.pk)
 
-    employee.usedCodes = json.dumps(usedcodes)
-    employee.save()
+        employee.usedCoupons = json.dumps(usedcodes)
+        employee.save()
 
-    return HttpResponse("sucess",status = 200)
-    #except Exception as e:
-     #   return HttpResponse(e,status = 400)
+        return HttpResponse("sucess",status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
 
 def addPartner(request):
     try:
@@ -110,3 +110,16 @@ def addPartner(request):
 # Create your views here.
 def testConn(request):
     return HttpResponse(200)
+
+
+def login(request):
+    try:
+        req = extractRequest(request)
+        emp = Employee.objects.filter(email=req["email"])
+
+
+
+
+        return HttpResponse("sucess",status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
