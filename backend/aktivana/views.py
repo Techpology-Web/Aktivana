@@ -26,7 +26,7 @@ def addEmployee(request):
     req = extractRequest(request)
     try:
         company = Company.objects.filter(signupCode=req["signupCode"])
-        if len(company) != 0:
+        if len(company) != 0 and len(Employee.objects.filter(email=req["email"])):
             employee  = Employee(
             firstName = req["firstName"],   
             lastName  = req["lastName"],
