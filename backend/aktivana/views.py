@@ -30,7 +30,7 @@ def addEmployee(request):
             lastName=req["lastName"],
             password=req["password"],
             email=req["email"],
-            company=company,
+            company=company[0],
             )
             employee.save()
             return HttpResponse("success",status=200)
