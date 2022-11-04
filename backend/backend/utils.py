@@ -1,5 +1,6 @@
 import json
 from passlib.hash import argon2
+from django.conf import settings
 
 def extractRequest(_req):
     return json.loads(_req.body.decode('utf-8'))
