@@ -31,7 +31,7 @@ class Company (models.Model):
     email       = models.TextField()
     password    = models.TextField()
     activeCodes = models.ManyToManyField(Code)
-    signupCode  = models.TextField(default=createSignupCode())
+    signupCode  = models.TextField(default=createSignupCode()) # this code is neccecary for employees to signup
     
 
 class Employee (models.Model):
