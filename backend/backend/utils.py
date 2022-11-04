@@ -1,4 +1,5 @@
 import json
+from passlib.hash import argon2
 
 def extractRequest(_req):
     return json.loads(_req.body.decode('utf-8'))
