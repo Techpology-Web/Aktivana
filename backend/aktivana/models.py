@@ -7,7 +7,7 @@ def createSignupCode():
     alphabet = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,c"
     code = ""
     for i in range(9):
-        code += alphabet[random.randint(0, len(alphabet-1))]
+        code += alphabet[random.randint(0, len(alphabet)-1)]
     return code
 
 class Partner (models.Model):
