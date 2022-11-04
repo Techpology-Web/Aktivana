@@ -22,5 +22,4 @@ def addCompany(request):
 
 # Create your views here.
 def testConn(request):
-    req = extractRequest(request)
     return HttpResponse(200)

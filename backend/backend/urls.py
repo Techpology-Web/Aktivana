@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from aktivana.views import *
 
+from aktivana.views import testConn
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/add', addCompany),

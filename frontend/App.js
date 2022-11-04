@@ -6,6 +6,8 @@ import axios, { Axios } from "axios"
 
 import HomeScreen from "./Src/HomeScreen";
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
 	// axios.defaults.baseURL = 'http://api.aktivana.com/';
 	//axios.defaults.baseURL = 'http://192.168.10.238:8000/';
