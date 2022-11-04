@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import environ
 
+import os
+import environ
 
 env = environ.Env()
 environ.Env.read_env()
@@ -30,7 +31,10 @@ SECRET_KEY = 'django-insecure-+s#(k@)pq^avfb9c0=kf8=f6n*pa=*qe@w-k))a+$e7j0j+2qx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "192.168.1.189"]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000", "http://192.168.1.189:8000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000", "http://192.168.1.189:8000"]
 
 
 # Application definition
@@ -48,8 +52,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    "corsheaders.middleware.CorsPostCsrfMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -133,3 +138,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ARGON_HASH_ROUNDS = env('ARGON_HASH_ROUNDS')
 ARGON_HASH_SALT = env('ARGON_HASH_SALT')
 ARGON_HASH_PARALLELISM = env('ARGON_HASH_PARALLELISM')
+
+# Encryption
+ARGON_HASH_ROUNDS = env('ARGON_HASH_ROUNDS')
+ARGON_HASH_SALT = env('ARGON_HASH_SALT')
+ARGON_HASH_PARALLELISM = env('ARGON_HASH_PARALLELISM')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
