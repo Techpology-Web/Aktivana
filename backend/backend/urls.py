@@ -19,6 +19,6 @@ from aktivana.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('company/add/', addCompany),
+    path('company/add', addCompany),
 
 ]
