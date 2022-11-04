@@ -41,11 +41,28 @@ def addEmployee(request):
     except Exception as e:
         return HttpResponse(e,status = 400)
 
+def getCodes(request):
+    try:
+        req = extractRequest(request)
+        employee = Employee.objects.get(pk=req["id"])
+        codes = employee.company.activeCodes.all()
+
+        codesJ = []
+        usedCodes = json.loads(employee.usedCodes)
+        for code in codes:
+            if code.pk not in usedCodes:
+                print(str(code.__dict__))
+                codesJ.append(str(code.__dict__))
+        
+
+        return HttpResponse(json.dumps(codesJ),status = 200)
+    except Exception as e:
+        return HttpResponse(e,status = 400)
 
 def addCode(request):
     try:
         req = extractRequest(request)
-        partner = Partner.objects.get(pk="pk")
+        partner = Partner.objects.get(pk="id")
         code = Code(
             expireTime=req["expireTime"],
             useTime=req["useTime"],
@@ -57,6 +74,22 @@ def addCode(request):
     except Exception as e:
         return HttpResponse(e,status = 400)
 
+def useCode(request):
+    #try:
+    req = extractRequest(request)
+
+    employee = Employee.objects.get(pk=req["employeeId"])        
+    usedcodes = json.loads(employee.usedCodes)
+
+    code = Code.objects.get(pk=req["codeId"])
+    usedcodes.append(code.pk)
+
+    employee.usedCodes = json.dumps(usedcodes)
+    employee.save()
+
+    return HttpResponse("sucess",status = 200)
+    #except Exception as e:
+     #   return HttpResponse(e,status = 400)
 
 def addPartner(request):
     try:
