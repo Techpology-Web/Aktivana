@@ -16,9 +16,9 @@ export default function HomeScreen() {
   
   return (
     <SafeAreaView style={[t.bgGray900,t.p5]} >
-      <Text>HomeScreen</Text>
       
-      <InputField placeholder="Din E-mail" />
+      <InputField placeholder="Din E-mail" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
+      <InputField placeholder="Din E-mail" password={true} icon={<MaterialCommunityIcons name="key-outline" size={24} color="#00000030" />} />
       
       <Button title="Logga in" onPress={()=>{alert("Logga in")}} ></Button>
       
