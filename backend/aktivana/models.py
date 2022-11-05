@@ -15,7 +15,7 @@ class Partner (models.Model):
     name    = models.TextField() # partner name
     logo    = models.TextField() # their logo
     phone   = models.TextField() # their phonenumber
-    email   = models.TextField() # their support email (email a employee can contact)
+    email   = models.TextField() # their support email (email a Acount can contact)
     website = models.TextField() # thier website
     adress  = models.TextField() # thier adress
 
@@ -56,7 +56,7 @@ class Company (models.Model):
     email         = models.TextField()
     password      = models.TextField()
     activeCoupons = models.ManyToManyField(Coupon)
-    signupCode    = models.TextField(default=createSignupCode()) # this code is neccecary for employees to signup
+    signupCode    = models.TextField(default=createSignupCode()) # this code is neccecary for Acounts to signup
   
     def toJson(self):
         activecodes = []
@@ -73,19 +73,22 @@ class Company (models.Model):
             })
         )
 
-class Employee (models.Model):
+class Acount (models.Model):
 
     firstName   = models.TextField()          
     lastName    = models.TextField()          
     password    = models.TextField()          
     email       = models.TextField()          
     company     = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
-    usedCoupons = models.TextField(default="[]")                                   # the codes they have already used
+    usedCoupons = models.TextField(default="[]")                       # the codes they have already used
+    acountType  = models.IntegerField(default=0)                       # 0 for Acount 1 for admin (aktivana)
+    
     def toJson(self):
         return json.loads(json.dumps(
             {
                 "firstName"      : self.firstName,
                 "lastName"       : self.lastName,
+                "type"           : self.acountType,
                 "password"       : self.password,
                 "email"          : self.email,
                 "company"        : self.company.toJson(),
