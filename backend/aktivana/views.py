@@ -80,7 +80,7 @@ def useCode(request):
     try:
         req = extractRequest(request)
 
-        acount = Acount.objects.get(pk=req["AcountId"])        
+        acount = Acount.objects.get(pk=req["acountId"])        
         usedcodes = json.loads(acount.usedCoupons)
 
         coupon = Coupon.objects.get(pk=req["codeId"])
