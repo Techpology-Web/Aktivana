@@ -85,7 +85,7 @@ class Acount (models.Model):
     def toJson(self):
         return json.loads(json.dumps(
             {
-                "emfirstNameail" : self.firstName,
+                "firstName"      : self.firstName,
                 "lastName"       : self.lastName,
                 "password"       : self.password,
                 "email"          : self.email,
