@@ -121,7 +121,7 @@ def login(request):
         if len(emp) != 0:
             if emp[0].password == encrypt(req["password"]):
                 
-                return HttpResponse(str(emp[0].pk),status=200)
+                return HttpResponse(str(emp[0]),status=200)
             else:
                 return HttpResponse("Wrong password for "+req["email"],status = 409)
         else:

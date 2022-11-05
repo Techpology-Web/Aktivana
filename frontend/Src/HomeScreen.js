@@ -26,13 +26,7 @@ export default function HomeScreen() {
       <InputField val={e=>{setPassword(e)}} placeholder="Din E-mail" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} />
       
       <Button title="Logga in" onPress={()=>{
-        alert(password)
-        axios.post("acount/login",{
-          "email": email,
-          "password": password
-        }).then(r=>{
-          setAcount(r.data)
-        })
+      
       }} ></Button>
       
       
