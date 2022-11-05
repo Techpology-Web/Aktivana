@@ -9,7 +9,6 @@ import {
 } from 'react-native-safe-area-context';
 import axios from 'axios';
 import {t} from "react-native-tailwindcss"
-import ListSelector from './Components/ListSelector';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -43,6 +42,7 @@ function Info(props){
             source={{uri:props.coupon.picture}}
           />     
          </View>
+         <TouchableOpacity onPress={()=>{alert("uses "+ props.coupon.code);props.use()}} style={[t.bgGray200,t.p4]} ><Text>Use</Text></TouchableOpacity>
       </View>
     </Animatable.View>
   )
@@ -53,19 +53,26 @@ export default function HomeScreen() {
   
   const [coupons,setCoupons] = useState([])
   const [selectedCoupons,setSelectedCoupons] = useState()
+  const [xd,setXd] = useState()
+  
+  let acount = 2
   
 
   useEffect(()=>{
-    axios.post("employee/getCodes",{"id":3}).then(r=>{
+    axios.post("acount/getCodes",{"id":acount}).then(r=>{
       let couponss = []
       r.data.forEach(element => {
         console.log(element.code)
-        couponss.push(<Coupon onPress={()=>{setSelectedCoupons(<Info coupon={element} ></Info>)}} code={element.code} ></Coupon>)
+        couponss.push(<Coupon onPress={()=>{setSelectedCoupons(<Info use={()=>{
+          axios.post("acount/useCode",{"AcountId":acount,"codeId":element.id}).then(r=>{
+            setXd("asd")
+          })
+        }} coupon={element} ></Info>)}} code={element.code} ></Coupon>)
       });
       setCoupons(couponss)
     })
 
-  },[])
+  },[xd])
 
   return (
     <SafeAreaView style={[t.p10]} >
