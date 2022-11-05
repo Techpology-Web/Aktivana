@@ -1,5 +1,5 @@
 from django.db import models
-
+import json
 # Create your models here.
 
 def createSignupCode():
@@ -20,7 +20,7 @@ class Partner (models.Model):
     adress  = models.TextField() # thier adress
 
     def toJson(self):
-        return json.dumps(
+        return json.loads(json.dumps(
             {
                 "name"    :self.name,
                 "logo"    :self.logo,
@@ -28,7 +28,7 @@ class Partner (models.Model):
                 "email"   :self.email,
                 "website" :self.website,
                 "adress"  :self.adress,
-            }
+            })
         )
 
 class Coupon (models.Model):
@@ -40,14 +40,14 @@ class Coupon (models.Model):
     code       = models.TextField()             # code to refer to the code
 
     def toJson(self):
-        return json.dumps(
+        return json.loads(json.dumps(
             {
                 "expireTime" : self.expireTime,
                 "useTime"    : self.useTime,
                 "partner"    : self.partner.toJson(),
                 "picture"    : self.picture,
                 "code"       : self.code,
-            }
+            })
         )
 
 class Company (models.Model):
@@ -55,13 +55,37 @@ class Company (models.Model):
     password      = models.TextField()
     activeCoupons = models.ManyToManyField(Coupon)
     signupCode    = models.TextField(default=createSignupCode()) # this code is neccecary for employees to signup
-    
+  
+    def toJson(self):
+        activecodes = []
+        for code in self.activeCoupons:
+            activecodes.append(code.toJson())
+
+        return json.loads(json.dumps(
+            {
+                "email"         : self.email,
+                "password"      : self.password,
+                "activeCoupons" : activecodes,
+                "signupCode"    : self.signupCode,
+            })
+        )
 
 class Employee (models.Model):
 
-    firstName  = models.TextField()          
-    lastName   = models.TextField()          
-    password   = models.TextField()          
-    email      = models.TextField()          
-    company    = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
+    firstName   = models.TextField()          
+    lastName    = models.TextField()          
+    password    = models.TextField()          
+    email       = models.TextField()          
+    company     = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
     usedCoupons = models.TextField(default="[]")                                   # the codes they have already used
+    def toJson(self):
+        return json.loads(json.dumps(
+            {
+                "emfirstNameail" : self.firstName,
+                "lastName"       : self.lastName,
+                "password"       : self.password,
+                "email"          : self.email,
+                "company"        : self.company.toJson(),
+                "usedCoupons"    : json.loads(self.usedCoupons),
+            })
+        )
