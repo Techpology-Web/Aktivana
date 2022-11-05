@@ -75,8 +75,19 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={[t.p10,t.bgGray900]} >
-      <Text>HomeScreen1</Text>
-      <Button onPress={()=>{alert("uses "+ props.coupon.code);props.use()}} style={[t.bgGray200,t.p4]} title="Logga in" ></Button>
+
+      <InputField val={e=>{setEmail(e)}}    placeholder="Din E-mail"                 icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
+      <InputField val={e=>{setPassword(e)}} placeholder="Din E-mail" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} />
+      
+      <Button title="Logga in" onPress={()=>{
+        alert(password)
+        axios.post("acount/login",{
+          "email": email,
+          "password": password
+        }).then(r=>{
+          setAcount(r.data)
+        })
+      }} ></Button>
 
       <View  >
         <View style={[t.flex,t.flexCol,t.flex]} >
