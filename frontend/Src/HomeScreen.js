@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import {t} from "react-native-tailwindcss"
 import * as Animatable from 'react-native-animatable';
+import Button from './Components/Button';
 
 
 function Coupon(props){
@@ -38,11 +39,11 @@ function Info(props){
         <View style={[t.flex,t.flexRow,t.flex,]} >
           <Text style={[t.mY4]} >Image </Text>
           <Image
-            style={{width: '100%', height: '50%'}}
+            style={{width: '100%', height: '100%'}}
             source={{uri:props.coupon.picture}}
           />     
          </View>
-         <TouchableOpacity onPress={()=>{alert("uses "+ props.coupon.code);props.use()}} style={[t.bgGray200,t.p4]} ><Text>Use</Text></TouchableOpacity>
+         <Button onPress={()=>{alert("uses "+ props.coupon.code);props.use()}} style={[t.bgGray200,t.p4]} title="Use" ></Button>
       </View>
     </Animatable.View>
   )
@@ -55,19 +56,17 @@ export default function HomeScreen() {
   const [selectedCoupons,setSelectedCoupons] = useState()
   const [xd,setXd] = useState()
   
-  let acount = 2
+  let acount = 1
   
-
   useEffect(()=>{
     axios.post("acount/getCodes",{"id":acount}).then(r=>{
       let couponss = []
       r.data.forEach(element => {
-        console.log(element.code)
-        couponss.push(<Coupon onPress={()=>{setSelectedCoupons(<Info use={()=>{
-          axios.post("acount/useCode",{"AcountId":acount,"codeId":element.id}).then(r=>{
+        couponss.push(<Button onPress={()=>{setSelectedCoupons(<Info use={()=>{
+          axios.post("acount/useCode",{"acountId":acount,"codeId":element.id}).then(er=>{
             setXd("asd")
           })
-        }} coupon={element} ></Info>)}} code={element.code} ></Coupon>)
+        }} coupon={element} ></Info>)}} title={element.code} ></Button>)
       });
       setCoupons(couponss)
     })
@@ -75,8 +74,10 @@ export default function HomeScreen() {
   },[xd])
 
   return (
-    <SafeAreaView style={[t.p10]} >
-      <Text>HomeScreen</Text>
+    <SafeAreaView style={[t.p10,t.bgGray900]} >
+      <Text>HomeScreen1</Text>
+      <Button onPress={()=>{alert("uses "+ props.coupon.code);props.use()}} style={[t.bgGray200,t.p4]} title="Logga in" ></Button>
+
       <View  >
         <View style={[t.flex,t.flexCol,t.flex]} >
         {coupons}
