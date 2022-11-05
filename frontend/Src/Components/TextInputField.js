@@ -21,7 +21,7 @@ export default function TextInputField(props) {
 		if (props.email)
 			imge = "https://cdn-icons-png.flaticon.com/512/546/546394.png"
 		if(props.img)
-			imge = props.img		
+			imge = props.img
 		
 		if(imge!="")
 			return <TouchableOpacity onPress={props.imageOnPress} >

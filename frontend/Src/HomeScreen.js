@@ -17,8 +17,9 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={[t.bgGray900,t.p5]} >
       <Text>HomeScreen</Text>
+      <TextInputField placeholder="Din E-mail" email={true} onChangeText={(e)=>{setText(e)}} ></TextInputField>
+      <TextInputField placeholder="Password" password={true} onChangeText={(e)=>{setText(e)}} ></TextInputField>
       <Button title="Logga in" onPress={()=>{alert("Logga in")}} ></Button>
-      <TextInputField email={true} onChangeText={(e)=>{setText(e)}} ></TextInputField>
       <Text>{text}</Text>
     </SafeAreaView>
   )
