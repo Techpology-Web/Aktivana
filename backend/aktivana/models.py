@@ -22,12 +22,13 @@ class Partner (models.Model):
     def toJson(self):
         return json.loads(json.dumps(
             {
-                "name"    :self.name,
-                "logo"    :self.logo,
-                "phone"   :self.phone,
-                "email"   :self.email,
-                "website" :self.website,
-                "adress"  :self.adress,
+                "name"    : self.name,
+                "logo"    : self.logo,
+                "phone"   : self.phone,
+                "email"   : self.email,
+                "website" : self.website,
+                "adress"  : self.adress,
+                "id"      : self.pk
             })
         )
 
@@ -47,6 +48,7 @@ class Coupon (models.Model):
                 "partner"    : self.partner.toJson(),
                 "picture"    : self.picture,
                 "code"       : self.code,
+                "id"         : self.pk
             })
         )
 
@@ -67,6 +69,7 @@ class Company (models.Model):
                 "password"      : self.password,
                 "activeCoupons" : activecodes,
                 "signupCode"    : self.signupCode,
+                "id"            : self.pk
             })
         )
 
@@ -87,5 +90,6 @@ class Employee (models.Model):
                 "email"          : self.email,
                 "company"        : self.company.toJson(),
                 "usedCoupons"    : json.loads(self.usedCoupons),
+                "id"             : self.pk
             })
         )
