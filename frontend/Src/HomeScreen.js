@@ -58,7 +58,8 @@ export default function HomeScreen() {
   const [selectedCoupons,setSelectedCoupons] = useState()
   const [xd,setXd] = useState()
   const [acount,setAcount] = useState(null)
-  
+  const [email, setEmail] = useState("alfred@stensatter.se");
+  const [password, setPassword] = useState("password");
   
   useEffect(()=>{
     if(acount != null){
@@ -85,7 +86,6 @@ export default function HomeScreen() {
       <InputField val={e=>{setPassword(e)}} placeholder="Din E-mail" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} />
       
       <Button title="Logga in" onPress={()=>{
-        alert(password)
         axios.post("acount/login",{
           "email": email,
           "password": password
