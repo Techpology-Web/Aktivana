@@ -21,7 +21,7 @@ export default function App() {
 	}
 
 	React.useEffect(()=>{
-		testConn();
+	//	testConn();
 	})
 
 	return (
