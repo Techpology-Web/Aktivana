@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import axios, { Axios } from "axios"
 
+import Template from "./Src/Template";
 import HomeScreen from "./Src/HomeScreen";
 
 const Stack = createNativeStackNavigator();
@@ -13,21 +14,11 @@ export default function App() {
 	//axios.defaults.baseURL = 'http://192.168.10.238:8000/';
 	axios.defaults.baseURL = 'http://192.168.1.189:8000/';
 
-	const testConn = () =>
-	{
-		axios.get("test")
-		.then(resp => { alert(resp.data) })
-		.catch(error => { alert(error.message) })
-	}
-
-	React.useEffect(()=>{
-		testConn();
-	})
-
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Template" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="Home"	component={HomeScreen}/>
+				<Stack.Screen name="Template"	component={Template}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

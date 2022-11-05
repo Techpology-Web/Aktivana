@@ -20,8 +20,6 @@ def addCompany(request):
     except Exception as e:
         return HttpResponse(e.__str__(),status=400)    
 
-
-
 def addEmployee(request):
     req = extractRequest(request)
     try:
