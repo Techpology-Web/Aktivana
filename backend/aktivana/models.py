@@ -19,6 +19,18 @@ class Partner (models.Model):
     website = models.TextField() # thier website
     adress  = models.TextField() # thier adress
 
+    def toJson(self):
+        return json.dumps(
+            {
+                "name"    :self.name,
+                "logo"    :self.logo,
+                "phone"   :self.phone,
+                "email"   :self.email,
+                "website" :self.website,
+                "adress"  :self.adress,
+            }
+        )
+
 class Coupon (models.Model):
     import time
     expireTime = models.IntegerField(default=0) # unix timestamp
@@ -26,6 +38,17 @@ class Coupon (models.Model):
     partner    = models.ForeignKey(Partner, on_delete=models.CASCADE)
     picture    = models.TextField()             # how the code should look and also what it gives
     code       = models.TextField()             # code to refer to the code
+
+    def toJson(self):
+        return json.dumps(
+            {
+                "expireTime" : self.expireTime,
+                "useTime"    : self.useTime,
+                "partner"    : self.partner.toJson(),
+                "picture"    : self.picture,
+                "code"       : self.code,
+            }
+        )
 
 class Company (models.Model):
     email         = models.TextField()
