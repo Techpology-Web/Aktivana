@@ -56,7 +56,6 @@ def getCodes(request):
             if coupon.pk not in usedCoupons:
                 print(str(coupon.__dict__))
                 codesJ.append(coupon.toJson())
-        
 
         return HttpResponse(json.dumps(codesJ),status = 200)
     except Exception as e:

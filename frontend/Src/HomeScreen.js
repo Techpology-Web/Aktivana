@@ -16,14 +16,15 @@ export default function HomeScreen() {
 
   useEffect(()=>{
     axios.post("employee/getCodes",{"id":3}).then(r=>{
-      
+      let couponss = []
       r.data.forEach(element => {
-        
+        console.log(element.code)
+        couponss.push(<Text>{element.code}</Text>)
       });
+      setCoupons(couponss)
 
     })
 
-    setCoupons([<Text>hej</Text>,<Text>hej2</Text>])
   },[])
 
   return (
