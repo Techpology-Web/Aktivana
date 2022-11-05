@@ -120,8 +120,8 @@ def login(request):
         emp = Acount.objects.filter(email=req["email"])
         if len(emp) != 0:
             if emp[0].password == encrypt(req["password"]):
-                
-                return HttpResponse(str(emp[0].toJson()),status=200)
+                print(emp[0].toJson())
+                return HttpResponse(json.dumps(emp[0].toJson()),status=200)
             else:
                 return HttpResponse("Wrong password for "+req["email"],status = 409)
         else:

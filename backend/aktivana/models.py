@@ -60,7 +60,7 @@ class Company (models.Model):
   
     def toJson(self):
         activecodes = []
-        for code in self.activeCoupons:
+        for code in self.activeCoupons.all():
             activecodes.append(code.toJson())
 
         return json.loads(json.dumps(
