@@ -11,6 +11,8 @@ import axios from 'axios';
 import {t} from "react-native-tailwindcss"
 import * as Animatable from 'react-native-animatable';
 import Button from './Components/Button';
+import InputField from './Components/InputField';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 function Coupon(props){
@@ -55,23 +57,26 @@ export default function HomeScreen() {
   const [coupons,setCoupons] = useState([])
   const [selectedCoupons,setSelectedCoupons] = useState()
   const [xd,setXd] = useState()
+  const [acount,setAcount] = useState(null)
   
-  let acount = 1
   
   useEffect(()=>{
-    axios.post("acount/getCodes",{"id":acount}).then(r=>{
-      let couponss = []
-      r.data.forEach(element => {
-        couponss.push(<Button onPress={()=>{setSelectedCoupons(<Info use={()=>{
-          axios.post("acount/useCode",{"acountId":acount,"codeId":element.id}).then(er=>{
-            setXd("asd")
-          })
-        }} coupon={element} ></Info>)}} title={element.code} ></Button>)
-      });
-      setCoupons(couponss)
-    })
+    if(acount != null){
+      axios.post("acount/getCodes",{"id":acount}).then(r=>{
+        let couponss = []
+        r.data.forEach(element => {
+          couponss.push(<Button onPress={()=>{setSelectedCoupons(<Info use={()=>{
+            axios.post("acount/useCode",{"acountId":acount,"codeId":element.id}).then(er=>{
+              setXd("asd")
+            })
+          }} coupon={element} ></Info>)}} title={element.code} ></Button>)
+        });
+        setCoupons(couponss)
+      })
+    }
+    
 
-  },[xd])
+  },[xd,acount])
 
   return (
     <SafeAreaView style={[t.p10,t.bgGray900]} >
