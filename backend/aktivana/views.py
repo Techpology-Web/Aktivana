@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.utils import extractRequest, encrypt
-from aktivana.models import Company, Employee, Partner, Coupon
+from aktivana.models import Company, Acount, Partner, Coupon
 from django.http import HttpResponse
 # Create your views here.
 import json
@@ -22,20 +22,20 @@ def addCompany(request):
 
 
 
-def addEmployee(request):
+def addAcount(request):
     req = extractRequest(request)
     try:
         company = Company.objects.filter(signupCode=req["signupCode"])
         if len(company) != 0:
-            if len(Employee.objects.filter(email=req["email"])):
-                employee  = Employee(
-                firstName = req["firstName"],   
-                lastName  = req["lastName"],
-                password  = encrypt(req["password"]),
-                email     = req["email"],
-                company   = company[0],
+            if len(Acount.objects.filter(email=req["email"])) <= 0:
+                acount  = Acount(
+                    firstName = req["firstName"],   
+                    lastName  = req["lastName"],
+                    password  = encrypt(req["password"]),
+                    email     = req["email"],
+                    company   = company[0],
                 )
-                employee.save()
+                acount.save()
                 return HttpResponse("success",status=200)
             else:
                 return HttpResponse("User with this email alredy exists",status=409)
@@ -47,15 +47,15 @@ def addEmployee(request):
 def getCodes(request):
     try:
         req = extractRequest(request)
-        employee = Employee.objects.get(pk=req["id"])
-        coupons = employee.company.activeCoupons.all()
+        acount = Acount.objects.get(pk=req["id"])
+        coupons = acount.company.activeCoupons.all()
 
         codesJ = []
-        usedCoupons = json.loads(employee.usedCoupons)
+        usedCoupons = json.loads(acount.usedCoupons)
         for coupon in coupons:
             if coupon.pk not in usedCoupons:
-                print(str(coupon.__dict__))
                 codesJ.append(coupon.toJson())
+        
 
         return HttpResponse(json.dumps(codesJ),status = 200)
     except Exception as e:
@@ -80,14 +80,14 @@ def useCode(request):
     try:
         req = extractRequest(request)
 
-        employee = Employee.objects.get(pk=req["employeeId"])        
-        usedcodes = json.loads(employee.usedCoupons)
+        acount = Acount.objects.get(pk=req["AcountId"])        
+        usedcodes = json.loads(acount.usedCoupons)
 
         coupon = Coupon.objects.get(pk=req["codeId"])
         usedcodes.append(coupon.pk)
 
-        employee.usedCoupons = json.dumps(usedcodes)
-        employee.save()
+        acount.usedCoupons = json.dumps(usedcodes)
+        acount.save()
 
         return HttpResponse("sucess",status = 200)
     except Exception as e:
@@ -117,7 +117,7 @@ def testConn(request):
 def login(request):
     try:
         req = extractRequest(request)
-        emp = Employee.objects.filter(email=req["email"])
+        emp = Acount.objects.filter(email=req["email"])
         if len(emp) != 0:
             if emp[0].password == encrypt(req["password"]):
                 

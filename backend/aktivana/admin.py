@@ -6,4 +6,4 @@ from aktivana.models import *
 admin.site.register(Coupon)
 admin.site.register(Partner)
 admin.site.register(Company)
-admin.site.register(Employee)
+admin.site.register(Acount)

@@ -22,10 +22,10 @@ from aktivana.views import testConn
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/add', addCompany),
-    path('employee/add', addEmployee),
-    path('employee/login', login),
-    path('employee/getCodes', getCodes),
-    path('employee/useCode', useCode),
+    path('acount/add', addAcount),
+    path('acount/login', login),
+    path('acount/getCodes', getCodes),
+    path('acount/useCode', useCode),
     path('partner/add', addPartner),
     path('code/add', addCode),
 
