@@ -25,11 +25,11 @@ export default function Signup(props) {
 			setError("") // reset error
 			//post ssignup
 			axios.post("acount/add",{
-				"firstName"	 : firstName,				
-				"lastName"	 : lastName,				
-				"email"		 : email,				
-				"password"   : password,				
-				"signupCode" : signupCode,				
+				"firstName"	 : firstName,
+				"lastName"	 : lastName,
+				"email"		 : email,
+				"password"   : password,
+				"signupCode" : signupCode
 			})
 			.then(r=>{
 				alert(r.data)
@@ -54,21 +54,21 @@ export default function Signup(props) {
 						}]} />
 					</View>
 
-					<TextInputField onChangeText={setEmail} placeholder="Din E-mail"                  icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
+					<TextInputField onChangeText={setEmail} placeholder="Din E-mail" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
 					
 					<View style={styles.container} >
 						<View style={styles.child} >
-							<TextInputField onChangeText={setFirstName} placeholder="Förnamn"                 icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
+							<TextInputField onChangeText={setFirstName} placeholder="Förnamn" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
 						</View>
 						<View style={styles.child} >
-							<TextInputField onChangeText={setLastName} placeholder="Efternamn"                 icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
+							<TextInputField onChangeText={setLastName} placeholder="Efternamn" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
 						</View>
 					</View>
 					<TextInputField onChangeText={setPassword} placeholder="Lösenord" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
 					<TextInputField onChangeText={e=>{setPassword1(e);setError((password!=e)?"Lösenorden stämmer inte":"")}} placeholder="Upprepa Lösenord" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
 					<View style={styles.container} >
 						<View style={styles.child} >
-							<TextInputField onChangeText={setSignupCode} placeholder="Inbjudnings kod"                 icon={<MaterialCommunityIcons name="key-outline" size={24} color="#00000030" />} ></TextInputField>
+							<TextInputField onChangeText={setSignupCode} placeholder="Inbjudnings kod" icon={<MaterialCommunityIcons name="key-outline" size={24} color="#00000030" />} ></TextInputField>
 						</View>
 						
 					</View>
