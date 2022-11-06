@@ -135,8 +135,8 @@ export default function SignupScreen(props) {
 		{
 			return(
 				<View style={[t.wFull, t.itemsCenter, t.justifyCenter]}>
-					<InputField val={(e)=>{setEmail(e)}} placeholder="e-mail" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
-					<InputField val={(e)=>{setPassw(e)}} placeholder="password" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
+					<InputField val={(e)=>{setEmail(e)}} placeholder="e-mail"   icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
+					<InputField val={(e)=>{setPassw(e)}} placeholder="password" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" password={true} />} />
 
 					<View style={[t.wFull, t.flexRow, t.justifyEnd, t.pR12, t.mT2]}>
 						<Text style={[t.textWhite]}>Har redan ett konto? </Text>
