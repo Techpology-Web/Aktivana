@@ -13,46 +13,16 @@ import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 export default function HomeScreen(props) {
-  const [email, setEmail] = useState("alfred@stensatter.se");
-  const [password, setPassword] = useState("password");
-  const [acount, setAcount] = useState(null);
 
-  function login(){
-    axios.post("acount/login",{"email":email,"password":password})
-    .then(r=>{
-      if(r.status == 200){
-        global.session = r.data;
-        props.navigation.navigate("Signup")
-      }
-    })
-  }
 
   return (
    <MainView>
-    <Animatable.View animation="fadeInUp">
-
-      <View style={[t.mX8]} >
-        <View style={[t.wFull,t.itemsCenter,t.mB5]} >
-          <Image source={require('../Images/logo.png')} style={[{
-            width:253,
-            height:60,
-          }]} />
-        </View>
-
-        <TextInputField onChangeText={setEmail} placeholder="Din E-mail"               icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
-        <TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
-
-        <View style={[t.mB5,t.flex,t.flexRowReverse]} >
-          <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
-            <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
-          </TouchableOpacity>
-          <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
-        </View>
-
-        <Button onPress={login} title="Logga in" ></Button>
+      <Animatable.View animation="fadeInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
+        <View style={[]} >
+          <Text style={[t.textWhite,t.text6xl]} >Hello</Text>
+          <Text style={[t.textWhite,t.text4xl]} >{global.session["firstName"]}</Text>
         </View>
       </Animatable.View>
-
    </MainView>
   )
 }

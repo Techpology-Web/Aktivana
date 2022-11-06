@@ -6,6 +6,7 @@ import axios, { Axios } from "axios"
 
 import HomeScreen from "./Src/Pages/HomeScreen";
 import Signup from "./Src/Pages/Signup";
+import Login from "./Src/Pages/Login";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,9 +28,10 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Signup" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="Home"	component={HomeScreen}/>
 				<Stack.Screen name="Signup"	component={Signup}/>
+				<Stack.Screen name="Login"	component={Login}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

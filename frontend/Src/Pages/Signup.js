@@ -73,7 +73,7 @@ export default function Signup(props) {
 						
 					</View>
 					<View style={[t.mB5,t.flex,t.flexRowReverse]} >
-						<TouchableOpacity onPress={()=>{props.navigation.navigate("Home")}} >
+						<TouchableOpacity onPress={()=>{props.navigation.navigate("Login")}} >
 						<Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Logga in </Text>
 						</TouchableOpacity>
 						<Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har du ett konto? </Text>
