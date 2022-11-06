@@ -48,6 +48,13 @@ export default function SignupScreen() {
 					<Text style={[t.textWhite, t.textXl]}>Please provide your companies invite code</Text>
 					<InputField val={(e)=>{setInviteCode(e)}} placeholder="inbjudnings-kod" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
 
+					<View style={[t.wFull, t.flexRow, t.justifyEnd, t.pR12, t.mT2]}>
+						<Text style={[t.textWhite]}>Har redan ett konto? </Text>
+						<TouchableOpacity onPress={()=>{props.navigation.navigate("Login")}}>
+							<Text style={[t.textBlue400]}>Har redan ett konto?</Text>
+						</TouchableOpacity>
+					</View>
+
 					<View style={[t.wFull,t.mR32, t.mT2]}>
 						<Text style={[t.textRed400, t.selfEnd, t.textMd ]}>{errorCode}</Text>
 					</View>
@@ -81,6 +88,13 @@ export default function SignupScreen() {
 				<View style={[t.wFull, t.itemsCenter, t.justifyCenter]}>
 					<InputField val={(e)=>{setFirstName(e)}} placeholder="first-name" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
 					<InputField val={(e)=>{setLastName(e)}} placeholder="last-name" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
+
+					<View style={[t.wFull, t.flexRow, t.justifyEnd, t.pR12, t.mT2]}>
+						<Text style={[t.textWhite]}>Har redan ett konto? </Text>
+						<TouchableOpacity onPress={()=>{props.navigation.navigate("Login")}}>
+							<Text style={[t.textBlue400]}>Har redan ett konto?</Text>
+						</TouchableOpacity>
+					</View>
 
 					<View style={[t.wFull,t.mR32, t.mT2]}>
 						<Text style={[t.textRed400, t.selfEnd, t.textMd ]}>{errorCode}</Text>
@@ -122,6 +136,13 @@ export default function SignupScreen() {
 				<View style={[t.wFull, t.itemsCenter, t.justifyCenter]}>
 					<InputField val={(e)=>{setEmail(e)}} placeholder="e-mail" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
 					<InputField val={(e)=>{setPassw(e)}} placeholder="password" icon={<MaterialCommunityIcons name="wallet-giftcard" size={24} color="#00000050" />} />
+
+					<View style={[t.wFull, t.flexRow, t.justifyEnd, t.pR12, t.mT2]}>
+						<Text style={[t.textWhite]}>Har redan ett konto? </Text>
+						<TouchableOpacity onPress={()=>{props.navigation.navigate("Login")}}>
+							<Text style={[t.textBlue400]}>Har redan ett konto?</Text>
+						</TouchableOpacity>
+					</View>
 
 					<View style={[t.wFull,t.mR32, t.mT2]}>
 						<Text style={[t.textRed400, t.selfEnd, t.textMd ]}>{errorCode}</Text>
