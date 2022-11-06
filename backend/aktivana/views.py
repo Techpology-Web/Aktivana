@@ -30,7 +30,7 @@ def addAcount(request):
 					firstName = req["firstName"],   
 					lastName  = req["lastName"],
 					password  = encrypt(req["password"]),
-					email     = req["email"],
+					email     = str(req["email"]).lower(),
 					company   = company[0],
 				)
 				account.save()
@@ -110,7 +110,7 @@ def testConn(request):
 def login(request):
 	try:
 		req = extractRequest(request)
-		emp = Account.objects.filter(email=req["email"])
+		emp = Account.objects.filter(email=str(req["email"]).lower())
 		if len(emp) != 0:
 			if(verify(req["password"], emp[0].password)):
 				print(emp[0].toJson())
