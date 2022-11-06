@@ -190,3 +190,32 @@ def addCoupon(request):
 				return HttpResponse("Coupon already exists", status=409)
 		return HttpResponse("Failed to upload image", status=409)
 	return HttpResponse(status=403)
+
+def updateCoupon(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		ID = req["nameID"]
+		name = req["name"]
+		partnerId = req["partner"]
+		image = req["image"]
+		
+		query = Partner.objects.filter(id=partnerId)[0]
+		_c = query.coupon_set.get(id = ID)
+		_c.code = name
+		_c.partner = query
+		_c.expireTime = req["expire"]
+		_c.useTime = req["use"]
+
+		if(image != ""):
+			path = f"media/{str(partnerId)}_{name}.{req['ext']}"
+			res = storeImage(image, path)
+			if(res):
+				_c.picture = path
+			else: return HttpResponse("Failed to upload image", status=409)
+		
+		_c.save()
+		try:
+			return HttpResponse(status=200)
+		except:
+			return HttpResponse("Failed to update coupon data", status=409)
+	return HttpResponse(status=403)
