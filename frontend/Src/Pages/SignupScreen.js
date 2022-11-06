@@ -15,7 +15,7 @@ import MainView from '../Components/MainView';
 import InputField from '../Components/InputField';
 import Button from '../Components/Button';
 
-export default function SignupScreen() {
+export default function SignupScreen(props) {
 
 	const [viewIndex, setViewIndex] = useState(0);
 	const [errorCode, setErrorCode] = useState("");
