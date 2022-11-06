@@ -27,9 +27,9 @@ urlpatterns = [
     path('account/getCodes/', acountGetCodes),
     path('account/useCode/', useCode),
     path('partner/add/', addPartner),
-    path('code/add/', addCode),
     path('company/verify/', verifyCompanyCode),
     path('code/get/',getCodes),
     path('code/del/', adminDeleteCode),
-    path('partner/get/all', getAllPartners)
+    path('partner/get/all', getAllPartners),
+    path('code/add/', addCoupon)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
