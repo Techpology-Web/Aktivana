@@ -1,5 +1,5 @@
 import { View, Text, Image, ImageBackground, Touchable, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
@@ -19,6 +19,12 @@ export default function Login(props) {
 
     const [account, setAcount] = useState(null);
     const [error, setError] = useState("");
+
+
+    if(global.session!="undefined"){
+        props.navigation.navigate("Home");
+	}
+	
 
     function login(){
         axios.post("account/login/",{"email":email,"password":password})
