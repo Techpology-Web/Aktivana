@@ -16,6 +16,7 @@ export default function Menu(props){
     
 
 	let ScreenHeight = Dimensions.get("window").height+20;
+	let ScreenWidth = Dimensions.get("window").width;
 
     const menu = useRef(null);
 
@@ -33,7 +34,7 @@ export default function Menu(props){
     }
 
     return (
-        <View style={[t.absolute,t.top0,,{width:"100%",height:ScreenHeight}]} >
+        <View  style={[t.bgBlue300r,t.flex,t.flexRow,t.absolute,t.top0,,{width:"100%",height:ScreenHeight}]} >
             <Animatable.View ref={menu} style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B"},margin]} >
         	    <View style={[t.mT24,t.mL8]} >
                     {props.children}    
@@ -42,7 +43,7 @@ export default function Menu(props){
                     <Text style={[t.textGreen600,t.textXl]} >Logga ut</Text>
                 </TouchableOpacity>
       	    </Animatable.View>
-            
+            <TouchableOpacity onPress={()=>{setVisible(!show)}}  style={{backgroundColor:"#ffffff00",height:ScreenHeight,width:ScreenWidth-280}} ></TouchableOpacity>
             <TouchableOpacity style={[t.absolute,t.top0,t.text2xl,t.textWhite,t.m2]} onPress={()=>setVisible(!show)} ><Feather name="menu" size={50} color="white" /></TouchableOpacity>
 
         </View>
