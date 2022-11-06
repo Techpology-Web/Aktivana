@@ -1,4 +1,4 @@
-import { View, Text, Image, ImageBackground, Touchable, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ImageBackground, Touchable, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import {
 	SafeAreaView,
@@ -19,18 +19,19 @@ export default function HomeScreen(props) {
 
   	return (
 		<MainView>
-				
-
 			<Animatable.View animation="slideInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
 				<View style={{marginBottom:300}} >
 					<Text onPress={()=>{}} style={[t.textWhite,t.text6xl]} >Hello</Text>
 				</View>
 			</Animatable.View>
 		
-			<Menu navigation={props.navigation} >
-				<TouchableOpacity onPress={()=>{props.navigation.navigate("AdminCouponsPage")}} ><Text style={[t.textWhite, t.text2xl, t.fontLight, t.mB2]} >Alla rabatter</Text></TouchableOpacity>
-				<TouchableOpacity onPress={()=>{props.navigation.navigate("AdminCouponsPage")}} ><Text style={[t.textWhite, t.text2xl, t.fontLight, t.mB2]} >Användare</Text></TouchableOpacity>
-			</Menu>
+			<Menu 
+				navigation={props.navigation} 
+				paths={[
+					{path:"AdminCouponsPage",name:"Alla rabatter"},
+					{path:"AdminCouponsPage",name:"Avändare"}
+				]}
+			/>
 		
 		</MainView>
   	)
