@@ -18,14 +18,16 @@ export default function Login(props) {
     const [password, setPassword] = useState("");
 
     const [account, setAcount] = useState(null);
+    const [error, setError] = useState("");
 
     function login(){
         axios.post("account/login/",{"email":email,"password":password})
         .then(r=>{
+            setError("")
             global.session = r.data;
             props.navigation.navigate("Home")
         }).catch(error=>{
-            alert(error.response.data)
+            setError(error.response.data)
         })
     }
 
@@ -46,12 +48,13 @@ export default function Login(props) {
 
             <View style={[t.mB5,t.flex,t.flexRowReverse]} >
             
-            <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
-                <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
-            </TouchableOpacity>
-            
-            <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
+                <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
+                    <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
+                </TouchableOpacity>
+                
+                <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
             </View>
+            <Text style={[t.textRight,t.textRed700,t.fontLight,t.textSm]}>{error}</Text>
 
             <Button onPress={login} title="Logga in" ></Button>
             </View>
