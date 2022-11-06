@@ -20,7 +20,8 @@ export default function Login(props) {
     const [account, setAcount] = useState(null);
     const [error, setError] = useState("");
 
-	if(global.session!="undefined"){
+
+    if(global.session!="undefined"){
         props.navigation.navigate("Home");
 	}
 	
