@@ -24,7 +24,7 @@ export default function Menu(props){
         if(value){
             menu.current.transitionTo( { marginHorizontal : -300 } );
         }else{
-            menu.current.transitionTo( { marginHorizontal : -10 } );
+            menu.current.transitionTo( { marginHorizontal : -15 } );
         }
         setShow(value);
     }
