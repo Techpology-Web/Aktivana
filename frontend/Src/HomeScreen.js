@@ -10,6 +10,7 @@ import {
 import Button from './Components/Button';
 import {t} from "react-native-tailwindcss"
 import InputField from './Components/InputField';
+import TextInputField from './Components/TextInputField';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from "axios";
 import { Dimensions } from 'react-native';
@@ -31,7 +32,9 @@ export default function HomeScreen() {
           <View style={[t.mX12]} >
 
             <InputField placeholder="Din E-mail" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></InputField>
-            <InputField></InputField>
+            
+            <TextInputField></TextInputField>
+
             <Button title="Logga in" ></Button>
           </View>
           
