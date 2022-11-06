@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.utils import extractRequest, encrypt, verify
-from aktivana.models import Company, Acount, Partner, Coupon
+from aktivana.models import Company, Account, Partner, Coupon
 from django.http import HttpResponse
 # Create your views here.
 import json
@@ -27,15 +27,15 @@ def addAcount(request):
 	try:
 		company = Company.objects.filter(signupCode=req["signupCode"])
 		if len(company) != 0:
-			if len(Acount.objects.filter(email=req["email"])) <= 0:
-				acount  = Acount(
+			if len(Account.objects.filter(email=req["email"])) <= 0:
+				account  = Account(
 					firstName = req["firstName"],   
 					lastName  = req["lastName"],
 					password  = encrypt(req["password"]),
 					email     = req["email"],
 					company   = company[0],
 				)
-				acount.save()
+				account.save()
 				return HttpResponse("success",status=200)
 			else:
 				return HttpResponse("User with this email already exists",status=409)
@@ -47,10 +47,10 @@ def addAcount(request):
 def acountGetCodes(request):
 	try:
 		req = extractRequest(request)
-		acount = Acount.objects.get(pk=req["id"])
-		coupons = acount.company.activeCoupons.all()
+		account = Account.objects.get(pk=req["id"])
+		coupons = account.company.activeCoupons.all()
 		codesJ = []
-		usedCoupons = json.loads(acount.usedCoupons)
+		usedCoupons = json.loads(account.usedCoupons)
 		for coupon in coupons:
 			if coupon.pk not in usedCoupons:
 				codesJ.append(coupon.toJson())
@@ -77,14 +77,14 @@ def useCode(request):
 	try:
 		req = extractRequest(request)
 
-		acount = Acount.objects.get(pk=req["acountId"])        
-		usedcodes = json.loads(acount.usedCoupons)
+		account = Account.objects.get(pk=req["acountId"])        
+		usedcodes = json.loads(account.usedCoupons)
 
 		coupon = Coupon.objects.get(pk=req["codeId"])
 		usedcodes.append(coupon.pk)
 
-		acount.usedCoupons = json.dumps(usedcodes)
-		acount.save()
+		account.usedCoupons = json.dumps(usedcodes)
+		account.save()
 
 		return HttpResponse("sucess",status = 200)
 	except Exception as e:
@@ -114,7 +114,7 @@ def testConn(request):
 def login(request):
 	try:
 		req = extractRequest(request)
-		emp = Acount.objects.filter(email=req["email"])
+		emp = Account.objects.filter(email=req["email"])
 		if len(emp) != 0:
 			if(verify(req["password"], emp[0].password)):
 				print(emp[0].toJson())
