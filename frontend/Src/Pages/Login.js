@@ -29,7 +29,7 @@ export default function Login(props) {
 
   return (
    <MainView>
-    <Animatable.View animation="">
+    <Animatable.View animation="fadeInDown">
 
       <View style={[t.mX8]} >
         <View style={[t.wFull,t.itemsCenter,t.mB5]} >
