@@ -104,7 +104,7 @@ export default function SignupScreen() {
 	{
 		const done = () =>
 		{
-			axios.post("acount/add/", {
+			axios.post("account/add/", {
 				signupCode: inviteCode,
 				firstName: firstName,
 				lastName: lastName,

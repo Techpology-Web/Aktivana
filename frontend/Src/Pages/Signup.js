@@ -24,7 +24,7 @@ export default function Signup(props) {
 		if(email != "" && password != "" && firstName != "" && lastName != "" && signupCode != ""){
 			setError("") // reset error
 			//post ssignup
-			axios.post("acount/add",{
+			axios.post("account/add",{
 				"firstName"	 : firstName,
 				"lastName"	 : lastName,
 				"email"		 : email,

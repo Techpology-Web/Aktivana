@@ -17,10 +17,10 @@ export default function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [acount, setAcount] = useState(null);
+    const [account, setAcount] = useState(null);
 
     function login(){
-        axios.post("acount/login/",{"email":email,"password":password})
+        axios.post("account/login/",{"email":email,"password":password})
         .then(r=>{
             global.session = r.data;
             props.navigation.navigate("Home")
