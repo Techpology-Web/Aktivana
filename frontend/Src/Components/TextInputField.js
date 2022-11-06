@@ -1,22 +1,25 @@
-import { View, Text,TextInput, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import {
-	SafeAreaView,
-	SafeAreaProvider,
-	SafeAreaInsetsContext,
-	useSafeAreaInsets,
-	initialWindowMetrics,
-} from 'react-native-safe-area-context';
-import axios from 'axios';
+import { View,TextInput, Touchable, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+
 import {t} from "react-native-tailwindcss"
-import * as Animatable from 'react-native-animatable';
 
 export default function TextInputField(props) {
+	/*
+		showText is so when the user pressed the key they can toogle
+		to see password or not
+	*/
+	const [showText,setShowText] = useState(props.password)
+
+	function iconPress(){
+		if(props.password){
+			setShowText(!showText);
+		}
+	}
 
     return (
-		<View style={[t.border, t.p2, t.bgWhite, t.roundedLg,t.h12,t.justifyCenter,t.mY2]} >
-			<TextInput placeholder='Din E-mal' />
-			{(props.icon)?props.icon:""}
+		<View style={[t.border,t.pR3, t.bgWhite, t.roundedLg,t.h12,t.justifyCenter,t.itemsCenter,t.mY3,t.flex,t.flexRow]} >
+			<TextInput secureTextEntry={showText} onChangeText={props.onChangeText} style={[{width:"93%",height:"100%"},t.pX2]} placeholder={props.placeholder} />
+			<TouchableOpacity onPress={()=>{iconPress()}} >{(props.icon)?props.icon:""}</TouchableOpacity>
 		</View>
 	)
 

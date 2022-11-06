@@ -4,9 +4,9 @@ import { t } from "react-native-tailwindcss";
 
 export default function InputField(props) {
 	return (
-		<View style={[t.wFull, t.mT8, t.flexRow, t.justifyCenter]}>
+		<View style={[t.wFull,t.mT8, t.flexRow, t.justifyCenter]}>
 			<TextInput
-				style={[{height: 45}, t.mL8, t.bgWhite, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, paddingLeft: 20}, t.wFull]}
+				style={[{height: 45}, t.bgWhite, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, paddingLeft: 20}, t.w4_6]}
 				placeholder={props.placeholder}
 				onChangeText={(props.val)?props.val:()=>{}}
                 secureTextEntry={props.password}
