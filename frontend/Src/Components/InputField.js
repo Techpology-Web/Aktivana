@@ -4,7 +4,7 @@ import { t } from "react-native-tailwindcss";
 
 export default function InputField(props) {
 	return (
-		<View style={[t.mT8, t.flexRow, t.justifyCenter]}>
+		<View style={[t.mT8, t.flexRow, t.justifyCenter, props.style]}>
 			<TextInput
 				style={[{height: 45}, t.bgWhite, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5, paddingLeft: 20}, t.w4_6]}
 				placeholder={props.placeholder}

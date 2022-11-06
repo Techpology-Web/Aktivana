@@ -20,8 +20,6 @@ def addCompany(request):
 	except Exception as e:
 		return HttpResponse(e.__str__(),status=400)    
 
-
-
 def addAcount(request):
 	req = extractRequest(request)
 	try:
@@ -57,7 +55,7 @@ def acountGetCodes(request):
 		return HttpResponse(json.dumps(codesJ),status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
-		
+
 def addCode(request):
 	try:
 		req = extractRequest(request)
@@ -106,10 +104,8 @@ def addPartner(request):
 	except Exception as e:
 		return HttpResponse(e,status = 400)
 
-# Create your views here.
 def testConn(request):
 	return HttpResponse(200)
-
 
 def login(request):
 	try:
@@ -126,7 +122,6 @@ def login(request):
 		return HttpResponse("sucess",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
-
 
 def getCodes(request):
     if request.method == "POST":
@@ -146,3 +141,25 @@ def verifyCompanyCode(request):
 			return HttpResponse(status=200)
 		return HttpResponse(status=500)
 	return HttpResponse(status=403)
+
+# Coupons
+
+def adminDeleteCode(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+
+		try:
+			Coupon.objects.filter(id = req["id"])[0].delete()
+			return HttpResponse(status=200)
+		except:
+			print("adminDeleteCode::views::aktivana : ERROR->(Coupon object with id{" + str(req["id"]) + "} not found)")
+			return HttpResponse(status=409)
+
+	return HttpResponse(status=403)
+
+def getAllPartners(request):
+	if(request.method == "GET"):
+		query = Partner.objects.all().values()
+		print(json.dumps(list(query)).replace("'", '"'))
+		return HttpResponse(json.dumps(list(query)).replace("'", '"'), status=200)
+	return HttpResponse(403)
