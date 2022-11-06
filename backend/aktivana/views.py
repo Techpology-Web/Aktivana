@@ -45,22 +45,19 @@ def addAcount(request):
 		return HttpResponse(e,status = 400)
 
 def acountGetCodes(request):
-    try:
-        req = extractRequest(request)
-        acount = Acount.objects.get(pk=req["id"])
-        coupons = acount.company.activeCoupons.all()
-
+	try:
+		req = extractRequest(request)
+		acount = Acount.objects.get(pk=req["id"])
+		coupons = acount.company.activeCoupons.all()
 		codesJ = []
 		usedCoupons = json.loads(acount.usedCoupons)
 		for coupon in coupons:
 			if coupon.pk not in usedCoupons:
 				codesJ.append(coupon.toJson())
-		
-
 		return HttpResponse(json.dumps(codesJ),status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
-
+		
 def addCode(request):
 	try:
 		req = extractRequest(request)

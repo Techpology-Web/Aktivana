@@ -27,5 +27,5 @@ urlpatterns = [
     path('partner/add/', addPartner),
     path('code/add/', addCode),
     path('company/verify/', verifyCompanyCode),
-
+    path('code/get/',getCodes)
 ]

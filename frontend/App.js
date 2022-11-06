@@ -21,9 +21,9 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="Home"	component={HomeScreen}/>
-				<Stack.Screen name="Signup"	component={Signup}/>
+				<Stack.Screen name="Signup"	component={SignupScreen}/>
 				<Stack.Screen name="Login"	component={Login}/>
 				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>
 			</Stack.Navigator>
