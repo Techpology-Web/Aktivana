@@ -9,6 +9,8 @@ import Signup from "./Src/Pages/Signup";
 import Login from "./Src/Pages/Login";
 import AdminCouponsPage from "./Src/Pages/Admin/CouponsPage";
 
+import SignupScreen from "./Src/Pages/SignupScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {

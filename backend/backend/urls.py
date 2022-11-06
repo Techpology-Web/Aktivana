@@ -17,17 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from aktivana.views import *
 
-from aktivana.views import testConn
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('company/add', addCompany),
-    path('acount/add', addAcount),
-    path('acount/login', login),
-    path('acount/getCodes', acountGetCodes),
-    path('acount/useCode', useCode),
-    path('partner/add', addPartner),
-    path('code/add', addCode),
-    path('code/get', getCodes),
+    path('company/add/', addCompany),
+    path('acount/add/', addAcount),
+    path('acount/login/', login),
+    path('acount/getCodes/', acountGetCodes),
+    path('acount/useCode/', useCode),
+    path('partner/add/', addPartner),
+    path('code/add/', addCode),
+    path('company/verify/', verifyCompanyCode),
 
 ]
