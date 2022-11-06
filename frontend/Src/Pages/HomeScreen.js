@@ -1,4 +1,4 @@
-import { View, Text, Image, ImageBackground, Touchable, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ImageBackground, Touchable, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import {
 	SafeAreaView,
@@ -11,20 +11,28 @@ import InputField from '../Components/InputField';
 import MainView from '../Components/MainView';
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
+import Menu from '../Components/Menu';
 
 export default function HomeScreen(props) {
 
+	const [show,setShow] = useState(false)
 
-
-  return (
-   <MainView>
-      <Animatable.View animation="fadeInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
-        <View style={[]} >
-          <Text style={[t.textWhite,t.text6xl]} >Hello</Text>
-          <Text onPress={()=>{props.navigation.navigate("AdminCouponsPage")}} style={[t.textWhite,t.text4xl]} >{"Alla Erbjudanden"}</Text>
-          <Text onPress={()=>{global.session="undefined";props.navigation.navigate("Login")}} style={[t.textWhite,t.text2xl]} >{"Logga ut"}</Text>
-        </View>
-      </Animatable.View>
-   </MainView>
-  )
+  	return (
+		<MainView>
+			<Animatable.View animation="slideInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
+				<View style={{marginBottom:300}} >
+					<Text onPress={()=>{}} style={[t.textWhite,t.text6xl]} >Hello</Text>
+				</View>
+			</Animatable.View>
+		
+			<Menu 
+				navigation={props.navigation} 
+				paths={[
+					{path:"AdminCouponsPage",name:"Alla rabatter"},
+					{path:"AdminCouponsPage",name:"Avändare"}
+				]}
+			/>
+		
+		</MainView>
+  	)
 }
