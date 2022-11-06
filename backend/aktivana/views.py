@@ -5,6 +5,14 @@ from django.http import HttpResponse
 # Create your views here.
 import json
 
+def createSignupCode():
+    import random
+    alphabet = "abcdefghijklmnopqrstuvwxyc"
+    code = ""
+    for i in range(9):
+        code += alphabet[random.randint(0, len(alphabet)-1)]
+    return code
+
 def addCompany(request):
 	req = extractRequest(request)
 	try:
@@ -12,6 +20,7 @@ def addCompany(request):
 			newCompany = Company(
 				email=req["email"],
 				password=encrypt(req["password"]),
+				signupCode=createSignupCode()
 			)
 			newCompany.save()
 			return HttpResponse(str(newCompany.__dict__).replace("'",'"'),status=200)
