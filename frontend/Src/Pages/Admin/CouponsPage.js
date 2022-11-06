@@ -40,24 +40,58 @@ export default function CouponsPage(props){
 	const [coupons,setCoupons] = useState([])
 	const [searchWord,setSearchWord] = useState("")
 
-	useEffect(()=>{
-		getPartners();
-
+	const updateCodeList = () =>
+	{
 		axios.post("code/get/").then(r=>{
-			setCoupons([])
-			
 			setCoupons(r.data)
 		}).catch(error=>{
 			alert(error.response.data)
-			setCoupons([])
 		});
+	}
+
+	useEffect(()=>{
+		updateCodeList();
+		getPartners();
 	},[])
 
-	const getCoupons = coupons.map((coupon,index) => 
+	const [isEdit, setIsEdit] = useState(false)
+	const [toEdit, setToEdit] = useState("")
+
+	const getCoupons = coupons.map((coupon,index) =>
 		(searchWord === "" || isSearched(searchWord,coupon)) ?
-		<Coupon key={index} count={index} onPress={()=>alert("set selected coupon "+JSON.stringify(coupon))} code={coupon.code} ></Coupon> :
+		<Coupon key={index} count={index} onPress={()=>{setToEdit(coupon["id"]);setIsEdit(true);setDataToUpdate(coupon);}} code={coupon.code} ></Coupon> :
 		<></>
 	);
+
+	const setDataToUpdate = (x) =>
+	{
+		//alert("set selected coupon "+JSON.stringify(x))
+		setName(x["code"])
+		setPartner(x["partner"]["id"])
+		
+		var exp = new Date(parseInt(x["expireTime"]) * 1000)
+		var dd = ""
+		var mm = ""
+		if(exp.getDate().toString().length == 1)
+		{
+			dd = "0"+exp.getDate();
+		}else{
+			dd = exp.getDate();
+		}
+		if(exp.getMonth().toString().length == 1)
+		{
+			mm = "0"+(exp.getMonth()+1)
+		}else{
+			mm = (exp.getMonth()+1);
+		}
+		exp = exp.getFullYear() + "-" + mm + "-" + dd;
+
+		setExpiry(exp)
+		setUseAmt(x["useTime"].toString())
+		setImg("")
+		setImgPath(axios.defaults.baseURL + x["picture"])
+		setIsSlideUp(true)
+	}
 
 	const [isSlideUp, setIsSlideUp] = useState(false)
 	const [name, setName] = useState("")
@@ -118,7 +152,30 @@ export default function CouponsPage(props){
 			use: useAmt
 		})
 		.then(resp=>{
-			alert(resp.data)
+			//alert(resp.data)
+			updateCodeList();
+		})
+		.catch(error=>{
+			alert(error.response.data)
+		})
+	}
+
+	const UpdateCoupon = () =>
+	{
+		var exp = new Date(expiry).getTime() / 1000
+		console.log(arrPartners[partner])
+		axios.post("code/update/", {
+			nameID: toEdit,
+			name: name,
+			partner: arrPartners[parseInt(partner)]["id"],
+			image: img,
+			ext: extension,
+			expire: exp,
+			use: useAmt
+		})
+		.then(resp=>{
+			//alert(resp.data)
+			updateCodeList();
 		})
 		.catch(error=>{
 			alert(error.response.data)
@@ -166,7 +223,7 @@ export default function CouponsPage(props){
 							</TouchableOpacity>
 						</Animatable.View>
 
-						<Button title="Klar" style={[t.mX8, t.mT2, t.mB4]} onPress={()=>{NewCoupon()}} />
+						<Button title="Klar" style={[t.mX8, t.mT2, t.mB4]} onPress={()=>{(isEdit) ? UpdateCoupon() : NewCoupon()}} />
 					</ScrollView>
 				</View>
 			</SlideUp>
@@ -184,7 +241,7 @@ export default function CouponsPage(props){
 				
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.wFull, t.hFull, t.itemsEnd, t.justifyEnd]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
-						<TouchableOpacity onPress={()=>{setName(""); setPartner(""); setImg(""); setIsSlideUp(true); setImgPath(""); setExpiry(""); setUseAmt("");}}>
+						<TouchableOpacity onPress={()=>{setName(""); setPartner(0); setImg(""); setIsSlideUp(true); setImgPath(""); setExpiry(""); setUseAmt("");setIsEdit(false)}}>
 							<Ionicons name="add" size={50} color="black" />
 						</TouchableOpacity>
 					</View>

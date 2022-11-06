@@ -31,5 +31,6 @@ urlpatterns = [
     path('code/get/',getCodes),
     path('code/del/', adminDeleteCode),
     path('partner/get/all', getAllPartners),
-    path('code/add/', addCoupon)
+    path('code/add/', addCoupon),
+    path('code/update/', updateCoupon)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
