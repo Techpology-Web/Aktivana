@@ -17,7 +17,7 @@ export default function HomeScreen(props) {
 
   return (
    <MainView>
-      <Animatable.View animation="fadeInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
+      <Animatable.View animation="slideInRight" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
         <View style={[]} >
           <Text style={[t.textWhite,t.text6xl]} >Hello</Text>
           <Text onPress={()=>{props.navigation.navigate("AdminCouponsPage")}} style={[t.textWhite,t.text4xl]} >{"Alla Erbjudanden"}</Text>
