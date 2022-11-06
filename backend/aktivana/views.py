@@ -44,23 +44,20 @@ def addAcount(request):
 	except Exception as e:
 		return HttpResponse(e,status = 400)
 
-def getCodes(request):
+def acountGetCodes(request):
 	try:
 		req = extractRequest(request)
 		acount = Acount.objects.get(pk=req["id"])
 		coupons = acount.company.activeCoupons.all()
-
 		codesJ = []
 		usedCoupons = json.loads(acount.usedCoupons)
 		for coupon in coupons:
 			if coupon.pk not in usedCoupons:
 				codesJ.append(coupon.toJson())
-		
-
 		return HttpResponse(json.dumps(codesJ),status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
-
+		
 def addCode(request):
 	try:
 		req = extractRequest(request)
@@ -129,6 +126,17 @@ def login(request):
 		return HttpResponse("sucess",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
+
+
+def getCodes(request):
+    if request.method == "POST":
+        coupons = []
+        for coupon in Coupon.objects.all():
+            coupons.append(coupon.toJson())
+
+        return HttpResponse(json.dumps(coupons))
+
+    return HttpResponse(status=403)
 
 def verifyCompanyCode(request):
 	if(request.method == "POST"):

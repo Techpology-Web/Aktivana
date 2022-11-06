@@ -20,12 +20,12 @@ export default function Login(props) {
     const [acount, setAcount] = useState(null);
 
     function login(){
-        axios.post("acount/login",{"email":email,"password":password})
+        axios.post("acount/login/",{"email":email,"password":password})
         .then(r=>{
             global.session = r.data;
             props.navigation.navigate("Home")
         }).catch(error=>{
-            alert(error)
+            alert(error.response.data)
         })
     }
 
@@ -45,9 +45,11 @@ export default function Login(props) {
             <TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
 
             <View style={[t.mB5,t.flex,t.flexRowReverse]} >
+            
             <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
                 <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
             </TouchableOpacity>
+            
             <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
             </View>
 

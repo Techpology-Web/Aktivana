@@ -22,10 +22,10 @@ urlpatterns = [
     path('company/add/', addCompany),
     path('acount/add/', addAcount),
     path('acount/login/', login),
-    path('acount/getCodes/', getCodes),
+    path('acount/getCodes/', acountGetCodes),
     path('acount/useCode/', useCode),
     path('partner/add/', addPartner),
     path('code/add/', addCode),
     path('company/verify/', verifyCompanyCode),
-
+    path('code/get/',getCodes)
 ]

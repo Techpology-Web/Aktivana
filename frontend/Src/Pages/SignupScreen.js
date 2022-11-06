@@ -35,6 +35,7 @@ export default function SignupScreen() {
 		{
 			axios.post("company/verify/", {code:inviteCode})
 			.then(resp => {
+				setErrorCode("");
 				if(resp.status != 403 && resp.status != 500)
 					setViewIndex(viewIndex + 1)
 			})
@@ -87,7 +88,7 @@ export default function SignupScreen() {
 					</View>
 
 					<View style={[t.justifyBetween, t.flexRow, t.wFull, t.pX12, t.mT4]}>
-						<TouchableOpacity onPress={()=>{setViewIndex(viewIndex - 1)}}>
+						<TouchableOpacity onPress={()=>{setViewIndex(viewIndex - 1);setErrorCode("");}}>
 							<MaterialIcons name="keyboard-arrow-left" size={60} color="white" />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={()=>{next()}}>
