@@ -13,7 +13,7 @@ export default function Menu(props){
 
     const [show,setShow] = useState(false)
 	const [margin,setMargin] = useState({ marginHorizontal : -300 })
-    
+    const [y,setY] = useState(0);
 
 	let ScreenHeight = Dimensions.get("window").height+20;
 	let ScreenWidth = Dimensions.get("window").width;
@@ -34,8 +34,18 @@ export default function Menu(props){
     }
 
     return (
-        <View  style={[t.bgBlue300r,t.flex,t.flexRow,t.absolute,t.top0,,{width:"100%",height:ScreenHeight}]} >
-            <Animatable.View ref={menu} style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B"},margin]} >
+        <View
+            style={[t.bgBlue300r,t.flex,t.flexRow,t.absolute,t.top0,,{width:"100%",height:ScreenHeight}]} 
+            onTouchStart={e=> setY(e.nativeEvent.pageY)}
+            onTouchEnd={e => {
+              if (y - e.nativeEvent.pageY > 10)
+                setVisible(!show);
+            }}>
+
+            <Animatable.View 
+                ref={menu}
+                style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B"},margin]}
+                >
         	    <View style={[t.mT24,t.mL8]} >
                     {props.children}    
                 </View>

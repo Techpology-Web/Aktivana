@@ -22,7 +22,7 @@ export default function HomeScreen(props) {
 				
 
 			<Animatable.View animation="slideInUp" style={[t.flex,t.justifyCenter,t.itemsCenter]} >
-				<View style={[t.mB24]} >
+				<View style={{marginBottom:300}} >
 					<Text onPress={()=>{}} style={[t.textWhite,t.text6xl]} >Hello</Text>
 				</View>
 			</Animatable.View>
