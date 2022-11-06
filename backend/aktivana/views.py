@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from backend.utils import extractRequest, encrypt
+from backend.utils import extractRequest, encrypt, verify
 from aktivana.models import Company, Acount, Partner, Coupon
 from django.http import HttpResponse
 # Create your views here.
@@ -119,7 +119,7 @@ def login(request):
         req = extractRequest(request)
         emp = Acount.objects.filter(email=req["email"])
         if len(emp) != 0:
-            if emp[0].password == encrypt(req["password"]):
+            if(verify(req["password"], emp[0].password)):
                 print(emp[0].toJson())
                 return HttpResponse(json.dumps(emp[0].toJson()),status=200)
             else:
