@@ -1,7 +1,8 @@
-import { ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
+import { ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
-import {t} from "react-native-tailwindcss"
+import {t} from "react-native-tailwindcss";
+import * as ImagePicker from 'expo-image-picker';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -22,6 +23,7 @@ import TextInputField from "../../Components/TextInputField";
 import SlideUp from "../../Components/SlideUp";
 import InputField from "../../Components/InputField";
 import ListSelector from "../../Components/ListSelector";
+import Button from "../../Components/Button";
 
 function Coupon(props){
 	return (
@@ -56,15 +58,15 @@ export default function CouponsPage(props){
 		<Coupon key={index} count={index} onPress={()=>alert("set selected coupon "+JSON.stringify(coupon))} code={coupon.code} ></Coupon> :
 		<></>
 	);
-		
-	const back = () =>{
-		props.navigation.goBack()
-	}
 
 	const [isSlideUp, setIsSlideUp] = useState(false)
 	const [name, setName] = useState("")
-	const [partner, setPartner] = useState("")
+	const [partner, setPartner] = useState(0)
+	const [expiry, setExpiry] = useState("")
+	const [useAmt, setUseAmt] = useState("")
 	const [img, setImg] = useState("")
+	const [imgPath, setImgPath] = useState("")
+	const [extension, setExtension] = useState("")
 
 	const [arrPartners, setArrPartners] = useState([])
 	const [arrPartnersNames, setArrPartnersNames] = useState([])
@@ -85,24 +87,87 @@ export default function CouponsPage(props){
 		})
 	}
 
+	const pickImage = async () => {
+		// No permissions request is necessary for launching the image library
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			base64: true,
+			quality: 0.7,
+		});
+
+		var z = result.uri.split("/")
+	
+		if (!result.cancelled) {
+			var ext = z[z.length - 1].split(".")[1]
+			setImg(result.base64);
+			setImgPath(result.uri)
+			setExtension(ext)
+		}
+	}
+
+	const NewCoupon = () =>
+	{
+		var exp = new Date(expiry).getTime() / 1000
+		axios.post("code/add/", {
+			name: name,
+			partner: arrPartners[parseInt(partner)]["id"],
+			image: img,
+			ext: extension,
+			expire: exp,
+			use: useAmt
+		})
+		.then(resp=>{
+			alert(resp.data)
+		})
+		.catch(error=>{
+			alert(error.response.data)
+		})
+	}
+
 	return(
 		<View style={[t.wFull, t.hFull]}>
 			
 			{(isSlideUp) ? 
 			<SlideUp>
 				<View>
-					<View style={[t.wFull, t.justifyBetween, t.flexRow, t.pY8, t.pX12, t.itemsCenter]}>
-						<Text style={[t.textWhite, t.text3xl]}>{(name == "") ? "Skapa kod" : name}</Text>
-						<TouchableOpacity onPress={()=>{setIsSlideUp(false)}}>
-							<MaterialCommunityIcons name="close-thick" size={24} color="white" />
-						</TouchableOpacity>
-					</View>
-					
-					<Text style={[t.textWhite, t.fontLight, t.textLg, t.mL16, t.mT4]}>Name</Text>
-					<InputField placeholder="name" style={[t.mT2]} />
+					<ScrollView>
+						<Animatable.View animation="fadeInUp">
+							<View style={[t.wFull, t.justifyBetween, t.flexRow, t.pY8, t.pX12, t.itemsCenter]}>
+								<Text style={[t.textWhite, t.text3xl]}>{(name == "") ? "Skapa kod" : name}</Text>
+								<TouchableOpacity style={[t.p2]} onPress={()=>{setIsSlideUp(false)}}>
+									<MaterialCommunityIcons name="close-thick" size={24} color="white" />
+								</TouchableOpacity>
+							</View>
+						</Animatable.View>
+						
+						<Animatable.View animation="fadeInUp">
+							<Text style={[t.textWhite, t.fontLight, t.textLg, t.mL16, t.mT4]}>Name</Text>
+							<InputField text={name} val={(e)=>{setName(e)}} placeholder="name" style={[t.mT2]} />
+						</Animatable.View>
 
-					<ListSelector title="Partner" vals={arrPartnersNames} val={(e)=>{setPartner(e)}} />
+						<ListSelector title="Partner" vals={arrPartnersNames} val={(e)=>{setPartner(e)}} />
 
+						<Animatable.View animation="fadeInUp" style={[t.mB4]}>
+							<Text style={[t.textWhite, t.fontLight, t.textLg, t.mL16]}>Expiry date</Text>
+							<InputField text={expiry} val={(e)=>{setExpiry(e)}} placeholder="yyyy-mm-dd" style={[t.mT2]} />
+						</Animatable.View>
+
+						<Animatable.View animation="fadeInUp" style={[t.mB4]}>
+							<Text style={[t.textWhite, t.fontLight, t.textLg, t.mL16]}>Use amount</Text>
+							<InputField text={useAmt} val={(e)=>{setUseAmt(e)}} placeholder="1" style={[t.mT2]} />
+						</Animatable.View>
+
+						<Animatable.View animation="fadeInUp">
+							<TouchableOpacity onPress={()=>{pickImage();}}>
+								<ImageBackground source={{uri: imgPath}} style={[{height: 200, backgroundColor: "#FFFFFF50"}, t.mX8, t.roundedLg, t.mT2, t.itemsCenter, t.justifyCenter]}>
+									<Text style={[t.textWhite, t.textXl, t.fontLight]}>Change image</Text>
+								</ImageBackground>
+							</TouchableOpacity>
+						</Animatable.View>
+
+						<Button title="Klar" style={[t.mX8, t.mT2, t.mB4]} onPress={()=>{NewCoupon()}} />
+					</ScrollView>
 				</View>
 			</SlideUp>
 			:
@@ -119,7 +184,7 @@ export default function CouponsPage(props){
 				
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.wFull, t.hFull, t.itemsEnd, t.justifyEnd]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
-						<TouchableOpacity onPress={()=>{setName(""); setPartner(""); setImg(""); setIsSlideUp(true)}}>
+						<TouchableOpacity onPress={()=>{setName(""); setPartner(""); setImg(""); setIsSlideUp(true); setImgPath(""); setExpiry(""); setUseAmt("");}}>
 							<Ionicons name="add" size={50} color="black" />
 						</TouchableOpacity>
 					</View>

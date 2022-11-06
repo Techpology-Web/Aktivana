@@ -2,13 +2,6 @@ from django.db import models
 import json
 # Create your models here.
 
-def createSignupCode():
-    import random
-    alphabet = "abcdefghijklmnopqrstuvwxyc"
-    code = ""
-    for i in range(9):
-        code += alphabet[random.randint(0, len(alphabet)-1)]
-    return code
 
 class Partner (models.Model):
 
@@ -56,7 +49,7 @@ class Company (models.Model):
     email         = models.TextField()
     password      = models.TextField()
     activeCoupons = models.ManyToManyField(Coupon)
-    signupCode    = models.TextField(default=createSignupCode()) # this code is neccecary for Acounts to signup
+    signupCode    = models.TextField(default="") # this code is neccecary for Acounts to signup
   
     def toJson(self):
         activecodes = []

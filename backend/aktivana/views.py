@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from backend.utils import extractRequest, encrypt, verify
+from backend.utils import extractRequest, encrypt, verify, storeImage
 from aktivana.models import Company, Account, Partner, Coupon
 from django.http import HttpResponse
 # Create your views here.
 import json
+
+def createSignupCode():
+    import random
+    alphabet = "abcdefghijklmnopqrstuvwxyc"
+    code = ""
+    for i in range(9):
+        code += alphabet[random.randint(0, len(alphabet)-1)]
+    return code
 
 def addCompany(request):
 	req = extractRequest(request)
@@ -12,6 +20,7 @@ def addCompany(request):
 			newCompany = Company(
 				email=req["email"],
 				password=encrypt(req["password"]),
+				signupCode=createSignupCode()
 			)
 			newCompany.save()
 			return HttpResponse(str(newCompany.__dict__).replace("'",'"'),status=200)
@@ -163,3 +172,30 @@ def getAllPartners(request):
 		print(json.dumps(list(query)).replace("'", '"'))
 		return HttpResponse(json.dumps(list(query)).replace("'", '"'), status=200)
 	return HttpResponse(403)
+
+def addCoupon(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		name = req["name"]
+		partnerId = req["partner"]
+		image = req["image"]
+
+		path = f"media/{str(partnerId)}_{name}.{req['ext']}"
+		res = storeImage(image, path)
+		if(res):
+			query = Partner.objects.filter(id=partnerId)[0]
+			_c = query.coupon_set.filter(code=name)
+			if(len(_c) == 0):
+				n = Coupon(
+					code = name,
+					partner = query,
+					expireTime = req["expire"],
+					useTime = req["use"],
+					picture = path
+				)
+				n.save()
+				return HttpResponse(status=200)
+			else:
+				return HttpResponse("Coupon already exists", status=409)
+		return HttpResponse("Failed to upload image", status=409)
+	return HttpResponse(status=403)
