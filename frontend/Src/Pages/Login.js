@@ -13,46 +13,48 @@ import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 export default function Login(props) {
-  const [email, setEmail] = useState("alfred@stensatter.se");
-  const [password, setPassword] = useState("password");
-  const [acount, setAcount] = useState(null);
+  
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  function login(){
-    axios.post("acount/login",{"email":email,"password":password})
-    .then(r=>{
-        global.session = r.data;
-        props.navigation.navigate("Home")
-    }).catch(error=>{
-        alert(error)
-    })
-  }
+    const [acount, setAcount] = useState(null);
 
-  return (
-   <MainView>
-    <Animatable.View animation="fadeInDown">
+    function login(){
+        axios.post("acount/login",{"email":email,"password":password})
+        .then(r=>{
+            global.session = r.data;
+            props.navigation.navigate("Home")
+        }).catch(error=>{
+            alert(error)
+        })
+    }
 
-      <View style={[t.mX8]} >
-        <View style={[t.wFull,t.itemsCenter,t.mB5]} >
-          <Image source={require('../Images/logo.png')} style={[{
-            width:253,
-            height:60,
-          }]} />
-        </View>
+    return (
+    <MainView>
+        <Animatable.View animation="fadeInDown">
 
-        <TextInputField onChangeText={setEmail} placeholder="Din E-mail"               icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
-        <TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
+        <View style={[t.mX8]} >
+            <View style={[t.wFull,t.itemsCenter,t.mB5]} >
+            <Image source={require('../Images/logo.png')} style={[{
+                width:253,
+                height:60,
+            }]} />
+            </View>
 
-        <View style={[t.mB5,t.flex,t.flexRowReverse]} >
-          <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
-            <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
-          </TouchableOpacity>
-          <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
-        </View>
+            <TextInputField onChangeText={setEmail} placeholder="Din E-mail"               icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
+            <TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
 
-        <Button onPress={login} title="Logga in" ></Button>
-        </View>
-      </Animatable.View>
+            <View style={[t.mB5,t.flex,t.flexRowReverse]} >
+            <TouchableOpacity onPress={()=>{props.navigation.navigate("Signup")}} >
+                <Text style={[t.textWhite,t.fontLight,t.textSm,t.textGreen300]}> Skapa Konto </Text>
+            </TouchableOpacity>
+            <Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>
+            </View>
 
-   </MainView>
-  )
+            <Button onPress={login} title="Logga in" ></Button>
+            </View>
+        </Animatable.View>
+
+    </MainView>
+    )
 }
