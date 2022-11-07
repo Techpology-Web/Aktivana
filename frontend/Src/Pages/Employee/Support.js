@@ -18,7 +18,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 function SupportButton(props){
     return (
         <Animatable.View animation="bounceIn" >
-            <TouchableOpacity style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
+            <TouchableOpacity onPress={props.onPress} style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
                 <View >
                     {props.icon}
                 </View>
@@ -42,8 +42,8 @@ export default function Support (props){
         <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
             <View style={[t.justifyBetween,{height:"100%"}]} >
             {(isSlideUp) ? 
-			<SlideUp>
-				<View>
+			<SlideUp close={()=>setIsSlideUp(false)} >
+                <Animatable.View animation={""} >
 					<ScrollView style={[t.p5]} >
                             <TextInputField keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Din E-mail" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
                             
@@ -55,7 +55,7 @@ export default function Support (props){
                             <Button style={{borderRadius:15,marginTop:40}} >Skicka</Button>
                         
 					</ScrollView>
-				</View>
+				</Animatable.View>
 			</SlideUp>
 			:
 			<></>
@@ -89,8 +89,8 @@ export default function Support (props){
                 </Animatable.View>
                 
                 <View style={[t.p12]} >
-                    <SupportButton icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</SupportButton>
-                    <SupportButton icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </SupportButton>
+                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</SupportButton>
+                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </SupportButton>
                 </View>
             </View>
 		</SafeAreaView>
