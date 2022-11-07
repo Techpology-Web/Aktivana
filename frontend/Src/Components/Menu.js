@@ -1,6 +1,6 @@
 
 import React, { useRef, useState } from 'react'
-import { Animated, Text,TouchableOpacity,View } from 'react-native'
+import { Animated, Text,TouchableOpacity,View, Image } from 'react-native'
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
@@ -48,7 +48,7 @@ export default function Menu(props){
 
             <Animatable.View 
                 ref={menu}
-                style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B"},margin]}
+                style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B",zIndex:10},margin]}
                  /*
                     Hej ali om du ser detta var inte arg på mig
                     Jag la till swiping för jag tyckte det var nice
@@ -60,8 +60,11 @@ export default function Menu(props){
                 if (y - e.nativeEvent.pageY > 5)
                     setVisible(!show);
                 }}>
+                <View style={[t.justifyCenter,t.itemsCenter,t.mT5]} >
+                    <Image source={require('../Images/logo.png')} style={[{width:253,height:60}]} />
+                </View>
 
-        	    <View style={[t.mT24,t.mL8]} >
+        	    <View style={[t.mT5,t.mL8]} >
                     {elements}    
                 </View>
                 
