@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "aktivana"
+    "aktivana",
+    "oneMail"
 ]
 
 MIDDLEWARE = [
@@ -143,6 +144,9 @@ ARGON_HASH_PARALLELISM = env('ARGON_HASH_PARALLELISM')
 ARGON_HASH_ROUNDS = env('ARGON_HASH_ROUNDS')
 ARGON_HASH_SALT = env('ARGON_HASH_SALT')
 ARGON_HASH_PARALLELISM = env('ARGON_HASH_PARALLELISM')
+
+ONE_EMAIL = env('ONE_EMAIL')
+ONE_PASSW = env('ONE_PASSW')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
