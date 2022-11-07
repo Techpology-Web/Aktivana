@@ -22,8 +22,8 @@ export default function Login(props) {
 
 
     if(global.session!="undefined"){
-        props.navigation.navigate("AdminHome");
-	}
+        if(global.session["type"]==1) props.navigation.navigate("AdminHome")
+        else props.navigation.navigate("EmployeeHome")	}
 	
 
     function login(){
