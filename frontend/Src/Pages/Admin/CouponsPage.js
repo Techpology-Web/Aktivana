@@ -33,7 +33,7 @@ function Coupon(props){
 
 	return (
 		<Animatable.View animation={"bounceIn"} style={[{width:110,height:110,marginHorizontal:3},t.mB3]} >
-			<TouchableOpacity onPress={props.onPress} style={[t.roundedLg,t.justifyCenter,t.p2,t.itemsCenter,{backgroundColor:"#2A2A2A",width:110,height:110}]} >
+			<TouchableOpacity onPress={props.onPress} style={[t.justifyCenter,t.p2,t.itemsCenter,{backgroundColor:"#2A2A2A",width:110,height:110, borderRadius:25}]} >
 				<Text style={[t.textLg, t.fontLight,t.textWhite]}>{props.code}</Text>
 			</TouchableOpacity>
 		</Animatable.View>
