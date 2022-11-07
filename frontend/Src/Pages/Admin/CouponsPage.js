@@ -1,4 +1,4 @@
-import { ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
+import { Dimensions, FlatList, ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import {t} from "react-native-tailwindcss";
@@ -25,11 +25,16 @@ import InputField from "../../Components/InputField";
 import ListSelector from "../../Components/ListSelector";
 import Button from "../../Components/Button";
 
+
 function Coupon(props){
+
+	let ScreenWidth = Dimensions.get("window").width+20;
+
+
 	return (
-		<Animatable.View animation={(props.count%2==0?"fadeInRight":"fadeInLeft")}>
-			<TouchableOpacity onPress={props.onPress} style={[t.bgWhite,t.roundedLg,t.h12,t.justifyCenter,t.p2,t.mB3]} >
-				<Text style={[t.textLg, t.fontLight]}>{props.code}</Text>
+		<Animatable.View animation={"bounceIn"} style={[{width:110,height:110,marginHorizontal:3},t.mB3]} >
+			<TouchableOpacity onPress={props.onPress} style={[t.roundedLg,t.justifyCenter,t.p2,t.itemsCenter,{backgroundColor:"#2A2A2A",width:110,height:110}]} >
+				<Text style={[t.textLg, t.fontLight,t.textWhite]}>{props.code}</Text>
 			</TouchableOpacity>
 		</Animatable.View>
 	);
@@ -239,7 +244,7 @@ export default function CouponsPage(props){
 					<Text style={[t.textWhite,t.text2xl]} >Alla Erbjudanden</Text>
 				</View>
 				
-				<Animatable.View animation="slideInRight" style={[t.absolute, t.wFull, t.hFull, t.itemsEnd, t.justifyEnd]}>
+				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
 						<TouchableOpacity onPress={()=>{setName(""); setPartner(0); setImg(""); setIsSlideUp(true); setImgPath(""); setExpiry(""); setUseAmt("");setIsEdit(false)}}>
 							<Ionicons name="add" size={50} color="black" />
@@ -247,14 +252,25 @@ export default function CouponsPage(props){
 					</View>
 				</Animatable.View>
 
-				<View>
+				<View style={[{height:"80%"}]} >
 					<Animatable.View animation="slideInDown">
 						<TextInputField style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}} 
 										name="search-outline" size={24} color="light-gray" />} />
 					</Animatable.View>
-					<ScrollView style={[t.pT12,t.mB12]}>
-						{(coupons.length>0)?getCoupons:<></>}
-					</ScrollView>
+					{(coupons.length>0)?
+						(<FlatList
+							scrollEnabled={true}
+							numColumns={3}
+							data={coupons}
+							renderItem={({item, index}) => (
+								(searchWord === "" || isSearched(searchWord,item)) ?
+								<Coupon key={index} count={index} onPress={()=>{setToEdit(item["id"]);setIsEdit(true);setDataToUpdate(item);}} code={item.code} ></Coupon> :
+								<></>)
+							}
+						/>):
+						<></>
+					}
+						
 				</View>
 			</SafeAreaView>
 		</View>
