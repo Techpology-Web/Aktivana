@@ -43,7 +43,7 @@ export default function Support (props){
             <View style={[t.justifyBetween,{height:"100%"}]} >
             {(isSlideUp) ? 
 			<SlideUp close={()=>setIsSlideUp(false)} >
-                <Animatable.View animation={""} >
+                <Animatable.View  >
 					<ScrollView style={[t.p5]} >
                             <TextInputField keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Din E-mail" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
                             

@@ -17,7 +17,7 @@ export default function SlideUp(props) {
   	return (
 	<View style={[t.absolute, t.wFull, t.hFull, t.bgWhite, {backgroundColor: color}, t.justifyEnd, t.z50]}>
 		<TouchableOpacity onPress={()=>{setSlide("fadeOutDownBig");setColor("rgba(14,14,14,0.0)")}} style={[{height:"36%"}]} />
-		<Animatable.View onAnimationEnd={close} animation={slide} style={[t.wFull, { height:"64%", backgroundColor: "#090909", borderTopLeftRadius: 30, borderTopRightRadius: 30}, t.flexCol ]}>
+		<Animatable.View onAnimationEnd={close} duration={500} animation={slide} style={[t.wFull,{ height:"64%", backgroundColor: "#090909", borderTopLeftRadius: 30, borderTopRightRadius: 30}, t.flexCol ]}>
 			{props.children}
 		</Animatable.View>
 	</View>
