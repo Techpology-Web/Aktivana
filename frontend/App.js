@@ -9,6 +9,7 @@ import AdminHomeScreen from "./Src/Pages/Admin/HomeScreen";
 import Signup from "./Src/Pages/Signup";
 import Login from "./Src/Pages/Login";
 import AdminCouponsPage from "./Src/Pages/Admin/CouponsPage";
+import Support from "./Src/Pages/Employee/Support";
 
 import SignupScreen from "./Src/Pages/SignupScreen";
 
@@ -21,9 +22,10 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Support" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AdminHome"			component={AdminHomeScreen}/>
 				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
+				<Stack.Screen name="Support"			component={Support}/>
 				<Stack.Screen name="Signup"				component={SignupScreen}/>
 				<Stack.Screen name="Login"				component={Login}/>
 				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>

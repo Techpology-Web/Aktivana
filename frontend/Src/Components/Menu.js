@@ -48,7 +48,7 @@ export default function Menu(props){
 
             <Animatable.View 
                 ref={menu}
-                style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B",zIndex:10},margin]}
+                style={[t.flex,t.bgBlack,t.relative,{width:300,height:ScreenHeight, backgroundColor:"#1B1B1B",zIndex:20},margin]}
                  /*
                     Hej ali om du ser detta var inte arg på mig
                     Jag la till swiping för jag tyckte det var nice
@@ -73,8 +73,8 @@ export default function Menu(props){
                 </TouchableOpacity>
 
       	    </Animatable.View>
-            <TouchableOpacity onPress={()=>{setVisible(!show)}}  style={{backgroundColor:"#ffffff00",height:ScreenHeight,width:ScreenWidth-280}} ></TouchableOpacity>
-            <TouchableOpacity style={[t.absolute,t.top0,t.text2xl,t.textWhite,t.m2]} onPress={()=>setVisible(!show)} ><Feather name="menu" size={50} color="white" /></TouchableOpacity>
+            <TouchableOpacity onPress={()=>{setVisible(!show)}}  style={{backgroundColor:"#ffffff00",height:ScreenHeight,width:ScreenWidth-280,zIndex:20}} ></TouchableOpacity>
+            <TouchableOpacity style={[t.absolute,t.top0,t.text2xl,t.textWhite,t.m2,{zIndex:10}]} onPress={()=>setVisible(!show)} ><Feather name="menu" size={50} color="white" /></TouchableOpacity>
 
         </View>
         
