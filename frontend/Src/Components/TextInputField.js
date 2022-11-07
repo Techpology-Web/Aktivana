@@ -20,10 +20,11 @@ export default function TextInputField(props) {
 
     return (
 		<View style={[t.border,t.pR3, t.bgWhite, t.roundedLg,t.h12,t.justifyCenter,t.itemsCenter,t.mY3,t.flex,t.flexRow,t.border0,style]} >
-			<TextInput 
+			<TextInput
 				secureTextEntry={showText} 
 				onChangeText={props.onChangeText} 
-				style={[{width:"93%",height:"100%"},t.pX4]} 
+				style={[{width:"93%",height:"100%"},t.pX4,((props.inputStyle)?props.inputStyle:{})]}
+				placeholderTextColor={props.placeholderTextColor?props.placeholderTextColor:"#000"} 
 				placeholder={props.placeholder} 
 				keyboardType={props.keyboardType}
 				textContentType={props.textContentType}

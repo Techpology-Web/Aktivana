@@ -52,7 +52,7 @@ export default function Login(props) {
             }]} />
             </View>
 
-            <TextInputField onChangeText={setEmail} placeholder="Din E-mail"               icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
+            <TextInputField onChangeText={setEmail} placeholder="Din E-mail"                  icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} ></TextInputField>
             <TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} ></TextInputField>
 
             <View style={[t.mB5,t.flex,t.flexRowReverse]} >

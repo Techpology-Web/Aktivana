@@ -3,18 +3,22 @@ import {t} from "react-native-tailwindcss";
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
-import { View, Text,Image } from "react-native-animatable";
+import { View, Text, Image,  } from "react-native-animatable";
 import Menu from "../../Components/Menu";
-import { TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import * as Animatable from 'react-native-animatable';
+import SlideUp from "../../Components/SlideUp";
+import TextInputField from "../../Components/TextInputField";
+import Button from "../../Components/Button";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-function Button(props){
+function SupportButton(props){
     return (
         <Animatable.View animation="bounceIn" >
-            <TouchableOpacity style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
+            <TouchableOpacity onPress={props.onPress} style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
                 <View >
                     {props.icon}
                 </View>
@@ -31,10 +35,32 @@ function Button(props){
 
 export default function Support (props){
 
+    const [isSlideUp, setIsSlideUp] = useState(true)
+
 
 	return(
         <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
             <View style={[t.justifyBetween,{height:"100%"}]} >
+            {(isSlideUp) ? 
+			<SlideUp close={()=>setIsSlideUp(false)} >
+                <Animatable.View  >
+					<ScrollView style={[t.p5]} >
+                            <TextInputField keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Din E-mail" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
+                            
+                            <View>
+                                <Text style={[t.textWhite,t.mB2,t.textLg]} > Beskriv problemet </Text>
+                                <TextInput style={[t.textWhite,t.border, t.borderWhite,{borderRadius:15,textAlignVertical: 'top'},t.p4]} placeholderTextColor="#8a8a8a" placeholder="Beskriv ditt problem" multiline={true} numberOfLines={10}/>
+                            </View>
+
+                            <Button style={{borderRadius:15,marginTop:40}} >Skicka</Button>
+                        
+					</ScrollView>
+				</Animatable.View>
+			</SlideUp>
+			:
+			<></>
+			}
+
                 <Menu
                     navigation={props.navigation} 
                     paths={[
@@ -63,8 +89,8 @@ export default function Support (props){
                 </Animatable.View>
                 
                 <View style={[t.p12]} >
-                    <Button icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</Button>
-                    <Button icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </Button>
+                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</SupportButton>
+                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </SupportButton>
                 </View>
             </View>
 		</SafeAreaView>
