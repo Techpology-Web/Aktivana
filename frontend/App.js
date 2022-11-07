@@ -4,7 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import axios, { Axios } from "axios"
 
-import HomeScreen from "./Src/Pages/HomeScreen";
+import EmployeeHomeScreen from "./Src/Pages/Employee/HomeScreen";
+import AdminHomeScreen from "./Src/Pages/Admin/HomeScreen";
 import Signup from "./Src/Pages/Signup";
 import Login from "./Src/Pages/Login";
 import AdminCouponsPage from "./Src/Pages/Admin/CouponsPage";
@@ -21,9 +22,10 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="Home"	component={HomeScreen}/>
-				<Stack.Screen name="Signup"	component={SignupScreen}/>
-				<Stack.Screen name="Login"	component={Login}/>
+				<Stack.Screen name="AdminHome"			component={AdminHomeScreen}/>
+				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
+				<Stack.Screen name="Signup"				component={SignupScreen}/>
+				<Stack.Screen name="Login"				component={Login}/>
 				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>
 			</Stack.Navigator>
 		</NavigationContainer>
