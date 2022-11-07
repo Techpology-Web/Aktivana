@@ -3,15 +3,15 @@ import React, { useState } from 'react'
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
-import Button from '../Components/Button';
+import Button from '../../Components/Button';
 import {t} from "react-native-tailwindcss"
-import TextInputField from '../Components/TextInputField';
+import TextInputField from '../../Components/TextInputField';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import InputField from '../Components/InputField';
-import MainView from '../Components/MainView';
+import InputField from '../../Components/InputField';
+import MainView from '../../Components/MainView';
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
-import Menu from '../Components/Menu';
+import Menu from '../../Components/Menu';
 
 export default function HomeScreen(props) {
 

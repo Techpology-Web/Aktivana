@@ -22,16 +22,19 @@ export default function Login(props) {
 
 
     if(global.session!="undefined"){
-        props.navigation.navigate("Home");
+        props.navigation.navigate("AdminHome");
 	}
 	
 
     function login(){
         axios.post("account/login/",{"email":email,"password":password})
         .then(r=>{
-            setError("")
             global.session = r.data;
-            props.navigation.navigate("Home")
+            // if type = 1 the acount is a admin acount
+            // then we send to admin home
+            if(r.data["type"]==1) props.navigation.navigate("AdminHome")
+            else props.navigation.navigate("EmployeeHome")
+
         }).catch(error=>{
             setError(error.response.data)
         })
