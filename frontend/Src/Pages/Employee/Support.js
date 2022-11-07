@@ -8,21 +8,24 @@ import Menu from "../../Components/Menu";
 import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+
+import * as Animatable from 'react-native-animatable';
+
 function Button(props){
-
-
     return (
-        <TouchableOpacity style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
-            <View >
-                {props.icon}
-            </View>
-            <View >
-                <Text style={[t.textWhite,t.text2xl,t.textCenter]} >{props.children}</Text>
-            </View>
-            <View style={[t.opacity0]} >
-                {props.icon}
-            </View>
-        </TouchableOpacity>
+        <Animatable.View animation="bounceIn" >
+            <TouchableOpacity style={[t.border2,t.borderWhite,t.flexRow,t.p2,t.roundedFull,t.itemsCenter,t.justifyEvenly,t.mB4]} >
+                <View >
+                    {props.icon}
+                </View>
+                <View >
+                    <Text style={[t.textWhite,t.text2xl,t.textCenter]} >{props.children}</Text>
+                </View>
+                <View style={[t.opacity0]} >
+                    {props.icon}
+                </View>
+            </TouchableOpacity>
+        </Animatable.View>
     )
 }
 
@@ -41,7 +44,7 @@ export default function Support (props){
                         {path:"AdminCouponsPage",name:"Om oss"},
                     ]}
                 />
-                <View>
+                <Animatable.View animation="bounceInUp" >
                     <View style={[t.flexRowReverse,t.p2]} >
                         <Image source={require('../../Images/logo.png')} style={[{
                             width:253*0.9,
@@ -57,14 +60,13 @@ export default function Support (props){
                                 Har du frågor, funderingar eller feedback som du vill dela med oss, tveka inte på att höra av er till oss
                             </Text>
                     </View>
-                </View>
+                </Animatable.View>
                 
                 <View style={[t.p12]} >
                     <Button icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</Button>
-                    <Button icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar</Button>
+                    <Button icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </Button>
                 </View>
             </View>
-            
 		</SafeAreaView>
 	)
 }

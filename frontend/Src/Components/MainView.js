@@ -12,15 +12,15 @@ export default function MainView (props){
 
     return (
         <SafeAreaView style={[t.bgGray900]} >
-        <View  >
-          <ImageBackground source={require('../Images/background.png')} style={[{
-            width: "100%",
-            height: ScreenHeight,
-            justifyContent:'center' 
-          }]} >
-            {props.children}
-            </ImageBackground>
-        </View>
+          <View  >
+            <ImageBackground source={require('../Images/background.png')} style={[{
+              width: "100%",
+              height: ScreenHeight,
+              justifyContent:'center' 
+            }]} >
+              {props.children}
+              </ImageBackground>
+          </View>
         </SafeAreaView>
     )
 }
