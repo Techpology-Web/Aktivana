@@ -28,6 +28,7 @@ export default function TextInputField(props) {
 				placeholder={props.placeholder} 
 				keyboardType={props.keyboardType}
 				textContentType={props.textContentType}
+				defaultValue={props.default}
 				/>
 			
 			<TouchableOpacity onPressOut={()=>{iconPress(true)}} onPressIn={()=>{iconPress(false)}} >{(props.icon)?props.icon:""}</TouchableOpacity>

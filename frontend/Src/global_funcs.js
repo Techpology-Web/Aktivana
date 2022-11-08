@@ -7,7 +7,10 @@
 export function isSearched(searchWord,product){
     //prop should have searched word and which product to check
     //console.log(product)
-    if(searchWord == ""){return true} //if they havent searched for anything
+
+    return JSON.stringify(product).includes(searchWord);
+
+    /* if(searchWord == ""){return true} //if they havent searched for anything
     for(const atribute in product){
       if(typeof(product[atribute])=="string"){
         if(product[atribute].toLowerCase().includes(searchWord.toLowerCase())){
@@ -27,6 +30,6 @@ export function isSearched(searchWord,product){
             
         }
       }  
-    }
-    return false;
+    } 
+    return false;*/
   }

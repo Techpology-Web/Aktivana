@@ -16,7 +16,7 @@ export default function ListSelector(props) {
 	const showOptions = () =>
 	{
 		const listVals = vals.map((v, index)=>
-			<TouchableOpacity onPress={()=>{setVal(index); setIsDropDown(false); props.val(index);}}>
+			<TouchableOpacity key={index} onPress={()=>{setVal(index); setIsDropDown(false); props.val(index);}}>
 				<Text style={[t.mX4, t.mY4]}>{v}</Text>
 			</TouchableOpacity>
 		);
