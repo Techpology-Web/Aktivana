@@ -60,8 +60,12 @@ export default function Menu(props){
                 if (y - e.nativeEvent.pageY > 5)
                     setVisible(!show);
                 }}>
-                <View style={[t.justifyCenter,t.itemsCenter,t.mT5]} >
-                    <Image source={require('../Images/logo.png')} style={[{width:253,height:60}]} />
+                <View style={[t.justifyCenter,t.itemsCenter,t.mT2]} >
+                    <Image source={require('../Images/logo.png')} style={[{
+                              width: 321*0.7,
+                              height: 113*0.7,
+                              resizeMode: 'contain'                       
+                        }]} />
                 </View>
 
         	    <View style={[t.mT5,t.mL8]} >

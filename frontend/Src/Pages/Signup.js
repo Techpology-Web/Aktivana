@@ -47,10 +47,11 @@ export default function Signup(props) {
 		<MainView>
 			<Animatable.View animation="fadeInUp">
 				<View style={[t.mX8]} >
-					<View style={[t.wFull,t.itemsCenter,t.mB5]} >
+					<View style={[t.wFull,t.itemsCenter]} >
 						<Image source={require('../Images/logo.png')} style={[{
-						width:253,
-						height:60,
+							width: 321*0.9,
+							height: 113*0.9,
+							resizeMode: 'contain',
 						}]} />
 					</View>
 

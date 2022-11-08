@@ -164,7 +164,7 @@ export default function SignupScreen(props) {
 
 	return (
 		<MainView>
-				<Image source={require('../Images/logo.png')} style={[{ width:253, height:60 }, t.selfCenter, t.mB8]} />
+				<Image source={require('../Images/logo.png')} style={[{ width: 321*0.8, height: 113*0.8, resizeMode: 'contain', }, t.selfCenter, t.mB0]} />
 				<View style={[t.itemsCenter, t.justifyCenter]}>
 					<ScrollView style={[t.wFull]}>
 						{viewEntryCode()}
