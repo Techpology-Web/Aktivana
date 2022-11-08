@@ -22,7 +22,7 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Support" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AdminHome"			component={AdminHomeScreen}/>
 				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
 				<Stack.Screen name="Support"			component={Support}/>
