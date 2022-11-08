@@ -89,3 +89,8 @@ class Account (models.Model):
                 "id"             : self.pk
             })
         )
+
+class PasswordReset(models.Model):
+    value  = models.TextField(default="", null=False)
+    target = models.ForeignKey(Account, on_delete=models.CASCADE)
+    expire = models.TextField(default="", null=False)

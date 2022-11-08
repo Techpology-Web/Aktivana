@@ -1,5 +1,6 @@
 from passlib.hash import argon2
 from django.conf import settings
+import random
 import base64
 import json
 
@@ -21,3 +22,9 @@ def storeImage(_data, _path):
 	except:
 		print("storeImage::utils : Error->('Could not store image' + path{" + _path +"})")
 		return False
+
+def genVerificationCode(_len = 5):
+	ret = ""
+	for i in range(_len):
+		ret += str(random.randint(0,9))
+	return ret
