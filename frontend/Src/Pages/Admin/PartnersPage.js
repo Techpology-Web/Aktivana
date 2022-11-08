@@ -43,22 +43,22 @@ export default function PartnersPage(props){
 	const [searchWord,setSearchWord] = useState("")
 	const [isSlideUp, setIsSlideUp] = useState(false)
 	const [selectedPartner, setSelectedPartner] = useState({})
+	const [isEdit, setIsEdit] = useState(false)
     
 
-	const updateCodeList = () =>
-	{
-		axios.get("partner/get/all").then(r=>{
-			setCoupons(r.data)
-		}).catch(error=>{
-			alert(error.response.data)
-		});
-	}
+    const fetchPartners = () =>{
+        axios.get("partner/get/all").then(r=>{
+            setCoupons(r.data)
+        }).catch(error=>{
+            alert(error.response.data)
+        });
+    }
 
 	useEffect(()=>{
-		updateCodeList();
-	},[])
+        fetchPartners() 
+    },[])
 
-    const edit = () =>
+    const add = () =>
     {
         setSelectedPartner({
             name:"",
@@ -67,9 +67,41 @@ export default function PartnersPage(props){
             adress:"",
             website:"",
         })
-        setIsSlideUp(true)
+        setIsSlideUp(true);
+        setIsEdit(false);
     }
 
+    const addOrUpdate = () =>{
+        setIsSlideUp(false)
+
+        if(isEdit){
+            axios.post("partner/update/",selectedPartner).then(r=>{
+                //alert(r.data)
+                fetchPartners()
+            }).catch(e=>{
+                //alert(e.response.data)
+            })
+        }else{
+            axios.post("partner/add/",selectedPartner).then(r=>{
+                //alert(r.data)
+                fetchPartners()
+            }).catch(e=>{
+                //alert(e.response.data)
+            })
+        }
+    }
+    const remove = () =>{
+        setIsSlideUp(false)
+        axios.post("partner/remove/",{"id":selectedPartner.id}).then(r=>{
+            alert(r.data)
+            fetchPartners()
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+    const updateSelectedParner = (key,value) =>{
+        selectedPartner[key]= value
+    }
 	return(
 		<View style={[t.wFull, t.hFull]}>
 			
@@ -77,16 +109,24 @@ export default function PartnersPage(props){
 			<SlideUp close={()=>{setIsSlideUp(false)}}>
 				<View>
 					<ScrollView>
-                        <View style={[t.wFull, t.justifyBetween, t.flexRow, t.pY5, t.pX12, t.itemsCenter]}>
+                        <View style={[t.wFull,t.pT5,t.pX5]}>
                             <Text style={[t.textWhite, t.text3xl]}>Skapa ny partner</Text>
+                            {(isEdit)?<Button onPress={()=>props.navigation.navigate("AdminCouponsPage",{passPartner:selectedPartner})} >Rabatter</Button>:<></>}
+                            
                         </View>
-                        <View style={[t.p5]} >
-                            <TextInputField default={selectedPartner.name} keyboardType="default" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Namn" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="label-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.phone} keyboardType="phone-pad" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Telefonnummer" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="phone-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.email} keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras E-mail" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.adress} keyboardType="default" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Adress" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="post-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.website} keyboardType="url" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Hemsida" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="web" size={24} color="#fff" />} ></TextInputField>
-                            <Button>Skapa</Button>
+                        <View style={[t.pX5]} >
+                            <TextInputField default={selectedPartner.name}    onChangeText={e=>updateSelectedParner("name",e)}    keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Namn"          style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="label-outline" size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedPartner.phone}   onChangeText={e=>updateSelectedParner("phone",e)}   keyboardType="phone-pad"     inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Telefonnummer" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="phone-outline" size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedPartner.email}   onChangeText={e=>updateSelectedParner("email",e)}   keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras E-mail"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedPartner.adress}  onChangeText={e=>updateSelectedParner("adress",e)}  keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Adress"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="post-outline"  size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedPartner.website} onChangeText={e=>updateSelectedParner("website",e)} keyboardType="url"           inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Hemsida"       style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="web"           size={24} color="#fff" />} ></TextInputField>
+                            {(!isEdit)?<Button onPress={()=>addOrUpdate()} >Skapa</Button>:(
+                                <View style={[t.flexRow]} >
+                                    <Button style={{marginLeft: 0,flex:1,paddingRight: 10}} onPress={()=>addOrUpdate()} >Skapa</Button>
+                                    <Button style={{marginLeft: 10,flex:1,paddingRight: 10}} onPress={()=>remove()} >Tabort</Button>
+                                </View>
+                            )}
+                            
                         </View>
                         
 					</ScrollView>
@@ -106,7 +146,7 @@ export default function PartnersPage(props){
 				
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
-						<TouchableOpacity onPress={edit}>
+						<TouchableOpacity onPress={add}>
 							<Ionicons name="add" size={50} color="black" />
 						</TouchableOpacity>
 					</View>
@@ -124,7 +164,7 @@ export default function PartnersPage(props){
 							data={coupons}
 							renderItem={({item, index}) => (
 								(searchWord === "" || isSearched(searchWord,item)) ?
-								<Coupon key={index} count={index} onPress={()=>{setIsSlideUp(true);setSelectedPartner(item)}} code={item.name} ></Coupon> :
+								<Coupon key={index} count={index} onPress={()=>{setIsSlideUp(true);setSelectedPartner(item);setIsEdit(true)}} code={item.name} ></Coupon> :
 								<></>)
 							}
 						/>):

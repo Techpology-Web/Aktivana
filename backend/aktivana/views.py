@@ -228,3 +228,29 @@ def updateCoupon(request):
 		except:
 			return HttpResponse("Failed to update coupon data", status=409)
 	return HttpResponse(status=403)
+
+def updatePartner(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		
+		partner = Partner.objects.filter(pk=req["id"])[0]
+		
+		partner.name = req["name"]
+		partner.email = req["email"]
+		partner.phone  =  req["phone"]
+		partner.adress  =  req["adress"]
+		partner.website  =  req["website"]
+
+		partner.save()
+		return HttpResponse("Partner was updated",status=200)
+
+	return HttpResponse(status=403)
+
+def removePartner(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		partner = Partner.objects.filter(pk=req["id"])[0]
+		name = partner.name
+		partner.delete()
+		return HttpResponse(name+" was deleted",status=200)
+	return HttpResponse(status=403)

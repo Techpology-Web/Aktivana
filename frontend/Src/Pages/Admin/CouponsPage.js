@@ -44,6 +44,13 @@ export default function CouponsPage(props){
 
 	const [coupons,setCoupons] = useState([])
 	const [searchWord,setSearchWord] = useState("")
+	
+	let {passPartner} = typeof(props.route.params)!="undefined"?props.route.params:""
+	/* try{
+		passPartner = props.navigation.getParam("passPartner")
+	}catch(e){} */
+	
+	
 
 	const updateCodeList = () =>
 	{
@@ -57,6 +64,9 @@ export default function CouponsPage(props){
 	useEffect(()=>{
 		updateCodeList();
 		getPartners();
+		if(typeof(passPartner) != "undefined"){
+			setSearchWord(passPartner.name)
+		}
 	},[])
 
 	const [isEdit, setIsEdit] = useState(false)
@@ -254,7 +264,7 @@ export default function CouponsPage(props){
 
 				<View style={[{height:"80%"}]} >
 					<Animatable.View animation="slideInDown">
-						<TextInputField style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}} 
+						<TextInputField default={(passPartner)?passPartner.name:""} style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}} 
 										name="search-outline" size={24} color="light-gray" />} />
 					</Animatable.View>
 					{(coupons.length>0)?

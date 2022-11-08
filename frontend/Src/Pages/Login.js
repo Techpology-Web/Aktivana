@@ -20,7 +20,6 @@ export default function Login(props) {
     const [account, setAcount] = useState(null);
     const [error, setError] = useState("");
 
-    alert(JSON.stringify((global.session["type"])))
     if(typeof(global.session) != "undefined"){
         if(global.session["type"]==1) props.navigation.navigate("AdminHome")
         else props.navigation.navigate("EmployeeHome")	
@@ -33,7 +32,6 @@ export default function Login(props) {
             global.session = r.data;
             // if type = 1 the acount is a admin acount
             // then we send to admin home
-            alert(typeof(r.data["type"]))
             if(r.data["type"]===1) props.navigation.navigate("AdminHome")
             else props.navigation.navigate("EmployeeHome")
 
