@@ -222,7 +222,7 @@ export default function CouponsPage(props){
 
 						<Animatable.View animation="fadeInUp">
 							<TouchableOpacity onPress={()=>{pickImage();}}>
-								<ImageBackground source={{uri: imgPath}} style={[{height: 200, backgroundColor: "#FFFFFF50"}, t.mX8, t.roundedLg, t.mT2, t.itemsCenter, t.justifyCenter]}>
+								<ImageBackground source={imgPath!=""?{uri: imgPath}:{}} style={[{height: 200, backgroundColor: "#FFFFFF50"}, t.mX8, t.roundedLg, t.mT2, t.itemsCenter, t.justifyCenter]}>
 									<Text style={[t.textWhite, t.textXl, t.fontLight]}>Change image</Text>
 								</ImageBackground>
 							</TouchableOpacity>
