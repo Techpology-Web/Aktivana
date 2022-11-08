@@ -171,9 +171,11 @@ def adminDeleteCode(request):
 
 def getAllPartners(request):
 	if(request.method == "GET"):
-		query = Partner.objects.all().values()
-		print(json.dumps(list(query)).replace("'", '"'))
-		return HttpResponse(json.dumps(list(query)).replace("'", '"'), status=200)
+		query = Partner.objects.all()
+		parners = []
+		for p in query:
+			parners.append(p.toJson())
+		return HttpResponse(json.dumps(parners), status=200)
 	return HttpResponse(403)
 
 def addCoupon(request):
