@@ -2,6 +2,7 @@ import * as React from "react";
 import {Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as NavigationBar from 'expo-navigation-bar';
 import axios, { Axios } from "axios"
 
 import EmployeeHomeScreen from "./Src/Pages/Employee/HomeScreen";
@@ -17,8 +18,13 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 	// axios.defaults.baseURL = 'http://api.aktivana.com/';
-	axios.defaults.baseURL = 'http://192.168.10.238:8000/';
-	//axios.defaults.baseURL = 'http://192.168.1.189:8000/';
+	//axios.defaults.baseURL = 'http://192.168.10.238:8000/';
+	axios.defaults.baseURL = 'http://192.168.1.189:8000/';
+
+	NavigationBar.setPositionAsync("absolute");
+	NavigationBar.setVisibilityAsync("hidden");
+	NavigationBar.setBackgroundColorAsync("#00000000");
+	NavigationBar.setBehaviorAsync('overlay-swipe')
 
 	return (
 		<NavigationContainer>
