@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from backend.utils import extractRequest, encrypt, verify, storeImage
-from aktivana.models import Company, Account, Partner, Coupon
+from backend.utils import extractRequest, encrypt, verify, storeImage, genVerificationCode
+from aktivana.models import Company, Account, Partner, Coupon, PasswordReset
 from django.http import HttpResponse
+from oneMail.views import emailHandler
 # Create your views here.
+from datetime import datetime
+from datetime import timedelta
 import json
 
 def createSignupCode():
@@ -253,4 +256,27 @@ def removePartner(request):
 		name = partner.name
 		partner.delete()
 		return HttpResponse(name+" was deleted",status=200)
+	return HttpResponse(status=403)
+	
+def forgotPassword(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		
+		email	= req["email"]
+		value	= genVerificationCode()
+		expire	= (datetime.now() + timedelta(minutes=5)).strftime('%Y-%m-%d %H:%M:%S')
+		print(expire)
+
+		_ret = PasswordReset(
+			value=value,
+			target=Account.objects.get(email=email),
+			expire=expire
+		)
+
+		_ret.save()
+
+		#eh	= emailHandler()
+		#eh.sendEmail("info@techpology.com", "asså", "<p>Tja fan</p>")
+
+		return HttpResponse(status=200)
 	return HttpResponse(status=403)
