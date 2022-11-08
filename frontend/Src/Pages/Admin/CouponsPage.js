@@ -65,7 +65,7 @@ export default function CouponsPage(props){
 		updateCodeList();
 		getPartners();
 		if(typeof(passPartner) != "undefined"){
-			setSearchWord(passPartner.name)
+			setSearchWord(JSON.stringify(passPartner))
 		}
 	},[])
 
