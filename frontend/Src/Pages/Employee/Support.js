@@ -35,8 +35,9 @@ function SupportButton(props){
 
 export default function Support (props){
 
-    const [isSlideUp, setIsSlideUp] = useState(true)
-
+    const [isSlideUp, setIsSlideUp] = useState(false)
+    const [mode, setMode] = useState("")
+    
 
 	return(
         <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
@@ -44,7 +45,8 @@ export default function Support (props){
             {(isSlideUp) ? 
 			<SlideUp close={()=>setIsSlideUp(false)} >
                 <Animatable.View  >
-					<ScrollView style={[t.p5]} >
+                    <Text style={[t.textWhite,t.text3xl,t.textCenter,t.mT2]} >{mode}</Text>
+					<ScrollView style={[t.pX5]} >
                             <TextInputField keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Din E-mail" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
                             
                             <View>
@@ -89,8 +91,8 @@ export default function Support (props){
                 </Animatable.View>
                 
                 <View style={[t.p12]} >
-                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</SupportButton>
-                    <SupportButton onPress={()=>{setIsSlideUp(true)}} icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </SupportButton>
+                    <SupportButton onPress={()=>{setIsSlideUp(true);setMode("Hjälp")}} icon={<MaterialIcons name="support-agent" size={40} color="white" />} >Support</SupportButton>
+                    <SupportButton onPress={()=>{setIsSlideUp(true);setMode("Rapportera bugg")}} icon={<Ionicons name="bug-outline"        size={40} color="white" />} >Buggar </SupportButton>
                 </View>
             </View>
 		</SafeAreaView>
