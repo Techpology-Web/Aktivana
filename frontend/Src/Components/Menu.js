@@ -64,7 +64,7 @@ export default function Menu(props){
                     <Image source={require('../Images/logo.png')} style={[{
                               width: 321*0.7,
                               height: 113*0.7,
-                              resizeMode: 'contain'                       
+                              resizeMode: 'contain'
                         }]} />
                 </View>
 
