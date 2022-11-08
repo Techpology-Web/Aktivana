@@ -24,7 +24,7 @@ export default function TextInputField(props) {
 				secureTextEntry={showText} 
 				onChangeText={props.onChangeText} 
 				style={[{width:"93%",height:"100%"},t.pX4,((props.inputStyle)?props.inputStyle:{})]}
-				placeholderTextColor={props.placeholderTextColor?props.placeholderTextColor:"#000"} 
+				placeholderTextColor={props.placeholderTextColor?props.placeholderTextColor:"#919191"} 
 				placeholder={props.placeholder} 
 				keyboardType={props.keyboardType}
 				textContentType={props.textContentType}
