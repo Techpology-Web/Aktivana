@@ -2,8 +2,7 @@ import { View, Text, TextInput } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { t } from "react-native-tailwindcss"
 
-export default function SlicedInputField() {
-
+export default function SlicedInputField(props) {
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [value, setValue] = useState("")
 	
@@ -72,15 +71,20 @@ export default function SlicedInputField() {
 							z -= 2
 							setValue(y);
 							runRef()
+							props.value(y)
+							console.log("deleted")
 						}
 					}
 				}
+				keyboardType="number-pad"
 				onChangeText={(e)=>{
 					var y = value;
 					y += e;
 					updateValue(1);
 					setValue(y);
 					runRef()
+					props.value(y)
+					console.log("added")
 				}}
 				onSubmitEditing={()=>{}}
 				ref={setRef()}
@@ -111,7 +115,6 @@ export default function SlicedInputField() {
 
 	return (
 		<View>
-			<Text>SlicedInputField</Text>
 			{genInputFields(5)}
 		</View>
 	)

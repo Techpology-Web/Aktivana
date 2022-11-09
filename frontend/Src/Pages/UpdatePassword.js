@@ -3,28 +3,33 @@ import React, { useEffect, useState } from 'react'
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
-import Button from '../Components/Button';
 import {t} from "react-native-tailwindcss"
 import TextInputField from '../Components/TextInputField';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import InputField from '../Components/InputField';
-import MainView from '../Components/MainView';
-import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
-export default function ForgotPasswordScreen(props) {
+// Animations
+import * as Animatable from 'react-native-animatable';
 
-	const [email, setEmail] = useState("")
+// Components
+import Button from '../Components/Button';
+import InputField from '../Components/InputField';
+import MainView from '../Components/MainView';
+import SlicedInputField from '../Components/SlicedInputField';
 
-	const sendVerification = () =>
+export default function UpdatePassword(props) {
+	const [passw, setPassw] = useState("")
+
+	const update = () =>
 	{
-		axios.post("account/forgot/", {
-			"email": email
+		axios.post("account/forgot/update/", {
+			"email": global.recoverEmail,
+			"passw": passw
 		})
-		.then(resp=>{
+		.then(resp => {
 			if(resp.status != 403 && resp.status != 409){
-				global.recoverEmail = email
-				props.navigation.navigate("VerifyForgotPassword")
+				global.recoverEmail = "";
+				props.navigation.navigate("Login");
 			}
 		})
 		.catch(error=>{
@@ -44,14 +49,10 @@ export default function ForgotPasswordScreen(props) {
 						}]} />
 					</View>
 
-					<TextInputField onChangeText={(e)=>{setEmail(e)}} placeholder="Din E-mail" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
-
-					<View style={[t.mB5,t.flex,t.flexRow, t.selfCenter]}>
-						<Text style={[t.textWhite,t.fontLight,t.textSm]}> Vi kommer skicka en verifierings kod till din e-mail </Text>
-					</View>
+					<TextInputField onChangeText={(e)=>{setPassw(e)}} placeholder="lössenord" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
 					<Text style={[t.textRight,t.textRed700,t.fontLight,t.textSm]}></Text>
 
-					<Button onPress={()=>{sendVerification()}} title="Skicka" />
+					<Button onPress={()=>{update()}} title="Klar" />
 
 					<View style={[t.wFull, t.flexRow, t.justifyEnd, t.mT2]}>
 						<Text style={[t.textWhite]}>Har redan ett konto? </Text>
