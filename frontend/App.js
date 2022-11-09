@@ -13,6 +13,7 @@ import AdminCouponsPage from "./Src/Pages/Admin/CouponsPage";
 import Support from "./Src/Pages/Employee/Support";
 
 import SignupScreen from "./Src/Pages/SignupScreen";
+import ForgotPasswordScreen from "./Src/Pages/ForgotPasswordScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,17 +25,18 @@ export default function App() {
 	NavigationBar.setPositionAsync("absolute");
 	NavigationBar.setVisibilityAsync("hidden");
 	NavigationBar.setBackgroundColorAsync("#00000000");
-	NavigationBar.setBehaviorAsync('overlay-swipe')
+	NavigationBar.setBehaviorAsync('overlay-swipe');
 
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="AdminHome"			component={AdminHomeScreen}/>
+				<Stack.Screen name="AdminHome"   		component={AdminHomeScreen}/>
 				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
 				<Stack.Screen name="Support"			component={Support}/>
-				<Stack.Screen name="Signup"				component={SignupScreen}/>
-				<Stack.Screen name="Login"				component={Login}/>
+				<Stack.Screen name="Signup" 			component={SignupScreen}/>
+				<Stack.Screen name="Login"  			component={Login}/>
 				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>
+				<Stack.Screen name="ForgotPassword"	component={ForgotPasswordScreen}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
