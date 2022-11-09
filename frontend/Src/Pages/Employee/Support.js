@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {t} from "react-native-tailwindcss";
 import {
 	SafeAreaView,
 } from 'react-native-safe-area-context';
 import { View, Text, Image,  } from "react-native-animatable";
 import Menu from "../../Components/Menu";
-import { ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { ScrollView, TouchableOpacity, TextInput, BackHandler } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -38,12 +38,13 @@ export default function Support (props){
     const [isSlideUp, setIsSlideUp] = useState(false)
     const [mode, setMode] = useState("")
     
-
+    const slider = useRef(null)
+    
 	return(
         <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
             <View style={[t.justifyBetween,{height:"100%"}]} >
             {(isSlideUp) ? 
-			<SlideUp close={()=>setIsSlideUp(false)} >
+			<SlideUp navigation={props.navigation} close={()=>setIsSlideUp(false)} >
                 <Animatable.View  >
                     <Text style={[t.textWhite,t.text3xl,t.textCenter,t.mT2]} >{mode}</Text>
 					<ScrollView style={[t.pX5]} >
