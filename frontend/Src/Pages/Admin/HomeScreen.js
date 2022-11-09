@@ -29,6 +29,7 @@ export default function HomeScreen(props) {
 				navigation={props.navigation} 
 				paths={[
 					{path:"AdminCouponsPage",name:"Alla rabatter"},
+					{path:"PartnersPage",name:"Partners"},
 					{path:"AdminCouponsPage",name:"Avändare"}
 				]}
 			/>

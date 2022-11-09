@@ -171,9 +171,11 @@ def adminDeleteCode(request):
 
 def getAllPartners(request):
 	if(request.method == "GET"):
-		query = Partner.objects.all().values()
-		print(json.dumps(list(query)).replace("'", '"'))
-		return HttpResponse(json.dumps(list(query)).replace("'", '"'), status=200)
+		query = Partner.objects.all()
+		parners = []
+		for p in query:
+			parners.append(p.toJson())
+		return HttpResponse(json.dumps(parners), status=200)
 	return HttpResponse(403)
 
 def addCoupon(request):
@@ -232,6 +234,32 @@ def updateCoupon(request):
 			return HttpResponse("Failed to update coupon data", status=409)
 	return HttpResponse(status=403)
 
+def updatePartner(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		
+		partner = Partner.objects.filter(pk=req["id"])[0]
+		
+		partner.name = req["name"]
+		partner.email = req["email"]
+		partner.phone  =  req["phone"]
+		partner.adress  =  req["adress"]
+		partner.website  =  req["website"]
+
+		partner.save()
+		return HttpResponse("Partner was updated",status=200)
+
+	return HttpResponse(status=403)
+
+def removePartner(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		partner = Partner.objects.filter(pk=req["id"])[0]
+		name = partner.name
+		partner.delete()
+		return HttpResponse(name+" was deleted",status=200)
+	return HttpResponse(status=403)
+	
 def forgotPassword(request):
 	if(request.method == "POST"):
 		req = extractRequest(request)
