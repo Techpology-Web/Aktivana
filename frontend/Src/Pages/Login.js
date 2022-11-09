@@ -52,8 +52,8 @@ export default function Login(props) {
 					}]} />
 				</View>
 
-				<TextInputField onChangeText={setEmail} placeholder="Din E-mail"                  icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
-				<TextInputField onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} />
+				<TextInputField							onChangeText={setEmail} placeholder="Din E-mail"                  icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
+				<TextInputField onSubmitEditing={login} onChangeText={setPassword} placeholder="Password" password={true} icon={<MaterialCommunityIcons name="key-outline"   size={24} color="#00000030" />} />
 
 				<View style={[t.mB5,t.flex,t.flexRow, t.selfEnd]}>
 					<Text style={[t.textWhite,t.fontLight,t.textSm,]}> Har inte ett konto? </Text>

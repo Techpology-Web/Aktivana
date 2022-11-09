@@ -36,7 +36,7 @@ export default function App() {
 				<Stack.Screen name="AdminHome"   		component={AdminHomeScreen}/>
 				<Stack.Screen name="PartnersPage"		component={PartnersPage}/>
 				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
-				<Stack.Screen name="Support"			component={Support}/>
+				<Stack.Screen name="Support"			component={Support} options={{ gestureEnabled:false,  }} />
 				<Stack.Screen name="Signup" 			component={SignupScreen}/>
 				<Stack.Screen name="Login"  			component={Login}/>
 				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>

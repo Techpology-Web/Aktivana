@@ -201,7 +201,7 @@ export default function CouponsPage(props){
 		<View style={[t.wFull, t.hFull]}>
 			
 			{(isSlideUp) ? 
-			<SlideUp close={()=>{setIsSlideUp(false)}}>
+			<SlideUp navigation={props.navigation} close={()=>{setIsSlideUp(false)}}>
 				<View>
 					<ScrollView>
 						<Animatable.View animation="fadeInUp">
