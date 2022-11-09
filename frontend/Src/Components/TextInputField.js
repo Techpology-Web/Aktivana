@@ -18,6 +18,14 @@ export default function TextInputField(props) {
 
 	const {style, ...rest} = props;
 
+	const handleKeyDown = (e) => {
+		alert(e.nativeEvent.key)
+		if(e.nativeEvent.key == "Enter"){
+			alert("asd")
+		}
+	}
+	
+
     return (
 		<View style={[t.border,t.pR3, t.bgWhite, t.roundedLg,t.h12,t.justifyCenter,t.itemsCenter,t.mY3,t.flex,t.flexRow,t.border0,style]} >
 			<TextInput
@@ -29,6 +37,7 @@ export default function TextInputField(props) {
 				keyboardType={props.keyboardType}
 				textContentType={props.textContentType}
 				defaultValue={props.default}
+				onSubmitEditing={(props.onSubmitEditing)?props.onSubmitEditing:()=>{}}
 				/>
 			
 			<TouchableOpacity onPressOut={()=>{iconPress(true)}} onPressIn={()=>{iconPress(false)}} >{(props.icon)?props.icon:""}</TouchableOpacity>
