@@ -76,9 +76,9 @@ export default function Support (props){
                 <Animatable.View animation="bounceInUp" >
                     <View style={[t.flexRowReverse,t.p2]} >
                         <Image source={require('../../Images/logo1.png')} style={[{
-                              width: 321*0.7,
-                              height: 113*0.7,
-                              resizeMode: 'contain'                       
+                                width: 321*0.7,
+                                height: 113*0.7,
+                                resizeMode: 'contain'                       
                         }]} />
                     </View>
                     <View style={[t.p8]} >
