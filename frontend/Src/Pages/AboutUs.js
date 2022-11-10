@@ -34,7 +34,7 @@ export default function AboutUs(props){
                 <View>
                     <ScrollView style={[t.p5,t.mT12]}>
                         <Text style={[t.textWhite,t.text3xl,t.mB2]} >Om oss</Text>
-                        <Text style={[t.textWhite,t.mB12]}>
+                        <Text style={[t.textWhite,t.mB12,t.textLg,t.fontLight]}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         </Text>
 
