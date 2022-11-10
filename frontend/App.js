@@ -12,7 +12,7 @@ import Login from "./Src/Pages/Login";
 import AdminCouponsPage from "./Src/Pages/Admin/CouponsPage";
 import Support from "./Src/Pages/Employee/Support";
 import PartnersPage from "./Src/Pages/Admin/PartnersPage";
-
+import CompanyPage from "./Src/Pages/Admin/CompanyPage/CompanyPage";
 import SignupScreen from "./Src/Pages/SignupScreen";
 import ForgotPasswordScreen from "./Src/Pages/ForgotPasswordScreen";
 
@@ -33,6 +33,7 @@ export default function App() {
 			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AdminHome"   		component={AdminHomeScreen}/>
 				<Stack.Screen name="PartnersPage"		component={PartnersPage}/>
+				<Stack.Screen name="CompanyPage"		component={CompanyPage}/>
 				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
 				<Stack.Screen name="Support"			component={Support} options={{ gestureEnabled:false,  }} />
 				<Stack.Screen name="Signup" 			component={SignupScreen}/>

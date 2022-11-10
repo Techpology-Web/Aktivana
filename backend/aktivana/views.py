@@ -18,18 +18,24 @@ def createSignupCode():
 
 def addCompany(request):
 	req = extractRequest(request)
-	try:
+	if(request.method == "POST"):
+
 		if len(Company.objects.filter(email=req["email"])) == 0:
 			newCompany = Company(
 				email=req["email"],
+				name =req["name"],
 				password=encrypt(req["password"]),
 				signupCode=createSignupCode()
 			)
 			newCompany.save()
+
+			for c in json.loads(req["activeCoupons"]):
+				newCompany.activeCoupons.add(Coupon.objects.get(pk=c["id"]))
+			newCompany.save()
+
 			return HttpResponse(str(newCompany.__dict__).replace("'",'"'),status=200)
 		return HttpResponse("Company with this email already exist",status=409)
 			
-	except Exception as e:
 		return HttpResponse(e.__str__(),status=400)    
 
 def addAcount(request):
@@ -281,4 +287,40 @@ def forgotPassword(request):
 		#eh.sendEmail("info@techpology.com", "asså", "<p>Tja fan</p>")
 
 		return HttpResponse(status=200)
+	return HttpResponse(status=403)
+
+def getAllCompanys(request):
+	if(request.method == "GET"):
+		query = Company.objects.all()
+		companys = []
+		for p in query:
+			companys.append(p.toJson())
+		return HttpResponse(json.dumps(companys), status=200)
+	return HttpResponse(status=403)
+
+def updateCompany(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		print(type(req["activeCoupons"]))
+		company = Company.objects.get(pk=req["id"])
+		company.name=req["name"]
+		company.email=req["email"]
+		company.activeCoupons.clear()
+		
+		for c in json.loads(req["activeCoupons"]):
+			company.activeCoupons.add(Coupon.objects.get(pk=c["id"]))
+
+		company.save()
+		return HttpResponse("Updated",status=200)
+
+	return HttpResponse(status=403)
+
+def removeCompany(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		company = Company.objects.get(pk=req["id"])
+		
+		company.delete()
+		return HttpResponse("Updated",status=200)
+
 	return HttpResponse(status=403)

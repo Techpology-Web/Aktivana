@@ -30,6 +30,7 @@ export default function HomeScreen(props) {
 				paths={[
 					{path:"AdminCouponsPage",name:"Alla rabatter"},
 					{path:"PartnersPage",name:"Partners"},
+					{path:"CompanyPage",name:"Företag"},
 					{path:"AdminCouponsPage",name:"Avändare"}
 				]}
 			/>

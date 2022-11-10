@@ -21,19 +21,26 @@ from aktivana.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('company/add/', addCompany),
+    path('company/get/all', getAllCompanys),
+    path('company/update/', updateCompany),
+    path('company/remove/', removeCompany),
+    path('company/verify/', verifyCompanyCode),
+
     path('account/add/', addAcount),
     path('account/login/', login),
     path('account/getCodes/', acountGetCodes),
     path('account/useCode/', useCode),
+    path('account/forgot/', forgotPassword),
+    
     path('partner/add/', addPartner),
     path('partner/update/', updatePartner),
     path('partner/remove/', removePartner),
     path('partner/get/all', getAllPartners),
-    path('company/verify/', verifyCompanyCode),
+    
     path('code/get/',getCodes),
     path('code/del/', adminDeleteCode),
     path('code/add/', addCoupon),
     path('code/update/', updateCoupon),
-    path('account/forgot/', forgotPassword)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
