@@ -32,7 +32,6 @@ urlpatterns = [
     path('account/login/', login),
     path('account/getCodes/', acountGetCodes),
     path('account/useCode/', useCode),
-    path('account/forgot/', forgotPassword),
     
     path('partner/add/', addPartner),
     path('partner/update/', updatePartner),
@@ -43,4 +42,8 @@ urlpatterns = [
     path('code/del/', adminDeleteCode),
     path('code/add/', addCoupon),
     path('code/update/', updateCoupon),
+
+    path('account/forgot/', forgotPassword),
+    path('account/forgot/verify/', verifyPassRecovery),
+    path('account/forgot/update/', updateAccountPassword)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

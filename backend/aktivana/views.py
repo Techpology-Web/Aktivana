@@ -134,7 +134,7 @@ def login(request):
 				print(emp[0].toJson())
 				return HttpResponse(json.dumps(emp[0].toJson()),status=200)
 			else:
-				return HttpResponse("Wrong password for "+req["email"],status = 409)
+				return HttpResponse("Wrong password or email",status = 409)
 		else:
 			return HttpResponse("No user with this email",status = 409)
 		return HttpResponse("sucess",status = 200)
@@ -324,3 +324,25 @@ def removeCompany(request):
 		return HttpResponse("Updated",status=200)
 
 	return HttpResponse(status=403)
+def verifyPassRecovery(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		print(req)
+		acc = Account.objects.filter(email= req["email"])[0]
+		p = PasswordReset.objects.filter(target_id=acc)
+		if(len(p) != 0):
+			if(p[0].value == req["code"]):
+				return HttpResponse(200)
+		return HttpResponse(409)
+	return HttpResponse(403)
+
+def updateAccountPassword(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		email = req["email"]
+		query = Account.objects.filter(email=email)[0]
+		PasswordReset.objects.get(target_id=query).delete()
+		query.password = encrypt(req["passw"])
+		query.save()
+		return HttpResponse(200)
+	return HttpResponse(403)
