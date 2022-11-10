@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
+import { BackHandler, Dimensions, FlatList, ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import {t} from "react-native-tailwindcss";
@@ -15,18 +15,19 @@ import { View, Text } from "react-native-animatable";
 import * as Animatable from 'react-native-animatable';
 
 // Utils
-import { isSearched } from "../../global_funcs";
+import { isSearched } from "../../../global_funcs";
 
 // Components
-import MainView from "../../Components/MainView";
-import TextInputField from "../../Components/TextInputField";
-import SlideUp from "../../Components/SlideUp";
-import InputField from "../../Components/InputField";
-import ListSelector from "../../Components/ListSelector";
-import Button from "../../Components/Button";
+import MainView from "../../../Components/MainView";
+import TextInputField from "../../../Components/TextInputField";
+import SlideUp from "../../../Components/SlideUp";
+import InputField from "../../../Components/InputField";
+import ListSelector from "../../../Components/ListSelector";
+import Button from "../../../Components/Button";
 
+import CouponSelector from "./CouponSelector"
 
-function Coupon(props){
+function Company(props){
 
 	return (
 		<Animatable.View animation={"bounceIn"} style={[{width:110,height:110,marginHorizontal:3},t.mB3]} >
@@ -37,35 +38,36 @@ function Coupon(props){
 	);
 }
 
-export default function PartnersPage(props){
+
+export default function CompanysPage(props){
 
 	const [coupons,setCoupons] = useState([])
 	const [searchWord,setSearchWord] = useState("")
 	const [isSlideUp, setIsSlideUp] = useState(false)
-	const [selectedPartner, setSelectedPartner] = useState({})
+	const [selectedCompany, setSelectedCompany] = useState({})
 	const [isEdit, setIsEdit] = useState(false)
+	const [addCoupon, setAddCoupon] = useState(false)
     
 
-    const fetchPartners = () =>{
-        axios.get("partner/get/all").then(r=>{
+    const fetchCompanys = () =>{
+        axios.get("company/get/all").then(r=>{
             setCoupons(r.data)
         }).catch(error=>{
-            alert(error.response.data)
+            //alert(error.response.data)
         });
     }
 
 	useEffect(()=>{
-        fetchPartners() 
+        fetchCompanys()
     },[])
 
     const add = () =>
     {
-        setSelectedPartner({
+        setSelectedCompany({
             name:"",
             email:"",
-            phone:"",
-            adress:"",
-            website:"",
+            activeCoupons:"[]",
+			password:""
         })
         setIsSlideUp(true);
         setIsEdit(false);
@@ -75,16 +77,16 @@ export default function PartnersPage(props){
         setIsSlideUp(false)
 
         if(isEdit){
-            axios.post("partner/update/",selectedPartner).then(r=>{
+            axios.post("company/update/",selectedCompany).then(r=>{
                 //alert(r.data)
-                fetchPartners()
+                fetchCompanys()
             }).catch(e=>{
                 //alert(e.response.data)
             })
         }else{
-            axios.post("partner/add/",selectedPartner).then(r=>{
+            axios.post("company/add/",selectedCompany).then(r=>{
                 //alert(r.data)
-                fetchPartners()
+                fetchCompanys()
             }).catch(e=>{
                 //alert(e.response.data)
             })
@@ -92,38 +94,36 @@ export default function PartnersPage(props){
     }
     const remove = () =>{
         setIsSlideUp(false)
-        axios.post("partner/remove/",{"id":selectedPartner.id}).then(r=>{
-            alert(r.data)
-            fetchPartners()
+        axios.post("company/remove/",{"id":selectedCompany.id}).then(r=>{
+            fetchCompanys()
         }).catch(e=>{
             alert(e.response.data)
         })
     }
-    const updateSelectedParner = (key,value) =>{
-        selectedPartner[key]= value
+    const updateSelectedCompany = (key,value) =>{
+        selectedCompany[key] = value
     }
 	return(
 		<View style={[t.wFull, t.hFull]}>
-			
+			{(addCoupon)?(
+                <CouponSelector selected={selectedCompany.activeCoupons} done={(e)=>{setAddCoupon(false);setIsSlideUp(true);updateSelectedCompany("activeCoupons",(e))}} />
+            ):(<></>)}
 			{(isSlideUp) ? 
 			<SlideUp close={()=>{setIsSlideUp(false)}}>
 				<View>
 					<ScrollView>
                         <View style={[t.wFull,t.pT5,t.pX5]}>
-                            <Text style={[t.textWhite, t.text3xl]}>Hantera partners</Text>
-                            {(isEdit)?<Button onPress={()=>props.navigation.navigate("AdminCouponsPage",{passPartner:selectedPartner})} >Se rabatter</Button>:<></>}
+                            <Text style={[t.textWhite, t.text3xl]}>Skapa nytt företag</Text>
                             
                         </View>
                         <View style={[t.pX5]} >
-                            <TextInputField default={selectedPartner.name}    onChangeText={e=>updateSelectedParner("name",e)}    keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Namn"          style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="label-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.phone}   onChangeText={e=>updateSelectedParner("phone",e)}   keyboardType="phone-pad"     inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Telefonnummer" style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="phone-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.email}   onChangeText={e=>updateSelectedParner("email",e)}   keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras E-mail"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.adress}  onChangeText={e=>updateSelectedParner("adress",e)}  keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Adress"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="post-outline"  size={24} color="#fff" />} ></TextInputField>
-                            <TextInputField default={selectedPartner.website} onChangeText={e=>updateSelectedParner("website",e)} keyboardType="url"           inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Hemsida"       style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="web"           size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedCompany.name}    onChangeText={e=>updateSelectedCompany("name",e)}    keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Namn"          style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="label-outline" size={24} color="#fff" />} ></TextInputField>
+                            <TextInputField default={selectedCompany.email}   onChangeText={e=>updateSelectedCompany("email",e)}   keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras E-mail"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
+                            <Button onPress={()=>{setAddCoupon(true);setIsSlideUp(false)}} >Hantera rabatter</Button>
                             {(!isEdit)?<Button onPress={()=>addOrUpdate()} >Skapa</Button>:(
                                 <View style={[t.flexRow]} >
                                     <Button style={{marginLeft: 0,flex:1,paddingRight: 10}} onPress={()=>addOrUpdate()} >Updatera</Button>
-                                    <Button style={{marginLeft: 10,flex:1,paddingRight: 10}} onPress={()=>remove()} >Tabort</Button>
+                                    <Button style={{marginLeft: 10,flex:1,paddingRight: 10}} onPress={()=>remove()}     >Tabort</Button>
                                 </View>
                             )}
                             
@@ -141,7 +141,7 @@ export default function PartnersPage(props){
 					<TouchableOpacity onPress={()=>{props.navigation.goBack()}} style={[t.p4]} >
 						<MaterialIcons name="arrow-back-ios" size={24} color="white" />
 					</TouchableOpacity>
-					<Text style={[t.textWhite,t.text2xl]} >Alla Erbjudanden</Text>
+					<Text style={[t.textWhite,t.text2xl]} >Företag</Text>
 				</View>
 				
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
@@ -164,7 +164,7 @@ export default function PartnersPage(props){
 							data={coupons}
 							renderItem={({item, index}) => (
 								(searchWord === "" || isSearched(searchWord,item)) ?
-								<Coupon key={index} count={index} onPress={()=>{setIsSlideUp(true);setSelectedPartner(item);setIsEdit(true)}} code={item.name} ></Coupon> :
+								<Company key={index} count={index} onPress={()=>{setIsSlideUp(true);setSelectedCompany(item);setIsEdit(true)}} code={item.name} /> :
 								<></>)
 							}
 						/>):

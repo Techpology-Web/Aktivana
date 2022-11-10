@@ -46,8 +46,9 @@ class Coupon (models.Model):
         )
 
 class Company (models.Model):
-    email         = models.TextField()
-    password      = models.TextField()
+    name          = models.TextField(default="")
+    email         = models.TextField(default="")
+    password      = models.TextField(default="")
     activeCoupons = models.ManyToManyField(Coupon)
     signupCode    = models.TextField(default="") # this code is neccecary for Acounts to signup
   
@@ -55,12 +56,12 @@ class Company (models.Model):
         activecodes = []
         for code in self.activeCoupons.all():
             activecodes.append(code.toJson())
-
         return json.loads(json.dumps(
             {
+                "name"         : self.name,
                 "email"         : self.email,
                 "password"      : self.password,
-                "activeCoupons" : activecodes,
+                "activeCoupons" : json.dumps(activecodes),
                 "signupCode"    : self.signupCode,
                 "id"            : self.pk
             })
