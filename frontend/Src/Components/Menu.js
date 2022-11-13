@@ -41,6 +41,7 @@ export default function Menu(props){
 	// the elements that can be clicked to navigate to screens
 	const elements = props.path != "undefined" ? props.paths.map((element,index)=>
 			<TouchableOpacity 
+				style={[t.p2,t.m05]}
 				key={index}
 				onPress={()=>{setVisible(false);props.navigation.navigate(element.path)}} >
 				<Text style={[t.textWhite, t.text2xl, t.fontLight, t.mB2]} >{element.name}</Text>
@@ -88,7 +89,7 @@ export default function Menu(props){
 				</Animatable.View>
 			</GestureRecognizer>
 			
-			<TouchableOpacity style={[t.absolute,t.top0,t.text2xl,t.textWhite,t.m2,t.z10]} onPress={()=>setVisible(!show)} >
+			<TouchableOpacity style={[t.absolute,t.top0,t.text2xl,t.textWhite,t.m2,t.z10, t.p2]} onPress={()=>setVisible(!show)} >
 				<Feather name="menu" size={50} color="white" style={[t.z10]} />
 			</TouchableOpacity>
 
