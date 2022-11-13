@@ -12,7 +12,7 @@ function Coupon(props){
     const [selected,setSelected] = useState(props.selected)
 
 	return (
-		<Animatable.View animation={"bounceIn"} style={[{ transform:[{scale:2}], marginHorizontal:3},t.mB3,]} >
+		<Animatable.View animation={"bounceIn"} delay={20*props.count} style={[{ transform:[{scale:2}], marginHorizontal:3},t.mB3,]} >
             <TouchableOpacity onPress={()=>{props.onPress(!selected);setSelected(!selected)}} style={[t.justifyCenter,t.p2,t.itemsCenter,{transform:[{scale: (selected)? 0.9 : 1}],backgroundColor:(selected)?"#009900":"#2A2A2A",width:110,height:110, borderRadius:25}]} >
 				<Text style={[t.textLg, t.fontLight,t.textWhite,t.textCenter]}>{props.code}</Text>
 			</TouchableOpacity>
