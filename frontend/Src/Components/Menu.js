@@ -35,6 +35,7 @@ export default function Menu(props){
 	
 	const logout = () =>{
 		global.session = "undefined";
+		console.log(global.session)
 		props.navigation.navigate("Login");
 	}
 	// the elements that can be clicked to navigate to screens

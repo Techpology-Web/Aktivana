@@ -70,7 +70,7 @@ export default function Support (props){
                         {path:"EmployeeHome"    ,name:"Hem"},
                         {path:"AdminCouponsPage",name:"Mina erbjudanden"},
                         {path:"Support"			,name:"Kontakta oss"},
-                        {path:"AdminCouponsPage",name:"Om oss"},
+                        {path:"AboutUs"         ,name:"Om oss"},
                     ]}
                 />
                 <Animatable.View animation="bounceInUp" >
