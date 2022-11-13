@@ -30,9 +30,9 @@ export default function HomeScreen(props) {
 				navigation={props.navigation} 
 				paths={[
 					{path:"EmployeeHome"    ,name:"Hem"},
-					{path:"AdminCouponsPage",name:"Mina erbjudanden"},
+					{path:"MyCoupons",name:"Mina erbjudanden"},
 					{path:"Support" 		,name:"Kontakta oss"},
-					{path:"AdminCouponsPage",name:"Om oss"},
+					{path:"AboutUs",name:"Om oss"},
 				]}
 			/>
 		

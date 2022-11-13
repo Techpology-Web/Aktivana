@@ -17,13 +17,16 @@ import SignupScreen from "./Src/Pages/SignupScreen";
 import ForgotPasswordScreen from "./Src/Pages/ForgotPasswordScreen";
 import VerifyForgotPassword from "./Src/Pages/VerifyForgotPassword";
 import UpdatePassword from "./Src/Pages/UpdatePassword";
+import AboutUs from "./Src/Pages/AboutUs"
+import MyCoupons from "./Src/Pages/Employee/MyCoupons"
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 	// axios.defaults.baseURL = 'http://api.aktivana.com/';
-	//axios.defaults.baseURL = 'http://192.168.10.238:8000/';
-	axios.defaults.baseURL = 'http://192.168.1.189:8000/';
+	axios.defaults.baseURL = 'http://192.168.10.238:8000/';
+	//axios.defaults.baseURL = 'http://localhost:19006//';
+	//axios.defaults.baseURL = 'http://192.168.1.189:8000/';
 
 	NavigationBar.setPositionAsync("absolute");
 	NavigationBar.setVisibilityAsync("hidden");
@@ -33,17 +36,19 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="AdminHome"   		component={AdminHomeScreen}/>
-				<Stack.Screen name="PartnersPage"		component={PartnersPage}/>
-				<Stack.Screen name="CompanyPage"		component={CompanyPage}/>
-				<Stack.Screen name="EmployeeHome"		component={EmployeeHomeScreen}/>
-				<Stack.Screen name="Support"			component={Support} options={{ gestureEnabled:false,  }} />
-				<Stack.Screen name="Signup" 			component={SignupScreen}/>
-				<Stack.Screen name="Login"  			component={Login}/>
-				<Stack.Screen name="AdminCouponsPage"	component={AdminCouponsPage}/>
-				<Stack.Screen name="ForgotPassword" 	component={ForgotPasswordScreen}/>
+				<Stack.Screen name="AdminHome"   			component={AdminHomeScreen}/>
+				<Stack.Screen name="PartnersPage"			component={PartnersPage}/>
+				<Stack.Screen name="CompanyPage"			component={CompanyPage}/>
+				<Stack.Screen name="EmployeeHome"			component={EmployeeHomeScreen}/>
+				<Stack.Screen name="Support"				component={Support} options={{ gestureEnabled:false,  }} />
+				<Stack.Screen name="Signup" 				component={SignupScreen}/>
+				<Stack.Screen name="Login"  				component={Login}/>
+				<Stack.Screen name="AdminCouponsPage"		component={AdminCouponsPage}/>
+				<Stack.Screen name="ForgotPassword" 		component={ForgotPasswordScreen}/>
 				<Stack.Screen name="VerifyForgotPassword"	component={VerifyForgotPassword}/>
 				<Stack.Screen name="UpdatePassword" 		component={UpdatePassword}/>
+				<Stack.Screen name="AboutUs" 				component={AboutUs}/>
+				<Stack.Screen name="MyCoupons" 				component={MyCoupons}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

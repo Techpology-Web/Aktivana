@@ -70,15 +70,15 @@ export default function Support (props){
                         {path:"EmployeeHome"    ,name:"Hem"},
                         {path:"AdminCouponsPage",name:"Mina erbjudanden"},
                         {path:"Support"			,name:"Kontakta oss"},
-                        {path:"AdminCouponsPage",name:"Om oss"},
+                        {path:"AboutUs"         ,name:"Om oss"},
                     ]}
                 />
                 <Animatable.View animation="bounceInUp" >
                     <View style={[t.flexRowReverse,t.p2]} >
                         <Image source={require('../../Images/logo1.png')} style={[{
-                              width: 321*0.7,
-                              height: 113*0.7,
-                              resizeMode: 'contain'                       
+                                width: 321*0.7,
+                                height: 113*0.7,
+                                resizeMode: 'contain'                       
                         }]} />
                     </View>
                     <View style={[t.p8]} >
