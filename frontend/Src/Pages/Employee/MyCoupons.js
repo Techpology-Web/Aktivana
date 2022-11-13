@@ -33,18 +33,13 @@ export default function Support (props){
     const [coupons, setCoupons] = useState([])
     const [selectedCoupon, setSelectedCoupon] = useState({
         code       :"Npc30",
-        partner    : {
-                        name   :"Padelcenter", 
-                        adress : "Fredriksdalsgatan 44, 602 23 Norrköping"
-                    },
+        partner    : {name   :"Padelcenter", adress : "Fredriksdalsgatan 44, 602 23 Norrköping"},
         expireTime : "2022-11-24",
         useTime    : "1"
     })
     
     let qrcodeValue = "https://www.fsf.org/";
     
-
-    const slider = useRef(null)
     
     const fetchCoupons = () =>{
         axios.post("account/getCodes/",{id:global.session["id"]}).then(r=>{
@@ -69,7 +64,6 @@ export default function Support (props){
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
 
-        // This arrangement can be altered based on how we want the date's format to appear.
         let currentDate = `${day}-${month}-${year}`;
         return currentDate
     } 
