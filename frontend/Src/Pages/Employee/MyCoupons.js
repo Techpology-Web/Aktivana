@@ -17,11 +17,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import QRCode from "react-native-qrcode-svg";
 import axios from "axios";
 
-function Coupon(props){
+function Coupon(props){ //  aspectRatio:16/9
     return (
         <Animatable.View animation="bounceIn" delay={props.count*100} style={[t.mB2]} >
             <TouchableOpacity onPress={props.onPress} >
-                <Image style={[{ aspectRatio:16/9 ,borderRadius:20}]} source={{uri:(props.img.includes("data"))?props.img:axios.defaults.baseURL+props.img}} />
+                <Image style={[{height:200 ,borderRadius:20}]} source={{uri:(props.img.includes("data"))?props.img:axios.defaults.baseURL+props.img}} />
             </TouchableOpacity>
         </Animatable.View>
     )
@@ -104,14 +104,15 @@ export default function Support (props){
                     navigation={props.navigation} 
                     paths={[
                         {path:"EmployeeHome"    ,name:"Hem"},
-                        {path:"AdminCouponsPage",name:"Mina erbjudanden"},
+                        {path:"MyCoupons",name:"Mina erbjudanden"},
                         {path:"Support"			,name:"Kontakta oss"},
                         {path:"AboutUs"         ,name:"Om oss"},
                     ]}
                 />
-                <Text style={[t.textWhite, t.text3xl, t.selfEnd, t.p3]} >Alla erbjudanden</Text>
-                <View style={[t.mT12,t.p2]} >
+                <Text style={[t.textWhite, t.text3xl, t.selfEnd, t.p3, t.absolute,t.z10]} >Alla erbjudanden</Text>
+                <View style={[]} >
                     <ScrollView>
+                        <View style={[t.mB32]} ></View>
                         {(coupons.length>0)?coupons.map((coupon, index)=>
                             <Coupon key={index} count={index} onPress={()=>{setSelected(coupon)}} img={coupon.picture} ></Coupon>):
                             <Text>loading</Text>

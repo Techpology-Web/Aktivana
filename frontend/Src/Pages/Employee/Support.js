@@ -68,7 +68,7 @@ export default function Support (props){
                     navigation={props.navigation} 
                     paths={[
                         {path:"EmployeeHome"    ,name:"Hem"},
-                        {path:"AdminCouponsPage",name:"Mina erbjudanden"},
+                        {path:"MyCoupons"       ,name:"Mina erbjudanden"},
                         {path:"Support"			,name:"Kontakta oss"},
                         {path:"AboutUs"         ,name:"Om oss"},
                     ]}
