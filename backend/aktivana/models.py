@@ -73,7 +73,8 @@ class Account (models.Model):
     lastName    = models.TextField()          
     password    = models.TextField()          
     email       = models.TextField()          
-    company     = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
+    partner     = models.ForeignKey(Partner,on_delete=models.CASCADE,null=True)
+    company     = models.ForeignKey(Company,on_delete=models.CASCADE,null=True)  # the company they belong to
     usedCoupons = models.TextField(default="[]")                       # the codes they have already used
     acountType  = models.IntegerField(default=0)                       # 0 for Account 1 for admin (aktivana)
     
