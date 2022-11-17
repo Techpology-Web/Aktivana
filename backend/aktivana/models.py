@@ -69,13 +69,13 @@ class Company (models.Model):
 
 class Account (models.Model):
 
-    firstName   = models.TextField()          
-    lastName    = models.TextField()          
-    password    = models.TextField()          
-    email       = models.TextField()          
+    firstName   = models.TextField()
+    lastName    = models.TextField()
+    password    = models.TextField()
+    email       = models.TextField()
     company     = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
     usedCoupons = models.TextField(default="[]")                       # the codes they have already used
-    acountType  = models.IntegerField(default=0)                       # 0 for Account 1 for admin (aktivana)
+    acountType  = models.IntegerField(default=0)                       # 0 for Account 1 for admin (aktivana) 2 for partner
     
     def toJson(self):
         return json.loads(json.dumps(
