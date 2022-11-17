@@ -19,8 +19,8 @@ export default function Login(props) {
 
 	const [account, setAcount] = useState(null);
 	const [error, setError] = useState("");
-	console.log(global.session)
-    if(typeof(global.session) != "undefined"){
+
+    if(typeof(global.session) != "undefined" && global.session != "undefined"){
         if(global.session["type"]==1) props.navigation.navigate("AdminHome")
         else if(global.session["type"]==2) props.navigation.navigate("Scan")
 		else props.navigation.navigate("EmployeeHome")	
