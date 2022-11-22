@@ -28,7 +28,7 @@ export default function ForgotPasswordScreen(props) {
 			}
 		})
 		.catch(error=>{
-			alert(error.response.data); 
+			alert(error.response.data);
 		});
 	}
 
@@ -43,7 +43,6 @@ export default function ForgotPasswordScreen(props) {
 							resizeMode: 'contain'
 						}]} />
 					</View>
-
 					<TextInputField onChangeText={(e)=>{setEmail(e)}} placeholder="Din E-mail" icon={<MaterialCommunityIcons name="email-outline" size={24} color="#00000030" />} />
 
 					<View style={[t.mB5,t.flex,t.flexRow, t.selfCenter]}>

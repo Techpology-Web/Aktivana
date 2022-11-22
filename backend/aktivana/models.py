@@ -28,7 +28,7 @@ class Partner (models.Model):
 class Coupon (models.Model):
     import time
     expireTime = models.IntegerField(default=0) # unix timestamp
-    useTime    = models.IntegerField(default=1) # how many times it can be used 
+    useTime    = models.IntegerField(default=1) # how many times it can be used
     partner    = models.ForeignKey(Partner, on_delete=models.CASCADE)
     picture    = models.TextField()             # how the code should look and also what it gives
     code       = models.TextField()             # code to refer to the code
@@ -51,7 +51,7 @@ class Company (models.Model):
     password      = models.TextField(default="")
     activeCoupons = models.ManyToManyField(Coupon)
     signupCode    = models.TextField(default="") # this code is neccecary for Acounts to signup
-  
+
     def toJson(self):
         activecodes = []
         for code in self.activeCoupons.all():
@@ -69,15 +69,15 @@ class Company (models.Model):
 
 class Account (models.Model):
 
-    firstName   = models.TextField()          
-    lastName    = models.TextField()          
-    password    = models.TextField()          
-    email       = models.TextField()          
-    partner     = models.ForeignKey(Partner,on_delete=models.CASCADE,null=True)
-    company     = models.ForeignKey(Company,on_delete=models.CASCADE,null=True)  # the company they belong to
+    firstName   = models.TextField()
+    lastName    = models.TextField()
+    password    = models.TextField()
+    email       = models.TextField()
+    partner     = models.ForeignKey(Partner,on_delete=models.CASCADE,null=True,blank=True)
+    company     = models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)  # the company they belong to
     usedCoupons = models.TextField(default="[]")                       # the codes they have already used
     acountType  = models.IntegerField(default=0)                       # 0 for Account 1 for admin (aktivana)
-    
+
     def toJson(self):
         return json.loads(json.dumps(
             {
