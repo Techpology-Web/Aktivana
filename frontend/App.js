@@ -18,13 +18,13 @@ import ForgotPasswordScreen from "./Src/Pages/ForgotPasswordScreen";
 import VerifyForgotPassword from "./Src/Pages/VerifyForgotPassword";
 import UpdatePassword from "./Src/Pages/UpdatePassword";
 import MyCoupons from "./Src/Pages/Employee/MyCoupons";
-import Scan from "./Src/Pages/Partner/Scan"; 
+import Scan from "./Src/Pages/Partner/Scan";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 	// axios.defaults.baseURL = 'http://api.aktivana.com/';
-	
+
 	axios.defaults.baseURL = 'http://192.168.10.238:8000/';
 	//axios.defaults.baseURL = 'http://192.168.1.189:8000/';
 
@@ -35,7 +35,7 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Scan" screenOptions={{ headerShown: false }}>
+			<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AdminHome"   		component={AdminHomeScreen}/>
 				<Stack.Screen name="PartnersPage"		component={PartnersPage}/>
 				<Stack.Screen name="CompanyPage"		component={CompanyPage}/>
@@ -50,5 +50,5 @@ export default function App() {
 				<Stack.Screen name="Scan" 		component={Scan}/>
 			</Stack.Navigator>
 		</NavigationContainer>);
-		
-}            
+
+}

@@ -5,20 +5,19 @@ import json
 
 class Partner (models.Model):
 
-    name    = models.TextField() # partner name
     logo    = models.TextField() # their logo
     phone   = models.TextField() # their phonenumber
-    email   = models.TextField() # their support email (email a Account can contact)
     website = models.TextField() # thier website
     adress  = models.TextField() # thier adress
 
     def toJson(self):
+        account = Account.objects.get(partner=self)
         return json.loads(json.dumps(
             {
-                "name"    : self.name,
+                "name"    : account.firstName,
                 "logo"    : self.logo,
                 "phone"   : self.phone,
-                "email"   : self.email,
+                "email"   : account.email,
                 "website" : self.website,
                 "adress"  : self.adress,
                 "id"      : self.pk
@@ -28,7 +27,7 @@ class Partner (models.Model):
 class Coupon (models.Model):
     import time
     expireTime = models.IntegerField(default=0) # unix timestamp
-    useTime    = models.IntegerField(default=1) # how many times it can be used 
+    useTime    = models.IntegerField(default=1) # how many times it can be used
     partner    = models.ForeignKey(Partner, on_delete=models.CASCADE)
     picture    = models.TextField()             # how the code should look and also what it gives
     code       = models.TextField()             # code to refer to the code
@@ -51,7 +50,7 @@ class Company (models.Model):
     password      = models.TextField(default="")
     activeCoupons = models.ManyToManyField(Coupon)
     signupCode    = models.TextField(default="") # this code is neccecary for Acounts to signup
-  
+
     def toJson(self):
         activecodes = []
         for code in self.activeCoupons.all():
@@ -73,11 +72,17 @@ class Account (models.Model):
     lastName    = models.TextField()
     password    = models.TextField()
     email       = models.TextField()
-    company     = models.ForeignKey(Company,on_delete=models.CASCADE)  # the company they belong to
+    partner     = models.ForeignKey(Partner,on_delete=models.CASCADE,null=True,blank=True)
+    company     = models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)  # the company they belong to
     usedCoupons = models.TextField(default="[]")                       # the codes they have already used
     acountType  = models.IntegerField(default=0)                       # 0 for Account 1 for admin (aktivana) 2 for partner
-    
+
     def toJson(self):
+        try:
+            company = self.company.toJson()
+        except:
+            company="{}"
+
         return json.loads(json.dumps(
             {
                 "firstName"      : self.firstName,
@@ -85,7 +90,7 @@ class Account (models.Model):
                 "type"           : self.acountType,
                 "password"       : self.password,
                 "email"          : self.email,
-                "company"        : self.company.toJson(),
+                "company"        : company,
                 "usedCoupons"    : json.loads(self.usedCoupons),
                 "id"             : self.pk
             })

@@ -35,8 +35,8 @@ def addCompany(request):
 
 			return HttpResponse(str(newCompany.__dict__).replace("'",'"'),status=200)
 		return HttpResponse("Company with this email already exist",status=409)
-			
-		return HttpResponse(e.__str__(),status=400)    
+
+		return HttpResponse(e.__str__(),status=400)
 
 def addAcount(request):
 	req = extractRequest(request)
@@ -45,7 +45,7 @@ def addAcount(request):
 		if len(company) != 0:
 			if len(Account.objects.filter(email=req["email"])) <= 0:
 				account  = Account(
-					firstName = req["firstName"],   
+					firstName = req["firstName"],
 					lastName  = req["lastName"],
 					password  = encrypt(req["password"]),
 					email     = str(req["email"]).lower(),
@@ -93,7 +93,7 @@ def useCode(request):
 	try:
 		req = extractRequest(request)
 
-		account = Account.objects.get(pk=req["acountId"])        
+		account = Account.objects.get(pk=req["acountId"])
 		usedcodes = json.loads(account.usedCoupons)
 
 		coupon = Coupon.objects.get(pk=req["codeId"])
@@ -110,14 +110,21 @@ def addPartner(request):
 	try:
 		req = extractRequest(request)
 		partner = Partner(
-			name=req["name"],
-			logo=req["name"],
-			phone=req["name"],
-			email=req["name"],
-			website=req["name"],
-			adress=req["name"],
+			logo=req["logo"],
+			phone=req["phone"],
+			website=req["website"],
+			adress=req["adress"],
 		)
 		partner.save()
+
+		account = Account(
+			firstName = req["firstName"],
+			lastName  = "",
+			password  = encrypt(req["password"]),
+			email     = str(req["email"]).lower(),
+      partner   = self
+		)
+		account.save()
 		return HttpResponse("sucess",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
@@ -126,20 +133,17 @@ def testConn(request):
 	return HttpResponse(200)
 
 def login(request):
-	try:
-		req = extractRequest(request)
-		emp = Account.objects.filter(email=str(req["email"]).lower())
-		if len(emp) != 0:
-			if(verify(req["password"], emp[0].password)):
-				print(emp[0].toJson())
-				return HttpResponse(json.dumps(emp[0].toJson()),status=200)
-			else:
-				return HttpResponse("Wrong password or email",status = 409)
+	req = extractRequest(request)
+	emp = Account.objects.filter(email=str(req["email"]).lower())
+	if len(emp) != 0:
+		if(verify(req["password"], emp[0].password)):
+			print(emp[0].toJson())
+			return HttpResponse(json.dumps(emp[0].toJson()),status=200)
 		else:
-			return HttpResponse("No user with this email",status = 409)
-		return HttpResponse("sucess",status = 200)
-	except Exception as e:
-		return HttpResponse(e,status = 400)
+			return HttpResponse("Wrong password or email",status = 409)
+	else:
+		return HttpResponse("No user with this email",status = 409)
+	return HttpResponse("sucess",status = 200)
 
 def getCodes(request):
     if request.method == "POST":
@@ -218,7 +222,7 @@ def updateCoupon(request):
 		name = req["name"]
 		partnerId = req["partner"]
 		image = req["image"]
-		
+
 		query = Partner.objects.filter(id=partnerId)[0]
 		_c = query.coupon_set.get(id = ID)
 		_c.code = name
@@ -232,7 +236,7 @@ def updateCoupon(request):
 			if(res):
 				_c.picture = path
 			else: return HttpResponse("Failed to upload image", status=409)
-		
+
 		_c.save()
 		try:
 			return HttpResponse(status=200)
@@ -243,16 +247,19 @@ def updateCoupon(request):
 def updatePartner(request):
 	if(request.method == "POST"):
 		req = extractRequest(request)
-		
+
 		partner = Partner.objects.filter(pk=req["id"])[0]
-		
-		partner.name = req["name"]
-		partner.email = req["email"]
+
 		partner.phone  =  req["phone"]
 		partner.adress  =  req["adress"]
 		partner.website  =  req["website"]
+		account = Account.objects.get(partner=partner)
+		account.firstName = req['name']
+		account.email = req["email"]
+		account.save()
 
 		partner.save()
+
 		return HttpResponse("Partner was updated",status=200)
 
 	return HttpResponse(status=403)
@@ -265,11 +272,11 @@ def removePartner(request):
 		partner.delete()
 		return HttpResponse(name+" was deleted",status=200)
 	return HttpResponse(status=403)
-	
+
 def forgotPassword(request):
 	if(request.method == "POST"):
 		req = extractRequest(request)
-		
+
 		email	= req["email"]
 		value	= genVerificationCode()
 		expire	= (datetime.now() + timedelta(minutes=5)).strftime('%Y-%m-%d %H:%M:%S')
@@ -306,7 +313,7 @@ def updateCompany(request):
 		company.name=req["name"]
 		company.email=req["email"]
 		company.activeCoupons.clear()
-		
+
 		for c in json.loads(req["activeCoupons"]):
 			company.activeCoupons.add(Coupon.objects.get(pk=c["id"]))
 
@@ -319,7 +326,7 @@ def removeCompany(request):
 	if(request.method == "POST"):
 		req = extractRequest(request)
 		company = Company.objects.get(pk=req["id"])
-		
+
 		company.delete()
 		return HttpResponse("Updated",status=200)
 
