@@ -268,9 +268,8 @@ def removePartner(request):
 	if(request.method == "POST"):
 		req = extractRequest(request)
 		partner = Partner.objects.filter(pk=req["id"])[0]
-		name = partner.name
 		partner.delete()
-		return HttpResponse(name+" was deleted",status=200)
+		return HttpResponse("Partner was deleted",status=200)
 	return HttpResponse(status=403)
 
 def forgotPassword(request):
