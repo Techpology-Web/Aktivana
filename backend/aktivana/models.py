@@ -5,7 +5,7 @@ import json
 
 class Partner (models.Model):
 
-    logo    = models.TextField() # their logo
+    logo    = models.TextField("") # their logo
     phone   = models.TextField() # their phonenumber
     website = models.TextField() # thier website
     adress  = models.TextField() # thier adress

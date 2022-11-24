@@ -67,6 +67,7 @@ export default function PartnersPage(props){
             name:"",
             password:"",
             email:"",
+            logo:"",
         })
         setIsSlideUp(true);
         setIsEdit(false);
@@ -83,11 +84,12 @@ export default function PartnersPage(props){
                 //alert(e.response.data)
             })
         }else{
+            // alert(JSON.stringify(selectedPartner))
             axios.post("partner/add/",selectedPartner).then(r=>{
                 //alert(r.data)
                 fetchPartners()
             }).catch(e=>{
-                //alert(e.response.data)
+                alert(e.response.data)
             })
         }
     }
@@ -146,7 +148,7 @@ export default function PartnersPage(props){
 					<TouchableOpacity onPress={()=>{props.navigation.goBack()}} style={[t.p4]} >
 						<MaterialIcons name="arrow-back-ios" size={24} color="white" />
 					</TouchableOpacity>
-					<Text style={[t.textWhite,t.text2xl]} >Alla Erbjudanden</Text>
+					<Text style={[t.textWhite,t.text2xl]} >Alla Partners</Text>
 				</View>
 
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>

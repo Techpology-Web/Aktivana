@@ -110,7 +110,7 @@ def addPartner(request):
 	try:
 		req = extractRequest(request)
 		partner = Partner(
-			logo=req["logo"],
+			# logo=req["logo"],
 			phone=req["phone"],
 			website=req["website"],
 			adress=req["adress"],
@@ -118,11 +118,12 @@ def addPartner(request):
 		partner.save()
 
 		account = Account(
-			firstName = req["firstName"],
+			firstName = req["name"],
 			lastName  = "",
 			password  = encrypt(req["password"]),
 			email     = str(req["email"]).lower(),
-      partner   = self
+			acountType= 2,
+			partner   = partner
 		)
 		account.save()
 		return HttpResponse("sucess",status = 200)
@@ -136,9 +137,11 @@ def login(request):
 	req = extractRequest(request)
 	emp = Account.objects.filter(email=str(req["email"]).lower())
 	if len(emp) != 0:
-		if(verify(req["password"], emp[0].password)):
-			print(emp[0].toJson())
-			return HttpResponse(json.dumps(emp[0].toJson()),status=200)
+		print(req)
+		logedinAccount = Account.objects.filter(email=str(req["email"]).lower(),password=encrypt(req["password"]))
+		print(encrypt(req["password"]))
+		if len(logedinAccount) > 0:
+			return HttpResponse(json.dumps(logedinAccount[0].toJson()),status=200)
 		else:
 			return HttpResponse("Wrong password or email",status = 409)
 	else:
