@@ -1,11 +1,13 @@
 import { BackHandler, Dimensions, FlatList, ImageBackground, ScrollView, TextInputComponent, TouchableOpacity } from "react-native";
+// import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import {t} from "react-native-tailwindcss";
 import * as ImagePicker from 'expo-image-picker';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import axios from "axios";
@@ -47,7 +49,7 @@ export default function CompanysPage(props){
 	const [selectedCompany, setSelectedCompany] = useState({})
 	const [isEdit, setIsEdit] = useState(false)
 	const [addCoupon, setAddCoupon] = useState(false)
-    
+
 
     const fetchCompanys = () =>{
         axios.get("company/get/all").then(r=>{
@@ -103,22 +105,34 @@ export default function CompanysPage(props){
     const updateSelectedCompany = (key,value) =>{
         selectedCompany[key] = value
     }
+    const copy = (string) =>{
+        Clipboard.setString(string)
+        alert(string+" blev kopierad")
+    }
 	return(
 		<View style={[t.wFull, t.hFull]}>
 			{(addCoupon)?(
                 <CouponSelector selected={selectedCompany.activeCoupons} done={(e)=>{setAddCoupon(false);setIsSlideUp(true);updateSelectedCompany("activeCoupons",(e))}} />
             ):(<></>)}
-			{(isSlideUp) ? 
+			{(isSlideUp) ?
 			<SlideUp close={()=>{setIsSlideUp(false)}}>
 				<View>
 					<ScrollView>
                         <View style={[t.wFull,t.pT5,t.pX5]}>
                             <Text style={[t.textWhite, t.text3xl]}>Skapa nytt företag</Text>
-                            
+
                         </View>
                         <View style={[t.pX5]} >
                             <TextInputField default={selectedCompany.name}    onChangeText={e=>updateSelectedCompany("name",e)}    keyboardType="default"       inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras Namn"          style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="label-outline" size={24} color="#fff" />} ></TextInputField>
                             <TextInputField default={selectedCompany.email}   onChangeText={e=>updateSelectedCompany("email",e)}   keyboardType="email-address" inputStyle={t.textWhite} placeholderTextColor="#8a8a8a" placeholder="Deras E-mail"        style={[t.border,{borderRadius:15},t.borderWhite,{backgroundColor:"#ffffff00"},t.textWhite]} icon={<MaterialCommunityIcons name="email-outline" size={24} color="#fff" />} ></TextInputField>
+                            <View style={[t.flexRow,t.itemsCenter]}>
+                                <Text style={[t.textWhite]}>
+                                    Deras inloggnings kod:
+                                </Text>
+                                <TouchableOpacity style={[t.itemsCenter,t.flex]} onPress={()=>{copy(selectedCompany.signupCode)}} >
+                                    <Text  style={[t.textWhite,t.fontBold]} >{selectedCompany.signupCode}</Text>
+                                </TouchableOpacity>
+                            </View>
                             <Button onPress={()=>{setAddCoupon(true);setIsSlideUp(false)}} >Hantera rabatter</Button>
                             {(!isEdit)?<Button onPress={()=>addOrUpdate()} >Skapa</Button>:(
                                 <View style={[t.flexRow]} >
@@ -126,9 +140,9 @@ export default function CompanysPage(props){
                                     <Button style={{marginLeft: 10,flex:1,paddingRight: 10}} onPress={()=>remove()}     >Tabort</Button>
                                 </View>
                             )}
-                            
+
                         </View>
-                        
+
 					</ScrollView>
 				</View>
 			</SlideUp>
@@ -143,7 +157,7 @@ export default function CompanysPage(props){
 					</TouchableOpacity>
 					<Text style={[t.textWhite,t.text2xl]} >Företag</Text>
 				</View>
-				
+
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
 						<TouchableOpacity onPress={add}>
@@ -154,7 +168,7 @@ export default function CompanysPage(props){
 
 				<View style={[{height:"80%"}]} >
 					<Animatable.View animation="slideInDown">
-						<TextInputField style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}} 
+						<TextInputField style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}}
 										name="search-outline" size={24} color="light-gray" />} />
 					</Animatable.View>
 					{(coupons.length>0)?
@@ -170,7 +184,7 @@ export default function CompanysPage(props){
 						/>):
 						<></>
 					}
-						
+
 				</View>
 			</SafeAreaView>
 		</View>
