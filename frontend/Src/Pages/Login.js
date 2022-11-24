@@ -13,7 +13,7 @@ import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 export default function Login(props) {
-  
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -21,10 +21,10 @@ export default function Login(props) {
 	const [error, setError] = useState("");
 
     if(typeof(global.session) != "undefined" && global.session != "undefined"){
-        if(global.session["type"]==1) props.navigation.navigate("AdminHome")
-        else props.navigation.navigate("EmployeeHome")	
+        if(global.session["type"]===1) props.navigation.navigate("AdminHome")
+        else if(global.session["type"]===2) props.navigation.navigate("Scan")
+		    else props.navigation.navigate("EmployeeHome")
     }
-	
 
     function login(){
         axios.post("account/login/",{"email":email,"password":password})
@@ -33,6 +33,7 @@ export default function Login(props) {
             // if type = 1 the acount is a admin acount
             // then we send to admin home
             if(r.data["type"]===1) props.navigation.navigate("AdminHome")
+          	else if(global.session["type"]===2) props.navigation.navigate("Scan")
             else props.navigation.navigate("EmployeeHome")
 
 		}).catch(error=>{
