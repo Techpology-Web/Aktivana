@@ -5,7 +5,7 @@ import {t} from "react-native-tailwindcss";
 import * as ImagePicker from 'expo-image-picker';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import axios from "axios";
@@ -44,13 +44,14 @@ export default function CouponsPage(props){
 
 	const [coupons,setCoupons] = useState([])
 	const [searchWord,setSearchWord] = useState("")
-	
+	const [slectedPartner,setSelectedPartner] = useState(1)
+
 	let {passPartner} = typeof(props.route.params)!="undefined"?props.route.params:""
 	/* try{
 		passPartner = props.navigation.getParam("passPartner")
 	}catch(e){} */
-	
-	
+
+
 
 	const updateCodeList = () =>
 	{
@@ -83,7 +84,7 @@ export default function CouponsPage(props){
 		//alert("set selected coupon "+JSON.stringify(x))
 		setName(x["code"])
 		setPartner(x["partner"]["id"])
-		
+
 		var exp = new Date(parseInt(x["expireTime"]) * 1000)
 		var dd = ""
 		var mm = ""
@@ -110,7 +111,7 @@ export default function CouponsPage(props){
 
 	const [isSlideUp, setIsSlideUp] = useState(false)
 	const [name, setName] = useState("")
-	const [partner, setPartner] = useState(0)
+	const [partner, setPartner] = useState(1)
 	const [expiry, setExpiry] = useState("")
 	const [useAmt, setUseAmt] = useState("")
 	const [img, setImg] = useState("")
@@ -129,7 +130,8 @@ export default function CouponsPage(props){
 			resp.data.forEach(element => {
 				x.push(element.name)
 			});
-			setArrPartnersNames(x)
+            setArrPartnersNames(x)
+            // setPartner(x[0])
 		})
 		.catch(error=>{
 			alert(error.response.data)
@@ -146,7 +148,7 @@ export default function CouponsPage(props){
 		});
 
 		var z = result.uri.split("/")
-	
+
 		if (!result.cancelled) {
 			var ext = z[z.length - 1].split(".")[1]
 			setImg(result.base64);
@@ -177,7 +179,8 @@ export default function CouponsPage(props){
 
 	const UpdateCoupon = () =>
 	{
-		var exp = new Date(expiry).getTime() / 1000
+        var exp = new Date(expiry).getTime() / 1000
+        alert(partner)
 		console.log(arrPartners[partner])
 		axios.post("code/update/", {
 			nameID: toEdit,
@@ -199,8 +202,8 @@ export default function CouponsPage(props){
 
 	return(
 		<View style={[t.wFull, t.hFull]}>
-			
-			{(isSlideUp) ? 
+
+			{(isSlideUp) ?
 			<SlideUp navigation={props.navigation} close={()=>{setIsSlideUp(false)}}>
 				<View>
 					<ScrollView>
@@ -212,7 +215,7 @@ export default function CouponsPage(props){
 								</TouchableOpacity>
 							</View>
 						</Animatable.View>
-						
+
 						<Animatable.View animation="fadeInUp">
 							<Text style={[t.textWhite, t.fontLight, t.textLg, t.mL16, t.mT4]}>Name</Text>
 							<InputField text={name} val={(e)=>{setName(e)}} placeholder="name" style={[t.mT2]} />
@@ -238,7 +241,7 @@ export default function CouponsPage(props){
 							</TouchableOpacity>
 						</Animatable.View>
 
-						<Button title="Klar" style={[t.mX8, t.mT2, t.mB4]} onPress={()=>{(isEdit) ? UpdateCoupon() : NewCoupon()}} />
+						<Button title="Klar" style={[t.mX8, t.mT2, t.mB4]} onPress={()=>{((isEdit) ? UpdateCoupon() : NewCoupon());setIsSlideUp(false)}} />
 					</ScrollView>
 				</View>
 			</SlideUp>
@@ -253,7 +256,7 @@ export default function CouponsPage(props){
 					</TouchableOpacity>
 					<Text style={[t.textWhite,t.text2xl]} >Alla Erbjudanden</Text>
 				</View>
-				
+
 				<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
 					<View style={[{backgroundColor:"#68F900", width: 60, height: 60}, t.itemsCenter, t.justifyCenter, t.roundedFull]}>
 						<TouchableOpacity onPress={()=>{setName(""); setPartner(0); setImg(""); setIsSlideUp(true); setImgPath(""); setExpiry(""); setUseAmt("");setIsEdit(false)}}>
@@ -264,7 +267,7 @@ export default function CouponsPage(props){
 
 				<View style={[{height:"80%"}]} >
 					<Animatable.View animation="slideInDown">
-						<TextInputField default={(passPartner)?passPartner.name:""} style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}} 
+						<TextInputField default={(passPartner)?passPartner.name:""} style={[t.roundedFull]} placeholder="Sök" onChangeText={setSearchWord} icon={<Ionicons style={{transform:[{scaleX:-1}]}}
 										name="search-outline" size={24} color="light-gray" />} />
 					</Animatable.View>
 					{(coupons.length>0)?
@@ -280,7 +283,7 @@ export default function CouponsPage(props){
 						/>):
 						<></>
 					}
-						
+
 				</View>
 			</SafeAreaView>
 		</View>
