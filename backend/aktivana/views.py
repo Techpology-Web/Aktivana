@@ -93,7 +93,7 @@ def useCode(request):
 	try:
 		req = extractRequest(request)
 
-		account = Account.objects.get(pk=req["acountId"])
+		account = Account.objects.get(pk=req["accountId"])
 		usedcodes = json.loads(account.usedCoupons)
 
 		coupon = Coupon.objects.get(pk=req["codeId"])
