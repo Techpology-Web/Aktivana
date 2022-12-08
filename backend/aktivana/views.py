@@ -355,3 +355,19 @@ def updateAccountPassword(request):
 		query.save()
 		return HttpResponse(200)
 	return HttpResponse(403)
+
+def getAllAccounts(request):
+	if(request.method == "POST"):
+		req = extractRequest(request)
+		email = req["email"]
+		accounts = []
+		if ("company" in req):
+			for account in Account.objects.filter(company=Company.objects.get(req['company']),acountType=0):
+				accounts.append(account.toJson())
+		else:
+			for account in Account.objects.filter(acountType=0):
+				accounts.append(account.toJson())
+
+		return HttpResponse(json.dumps(accounts))	
+
+	return HttpResponse(status=403)

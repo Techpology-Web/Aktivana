@@ -19,6 +19,7 @@ import VerifyForgotPassword from "./Src/Pages/VerifyForgotPassword";
 import UpdatePassword from "./Src/Pages/UpdatePassword";
 import MyCoupons from "./Src/Pages/Employee/MyCoupons";
 import Scan from "./Src/Pages/Partner/Scan";
+import EmployeePage from "./Src/Pages/Admin/EmployeePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ export default function App() {
 				<Stack.Screen name="MyCoupons" 		component={MyCoupons}/>
 				<Stack.Screen name="Scan" 		component={Scan}/>
 				<Stack.Screen name="Support" 		component={Support}/>
+				<Stack.Screen name="Employees" 		component={EmployeePage}/>
 			</Stack.Navigator>
 		</NavigationContainer>);
 

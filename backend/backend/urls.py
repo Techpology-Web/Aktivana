@@ -32,6 +32,7 @@ urlpatterns = [
     path('account/login/', login),
     path('account/getCodes/', acountGetCodes),
     path('account/useCode/', useCode),
+    path('account/get/all/', getAllAccounts),
     
     path('partner/add/', addPartner),
     path('partner/update/', updatePartner),

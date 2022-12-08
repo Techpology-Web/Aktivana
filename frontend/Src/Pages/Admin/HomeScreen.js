@@ -31,7 +31,7 @@ export default function HomeScreen(props) {
 					{path:"AdminCouponsPage",name:"Alla rabatter"},
 					{path:"PartnersPage",name:"Partners"},
 					{path:"CompanyPage",name:"Företag"},
-					{path:"AdminCouponsPage",name:"Avändare"}
+					{path:"Employees",name:"Avändare"}
 				]}
 			/>
 		
