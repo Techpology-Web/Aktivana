@@ -109,6 +109,7 @@ export default function CompanysPage(props){
         Clipboard.setString(string)
         alert(string+" blev kopierad")
     }
+    //props.navigation.navigate("AdminCouponsPage",{passPartner:selectedPartner})
 	return(
 		<View style={[t.wFull, t.hFull]}>
 			{(addCoupon)?(
@@ -134,13 +135,13 @@ export default function CompanysPage(props){
                                 </TouchableOpacity>
                             </View>
                             <Button onPress={()=>{setAddCoupon(true);setIsSlideUp(false)}} >Hantera rabatter</Button>
+                            <Button onPress={()=>props.navigation.navigate("Employees",{company:selectedCompany.name})} >Users</Button>
                             {(!isEdit)?<Button onPress={()=>addOrUpdate()} >Skapa</Button>:(
                                 <View style={[t.flexRow]} >
                                     <Button style={{marginLeft: 0,flex:1,paddingRight: 10}} onPress={()=>addOrUpdate()} >Updatera</Button>
                                     <Button style={{marginLeft: 10,flex:1,paddingRight: 10}} onPress={()=>remove()}     >Tabort</Button>
                                 </View>
                             )}
-
                         </View>
 
 					</ScrollView>

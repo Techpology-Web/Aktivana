@@ -39,12 +39,15 @@ function Coupon(props){
 
 export default function EmployeePage(props){
 
+	let {company} = typeof(props.route.params) !== "undefined" ? props.route.params : ""
+
 	const [coupons,setCoupons] = useState([])
-	const [searchWord,setSearchWord] = useState("")
+	const [searchWord,setSearchWord] = useState(company?company:"")
 	const [isSlideUp, setIsSlideUp] = useState(false)
 	const [selectedPartner, setSelectedPartner] = useState({})
 	const [isEdit, setIsEdit] = useState(false)
 
+    //{(isEdit)?<Button onPress={()=>} >Se rabatter</Button>:<></>}
 
     const fetchPartners = () =>{
         axios.post("account/get/all/",{"email":"asd"}).then(r=>{
@@ -67,8 +70,7 @@ export default function EmployeePage(props){
 				<View>
 					<ScrollView>
             <View style={[t.wFull,t.pT5,t.pX5]}>
-                <Text style={[t.textWhite, t.text3xl]}>Hantera partners</Text>
-                {(isEdit)?<Button onPress={()=>props.navigation.navigate("AdminCouponsPage",{passPartner:selectedPartner})} >Se rabatter</Button>:<></>}
+                <Text style={[t.textWhite, t.text3xl]}>Hantera employees</Text>
 
             </View>
             <View style={[t.pX5]} >
@@ -89,7 +91,7 @@ export default function EmployeePage(props){
 					<TouchableOpacity onPress={()=>{props.navigation.goBack()}} style={[t.p4]} >
 						<MaterialIcons name="arrow-back-ios" size={24} color="white" />
 					</TouchableOpacity>
-					<Text style={[t.textWhite,t.text2xl]} >Alla Partners</Text>
+					<Text style={[t.textWhite,t.text2xl]} >Alla Employees</Text>
 				</View>
                 {
 				    //<Animatable.View animation="slideInRight" style={[t.absolute, t.z10, {bottom:55,right:25}]}>
