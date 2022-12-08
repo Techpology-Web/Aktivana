@@ -48,6 +48,7 @@ export default function App() {
 				<Stack.Screen name="UpdatePassword" 		component={UpdatePassword}/>
 				<Stack.Screen name="MyCoupons" 		component={MyCoupons}/>
 				<Stack.Screen name="Scan" 		component={Scan}/>
+				<Stack.Screen name="Support" 		component={Support}/>
 			</Stack.Navigator>
 		</NavigationContainer>);
 
