@@ -33,7 +33,7 @@ export default function Login(props) {
             // if type = 1 the acount is a admin acount
             // then we send to admin home
             if(r.data["type"]===1) props.navigation.navigate("AdminHome")
-          	else if(global.session["type"]===2) props.navigation.navigate("Scan")
+          	else if(global.session["type"]===2) props.navigation.navigate("PartnerHome")
             else props.navigation.navigate("EmployeeHome")
 
 		}).catch(error=>{

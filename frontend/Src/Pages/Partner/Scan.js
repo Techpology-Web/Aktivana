@@ -5,6 +5,8 @@ import { t } from "react-native-tailwindcss";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import axios from 'axios';
+
 import {
 	SafeAreaView,
 	SafeAreaProvider,
@@ -17,17 +19,18 @@ export default function Scan(props){
     const [permission, requestPermission] = Camera.useCameraPermissions();
 	const [isScanned, setIsScanned] = useState(false)
 
-	const use = () =>{
-        axios.post("account/useCode/",{
-            "codeId":coupon,
-            "accountId":account,
-        }).then(r=>{
-
-        })
+	const use = (x) =>{
+        axios.post("account/useCode/", x
+		).then(r=>{
+			console.log(r.data)
+			props.navigation.navigate("PartnerHome")
+        }).catch(err=>{
+			alert(err.message)
+		})
     }
 
     return(
-        <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
+        <SafeAreaView style={[{backgroundColor:"#000000",height:"100%"}]} >
             <View style={[t.justifyBetween,{height:"100%"}]}>
                 <View style={[t.absolute, t.wFull, t.mT4, t.flexRow, t.itemsCenter, t.justifyBetween, t.pX4, t.z10]}>
 					<TouchableOpacity onPress={()=>{props.navigation.goBack()}}>
@@ -42,7 +45,7 @@ export default function Scan(props){
 						if(!isScanned)
 						{
 							setIsScanned(true)
-							//use()
+							use(e.data)
 						}
 					}} />
             </View>

@@ -38,7 +38,10 @@ export default function Support (props){
         useTime    : "1"
     })
     
-    let qrcodeValue = "https://www.fsf.org/";
+    let qrcodeValue = JSON.stringify({
+        "accountId": global.session["id"],
+        "codeId": selectedCoupon["id"]
+    });
     
     
     const fetchCoupons = () =>{

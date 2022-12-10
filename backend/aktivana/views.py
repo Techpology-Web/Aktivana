@@ -85,7 +85,7 @@ def addCode(request):
 			picture=req["picture"]
 		)
 		coupon.save()
-		return HttpResponse("sucess",status = 200)
+		return HttpResponse("success",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
 
@@ -102,7 +102,7 @@ def useCode(request):
 		account.usedCoupons = json.dumps(usedcodes)
 		account.save()
 
-		return HttpResponse("sucess",status = 200)
+		return HttpResponse("success",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
 
@@ -126,7 +126,7 @@ def addPartner(request):
 			partner   = partner
 		)
 		account.save()
-		return HttpResponse("sucess",status = 200)
+		return HttpResponse("success",status = 200)
 	except Exception as e:
 		return HttpResponse(e,status = 400)
 
