@@ -17,6 +17,15 @@ export default function Scan(props){
     const [permission, requestPermission] = Camera.useCameraPermissions();
 	const [isScanned, setIsScanned] = useState(false)
 
+	const use = () =>{
+        axios.post("account/useCode/",{
+            "codeId":coupon,
+            "accountId":account,
+        }).then(r=>{
+
+        })
+    }
+
     return(
         <SafeAreaView style={[{backgroundColor:"#1E1E1E",height:"100%"}]} >
             <View style={[t.justifyBetween,{height:"100%"}]}>
@@ -33,6 +42,7 @@ export default function Scan(props){
 						if(!isScanned)
 						{
 							setIsScanned(true)
+							//use()
 						}
 					}} />
             </View>

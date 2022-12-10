@@ -49,6 +49,7 @@ export default function App() {
 				<Stack.Screen name="MyCoupons" 		component={MyCoupons}/>
 				
 				<Stack.Screen name="Scan" 		component={Scan}/>
+				<Stack.Screen name="Support" 		component={Support}/>
 			</Stack.Navigator>
 		</NavigationContainer>);
 
