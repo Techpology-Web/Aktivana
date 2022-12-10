@@ -25,8 +25,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 	// axios.defaults.baseURL = 'http://api.aktivana.com/';
 
-	axios.defaults.baseURL = 'http://192.168.10.238:8000/';
-	//axios.defaults.baseURL = 'http://192.168.1.189:8000/';
+	//axios.defaults.baseURL = 'http://192.168.10.238:8000/';
+	axios.defaults.baseURL = 'http://192.168.1.189:8000/';
 
 	NavigationBar.setPositionAsync("absolute");
 	NavigationBar.setVisibilityAsync("hidden");
@@ -47,6 +47,7 @@ export default function App() {
 				<Stack.Screen name="VerifyForgotPassword"	component={VerifyForgotPassword}/>
 				<Stack.Screen name="UpdatePassword" 		component={UpdatePassword}/>
 				<Stack.Screen name="MyCoupons" 		component={MyCoupons}/>
+				
 				<Stack.Screen name="Scan" 		component={Scan}/>
 			</Stack.Navigator>
 		</NavigationContainer>);
